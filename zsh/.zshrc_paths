@@ -11,6 +11,11 @@ export GIT_SOURCE_HOME="${GIT_HOME}/source"
 export GIT_DOTFILES_HOME="${GIT_SOURCE_HOME}/config/justinpxrk-coding/dotfiles"
 export GIT_SCRIPTS_HOME="${GIT_SOURCE_HOME}/tools/justinpxrk-coding/scripts"
 
+# asdf
+export ASDF_DATA_DIR="$HOME/.asdf"
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
+fpath=($ASDF_DATA_DIR/completions $fpath)
+
 # eval-cache
 # Included convenience function _evalcache_clear clears .evalcache
 export ZSH_EVALCACHE_DIR="${XDG_CACHE_HOME}/eval-cache"
