@@ -30,9 +30,6 @@ export PATH="${GOENV_ROOT}/bin:${PATH}"
 # grep
 export PATH="${homebrew_opt_prefix}/grep/libexec/gnubin:${PATH}"
 
-# JetBrains Toolbox
-export PATH="${PATH}:/Users/justinpxrk/Library/Application Support/JetBrains/Toolbox/scripts"
-
 # nvim
 export VIM="${XDG_CONFIG_HOME}/nvim"
 export VIMRUNTIME="${homebrew_opt_prefix}/neovim/share/nvim/runtime/"
