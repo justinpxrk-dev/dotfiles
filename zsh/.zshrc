@@ -68,7 +68,6 @@ zinit for \
 zinit for \
     lucid \
     wait \
-  dominik-schwabe/zsh-fnm \
   rupa/z \
   zsh-users/zsh-autosuggestions
 
