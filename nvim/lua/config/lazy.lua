@@ -39,5 +39,8 @@ require("lazy").setup({
   -- Colorscheme that will be used when installing plugins
   install = { colorscheme = { "base24-builder-injection" } },
   -- Automatically check for plugin updates
-  checker = { enabled = true },
+  checker = {
+    enabled = true,
+    notify = false
+  },
 })
