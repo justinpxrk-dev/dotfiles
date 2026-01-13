@@ -68,9 +68,10 @@ zinit for \
 zinit for \
     lucid \
     wait \
+  dominik-schwabe/zsh-fnm \
   rupa/z \
-  zsh-users/zsh-autosuggestions \
-  lukechilds/zsh-nvm
+  zsh-users/zsh-autosuggestions
+
 
 # fast-syntax-highlighting should be loaded last so `zicompinit` can be hooked
 # before it loads.

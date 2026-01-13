@@ -37,23 +37,6 @@ export PATH="${PATH}:/Users/justinpxrk/Library/Application Support/JetBrains/Too
 export VIM="${XDG_CONFIG_HOME}/nvim"
 export VIMRUNTIME="${homebrew_opt_prefix}/neovim/share/nvim/runtime/"
 
-# nvm
-export NVM_DIR="${HOME}/.nvm"
-# lukechilds/zsh-nvm
-# TODO: Look into how zsh-nvm loads completions in order to avoid completion
-#       errors printing to stderr for the first few seconds after shell
-#       startup. Enabling NVM_COMPLETION causes autocompletion to print to
-#       stderr for approximately < 1.5 seconds after prompt start (I suspect
-#       incompatibilities between Zinit's turbo loading and zsh-nvm's
-#       completion loading method. Does not affect functionality but a minor
-#       annoyance. Manually source completions here to avoid using
-#       NVM_COMPLETION
-export NVM_COMPLETION='false'
-export NVM_LAZY_LOAD='true'
-# export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim', 'yarn')
-export NVM_NO_USE='false'
-source "${NVM_DIR}/bash_completion"
-
 # pyenv
 export PYENV_HOME="${HOME}/.pyenv"
 export PATH="${PYENV_HOME}/bin:${PATH}"
@@ -74,6 +57,9 @@ export PKG_CONFIG_PATH="${homebrew_opt_prefix}/zlib/lib/pkgconfig"
 
 # zsh-users/zsh-autosuggestions
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128
+
+# dominik-schwabe/zsh-fnm
+export ZSH_FNM_ENV_EXTRA_ARGS="--use-on-cd --version-file-strategy=recursive --corepack-enabled --shell zsh"
 
 # Unset any non exported variables here to avoid memory leaks
 unset homebrew_opt_prefix

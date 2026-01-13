@@ -12,10 +12,10 @@ export PATH="${GOROOT}/bin:${PATH}"
 export PATH="${PATH}:${GOPATH}/bin"
 
 # Homebrew
-_evalcache "${HOMEBREW_PREFIX}/bin/brew" shellenv
+_evalcache brew shellenv
 
 # pyenv
-_evalcache pyenv init - zsh
+_evalcache pyenv init -
 
 # pyenv-virtualenv 1.2.4
 _evalcache pyenv virtualenv-init -
