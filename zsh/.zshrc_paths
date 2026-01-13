@@ -38,8 +38,8 @@ export VIM="${XDG_CONFIG_HOME}/nvim"
 export VIMRUNTIME="${homebrew_opt_prefix}/neovim/share/nvim/runtime/"
 
 # pyenv
-export PYENV_HOME="${HOME}/.pyenv"
-export PATH="${PYENV_HOME}/bin:${PATH}"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $$PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
 # sqlite
 export CPPFLAGS="-I${homebrew_opt_prefix}/sqlite/include"

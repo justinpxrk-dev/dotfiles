@@ -15,7 +15,7 @@ export PATH="${PATH}:${GOPATH}/bin"
 _evalcache brew shellenv
 
 # pyenv
-_evalcache pyenv init -
+_evalcache pyenv init - zsh
 
 # pyenv-virtualenv 1.2.4
 _evalcache pyenv virtualenv-init -
