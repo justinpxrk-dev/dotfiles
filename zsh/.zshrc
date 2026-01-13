@@ -12,8 +12,8 @@
 # start_time=$(date +%s)
 ###
 
-# Define XDG Base Directory path environment variables only. All other path
-# environment variables should be defined in .zshrc_paths.
+# Define zsh and XDG Base Directory path environment variables only. All other
+# path environment variables should be defined in .zshrc_paths.
 # User directories
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_CONFIG_HOME="${HOME}/.config"
@@ -24,6 +24,10 @@ export XDG_RUNTIME_DIR="/var/folders/b6/4_zp7n2n6p79mqbmg5fj97t40000gn/T/"
 # System directories
 export XDG_DATA_DIRS="/usr/share:/usr/local/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
+
+# zsh directories
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+export ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of
 # ~/.config/zsh/.zshrc. Initialization code that may require console input
