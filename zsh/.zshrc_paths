@@ -25,6 +25,9 @@ export ZSH_EVALCACHE_DIR="${XDG_CACHE_HOME}/eval-cache"
 export HOMEBREW_PREFIX="/opt/homebrew"
 homebrew_opt_prefix="${HOMEBREW_PREFIX}/opt"
 
+# gpg
+export GPG_TTY="$TTY"
+
 # gnu-getopt
 export PATH="${homebrew_opt_prefix}/gnu-getopt/bin:${PATH}"
 

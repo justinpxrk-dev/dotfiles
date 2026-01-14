@@ -1,6 +1,12 @@
 [user]
-    email = 192945419+justinpxrk-coding@users.noreply.github.com
+    email = 192945419+justinpxrk-dev@users.noreply.github.com
+    signingkey = E5730BE6600BC37B
+
 [core]
     editor = nvim
+
 [url "ssh://git@github.com"]
 	insteadOf = https://github.com
+
+[commit]
+    gpgsign = true
