@@ -42,6 +42,9 @@ export PATH="${homebrew_opt_prefix}/grep/libexec/gnubin:${PATH}"
 export VIM="${XDG_CONFIG_HOME}/nvim"
 export VIMRUNTIME="${homebrew_opt_prefix}/neovim/share/nvim/runtime/"
 
+# Postgres
+export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig:$PKG_CONFIG_PATH"
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
