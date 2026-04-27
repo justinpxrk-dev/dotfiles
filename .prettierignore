@@ -1,0 +1,18 @@
+dot_config/sketchybar/lib
+Fonts
+Themes/lib
+Unmanaged
+Wallpapers
+
+# Claude
+.claude
+
+# Node
+pnpm-lock.yaml
+
+# Obsidian
+.obsidian
+!.obsidian/snippets
+
+# Visual Studio Code
+.vscode

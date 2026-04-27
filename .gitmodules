@@ -1,0 +1,20 @@
+[submodule "Fonts/font-monolisa"]
+	path = Fonts/font-monolisa
+	url = git@github.com:justinpxrk-dev/font-monolisa.git
+[submodule "Fonts/lib/monolisa-nerdfont-patch"]
+	path = Fonts/lib/monolisa-nerdfont-patch
+	url = git@github.com:justinpxrk-dev/monolisa-nerdfont-patch.git
+[submodule "dot_config/sketchybar/lib/SbarLua"]
+	path = dot_config/sketchybar/lib/SbarLua
+	url = git@github.com:FelixKratz/SbarLua.git
+[submodule "dot_config/sketchybar/lib/sketchybar-app-font"]
+	path = dot_config/sketchybar/lib/sketchybar-app-font
+	url = git@github.com:kvndrsslr/sketchybar-app-font.git
+[submodule "Themes/lib/tinted-terminal"]
+	path = Themes/lib/tinted-terminal
+	url = git@github.com:justinpxrk-dev/tinted-terminal.git
+	branch = justinpxrk-dev
+[submodule "Themes/lib/tinted-vscode"]
+	path = Themes/lib/tinted-vscode
+	url = git@github.com:justinpxrk-dev/tinted-vscode.git
+	branch = justinpxrk-dev

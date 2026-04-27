@@ -1,0 +1,50 @@
+[user]
+    {{- if eq .profile "personal"}}
+    email = 192945419+justinpxrk-dev@users.noreply.github.com
+    {{- end }}
+    name = Justin Park
+
+[url "ssh://git@github.com"]
+    insteadOf = https://github.com
+
+[core]
+    ignoreCase = false
+    pager = delta
+
+[branch]
+    sort = -committerdate
+
+[column]
+    ui = auto
+
+[delta]
+    navigate = true
+
+[diff]
+    algorithm = histogram
+
+[help]
+    autocorrect = prompt
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictStyle = zdiff3
+
+[rerere]
+    enabled = true
+{{ if eq .profile "personal" }}
+[fetch]
+    prune = true
+
+[pull]
+    rebase = true
+
+[push]
+    autoSetupRemote = true
+
+[rebase]
+    autoStash = true
+    autoSquash = true
+{{- end }}

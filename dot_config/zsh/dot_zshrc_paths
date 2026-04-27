@@ -1,0 +1,64 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash
+# shellcheck disable=SC2296
+
+# Contains my zsh environment path variables for interactive zsh shells.
+
+# eval-cache
+# Included convenience function _evalcache_clear clears eval-cache/
+export ZSH_EVALCACHE_DIR="${XDG_CACHE_HOME}/eval-cache"
+# export ZSH_EVALCACHE_DISABLE=true   # Bypass evalcache
+
+# Homebrew
+export HOMEBREW_PREFIX="/opt/homebrew"
+homebrew_opt_prefix="${HOMEBREW_PREFIX}/opt"
+export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
+
+# gpg
+export GPG_TTY="$TTY"
+
+# gnu-getopt
+export PATH="${homebrew_opt_prefix}/gnu-getopt/bin:${PATH}"
+
+# goenv
+export GOENV_ROOT="${homebrew_opt_prefix}/goenv"
+export PATH="${GOENV_ROOT}/bin:${PATH}"
+
+# grep
+export PATH="${homebrew_opt_prefix}/grep/libexec/gnubin:${PATH}"
+
+# nvim
+export VIM="${XDG_CONFIG_HOME}/nvim"
+export VIMRUNTIME="${homebrew_opt_prefix}/neovim/share/nvim/runtime/"
+
+# Postgres
+export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+# sqlite
+export CPPFLAGS="-I${homebrew_opt_prefix}/sqlite/include"
+export LDFLAGS="-L${homebrew_opt_prefix}/sqlite/lib"
+export PATH="${homebrew_opt_prefix}/sqlite/bin:${PATH}"
+export PKG_CONFIG_PATH="${homebrew_opt_prefix}/zlib/lib/pkgconfig"
+
+# uv
+export PATH="/Users/justinpxrk/.local/share/../bin:$PATH"
+
+# Zinit
+export ZINIT_HOME="${homebrew_opt_prefix}/zinit"
+
+# zlib
+export CPPFLAGS="-I${homebrew_opt_prefix}/zlib/include"
+export LDFLAGS="-L${homebrew_opt_prefix}/zlib/lib"
+export PKG_CONFIG_PATH="${homebrew_opt_prefix}/zlib/lib/pkgconfig"
+
+# zsh-users/zsh-autosuggestions
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128
+
+# dominik-schwabe/zsh-fnm
+export ZSH_FNM_ENV_EXTRA_ARGS="--use-on-cd --version-file-strategy=recursive --corepack-enabled --shell zsh"
+
+# agkozak/zsh-z
+export _Z_DATA="$XDG_CACHE_HOME/z/.z"
+
+# Unset any non exported variables here to avoid memory leaks
+unset homebrew_opt_prefix

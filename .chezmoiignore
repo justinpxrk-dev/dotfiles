@@ -1,0 +1,29 @@
+# Unmanaged Directories
+docs
+Assets
+Fonts
+Scripts
+Themes
+Unmanaged
+Wallpapers
+
+# Libraries
+.config/sketchybar/lib
+
+# Agents
+AGENTS.md
+CLAUDE.md
+
+# Tools
+mise.toml
+node_modules
+nvim.yml
+package.json
+pnpm-lock.yaml
+pyproject.toml
+pyrightconfig.json
+uv.lock
+
+# Misc
+LICENSE
+README.md

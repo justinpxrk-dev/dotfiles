@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dark Mode Palette</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #1e1e1e;
+        color: #92ad8d;
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        padding: 2.25rem;
+        font-size: 17px;
+        line-height: 1.5;
+      }
+      .doc-header {
+        margin-bottom: 1.25rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .doc-title {
+        font-size: 21px;
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+      }
+      .doc-meta {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        font-size: 12px;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #252525;
+        color: #697965;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .badge-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #92ad8d;
+      }
+
+      .description {
+        background: #252525;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-left: 3px solid #92ad8d;
+        border-radius: 6px;
+        padding: 14px 18px;
+        margin-bottom: 1.5rem;
+        font-family: -apple-system, "SF Pro Text", sans-serif;
+        font-size: 14px;
+        color: #a5bba1;
+        line-height: 1.65;
+      }
+      .description code {
+        background: #1e1e1e;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-size: 13px;
+        color: #92ad8d;
+      }
+
+      .section-label {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #697965;
+        margin-bottom: 0.65rem;
+        margin-top: 1.75rem;
+      }
+      .subsection-label {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #697965;
+        opacity: 0.75;
+        margin-bottom: 0.5rem;
+        margin-top: 0.85rem;
+      }
+
+      /* Chip grids — fixed widths via grid */
+      .chip-grid {
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+      .base-grid {
+        display: grid;
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+      .base-grid.accents {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+      }
+      .base-grid.bright {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        max-width: 80%;
+      }
+
+      /* Chips — fixed heights, no expand/shrink */
+      .chip,
+      .chip-base {
+        border-radius: 4px;
+        overflow: hidden;
+        min-width: 0;
+      }
+      .chip-block {
+        height: 56px;
+      }
+      .chip-base-block {
+        height: 48px;
+      }
+      .chip-info,
+      .chip-base-info {
+        padding: 6px 8px;
+        background: #252525;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        overflow: hidden;
+      }
+      .chip-base-slot {
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+        color: #697965;
+      }
+      .chip-name,
+      .chip-base-name {
+        font-size: 11px;
+        font-weight: 600;
+        color: #697965;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .chip-hex,
+      .chip-base-hex {
+        font-size: 11px;
+        opacity: 0.65;
+        color: #697965;
+        white-space: nowrap;
+      }
+
+      /* Rationale */
+      .rationale-table {
+        background: #181818;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 6px;
+        width: 100%;
+        margin-top: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-family: -apple-system, "SF Pro Text", sans-serif;
+        font-size: 14px;
+      }
+      .rationale-table tr {
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .rationale-table tr:first-child {
+        border-top: none;
+      }
+      .rationale-table td {
+        padding: 0.7rem 0.6rem;
+        vertical-align: top;
+        color: #697965;
+        line-height: 1.55;
+      }
+      .r-color {
+        width: 145px;
+        white-space: nowrap;
+      }
+      .r-swatch {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+      .r-slot {
+        font-family: "Menlo", monospace;
+        font-size: 12px;
+        color: #92ad8d;
+      }
+      .r-hex {
+        display: block;
+        font-family: "Menlo", monospace;
+        font-size: 11px;
+        opacity: 0.55;
+        margin-top: 2px;
+        margin-left: 16px;
+      }
+      .r-name {
+        width: 150px;
+        color: #92ad8d;
+        font-weight: 500;
+      }
+
+      /* Terminal */
+      .term-window {
+        border-radius: 9px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 1.5rem;
+        font-size: 13px;
+      }
+      .term-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 12px;
+        background: #2a2a2a;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .term-btns {
+        display: flex;
+        gap: 6px;
+      }
+      .term-btn {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+      }
+      .term-title {
+        font-size: 12px;
+        color: #697965;
+      }
+      .term-body {
+        padding: 14px 16px;
+        line-height: 1.4;
+        background: #181818;
+        overflow-x: auto;
+        color: #92ad8d;
+      }
+      .term-body pre {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .cursor {
+        animation: blink 1.2s step-end infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="doc-header">
+      <div class="doc-title">Dark Mode Palette</div>
+      <div class="doc-meta">
+        <span class="badge"><span class="badge-dot"></span>dark mode</span>
+        <span class="badge">base24 · 24 colors</span>
+        <span class="badge">bg #1e1e1e</span>
+        <span class="badge">fg #92ad8d</span>
+      </div>
+    </div>
+
+    <div class="description">
+      Engineered for low-ambient (evening / coding) viewing. Foreground sage at
+      OKLCH(0.72, 0.05, 140°) — near photopic peak (~555 nm), where cone
+      sensitivity is maximal under monitor luminance. Accents default to the
+      chroma floor (0.05 OKLCH) and contrast floor (5.5:1); cool slots near the
+      482 nm melanopsin peak are Gaussian-capped at the floor. Body foreground
+      hits 7:1 (WCAG AAA). ANSI 'white' and 'green' slot assignments swap
+      relative to strict Base24 — the sage foreground occupies the white slot; a
+      pale cream occupies the green slot so green-coded markup stays distinct
+      from default text. See <code>Theme Philosophy.md</code> for the full rule
+      set.
+    </div>
+
+    <div class="section-label">Terminal example</div>
+    <div class="term-window">
+      <div class="term-header">
+        <div class="term-btns">
+          <div class="term-btn" style="background: #ff5f57"></div>
+          <div class="term-btn" style="background: #febc2e"></div>
+          <div class="term-btn" style="background: #28c840"></div>
+        </div>
+        <div class="term-title">zsh · fastfetch</div>
+      </div>
+      <div class="term-body">
+        <pre
+          style="margin: 0"
+        ><span style="color: #989072">                     ..'</span>          <span style="color: #c3c59c">user</span>@<span style="color: #c3c59c">host</span>
+<span style="color: #989072">                 ,xNMM.</span>           <span style="color: #697965">------------------------------</span>
+<span style="color: #989072">               .OMMMMo</span>            <span style="color: #989072">OS:</span> macOS Tahoe 26.4.1 arm64
+<span style="color: #989072">               lMM"</span>               <span style="color: #989072">Host:</span> MacBook Air (M3, 2024)
+<span style="color: #c3c59c">     .;loddo:.  .olloddol;.</span>       <span style="color: #989072">Kernel:</span> Darwin 25.4.0
+<span style="color: #c3c59c">   cKMMMMMMMMMMNWMMMMMMMMMM0:</span>     <span style="color: #989072">Uptime:</span> 7 days, 12 hours
+<span style="color: #ae8a7e"> .KMMMMMMMMMMMMMMMMMMMMMMMWd.</span>     <span style="color: #989072">Packages:</span> 117 (brew), 16 (brew-cask)
+<span style="color: #ae8a7e"> XMMMMMMMMMMMMMMMMMMMMMMMX.</span>       <span style="color: #989072">Shell:</span> zsh 5.9
+<span style="color: #ae8a7e">;MMMMMMMMMMMMMMMMMMMMMMMM:</span>        <span style="color: #989072">Display:</span> 3440x1440 @ 85 Hz [External]
+<span style="color: #ae8a7e">:MMMMMMMMMMMMMMMMMMMMMMMM:</span>        <span style="color: #989072">WM:</span> Quartz Compositor (with Yabai)
+<span style="color: #9e8a9f">.MMMMMMMMMMMMMMMMMMMMMMMMX.</span>       <span style="color: #989072">Theme:</span> Liquid Glass
+<span style="color: #9e8a9f"> kMMMMMMMMMMMMMMMMMMMMMMMMWd.</span>     <span style="color: #989072">Font:</span> .AppleSystemUIFont [System]
+<span style="color: #9e8a9f"> 'XMMMMMMMMMMMMMMMMMMMMMMMMMMk</span>    <span style="color: #989072">Cursor:</span> Fill - Black, Outline - White
+<span style="color: #848fb3">  'XMMMMMMMMMMMMMMMMMMMMMMMMK.</span>    <span style="color: #989072">Terminal:</span> ghostty 1.3.1
+<span style="color: #848fb3">    kMMMMMMMMMMMMMMMMMMMMMMd</span>      <span style="color: #989072">Terminal Font:</span> MonoLisa Nerd Font (13pt)
+<span style="color: #848fb3">     ;KMMMMMMMWXXWMMMMMMMk.</span>       <span style="color: #989072">CPU:</span> Apple M3 (8) @ 4.06 GHz
+<span style="color: #848fb3">       "cooc*"    "*coo'"</span>         <span style="color: #989072">GPU:</span> Apple M3 (10) @ 1.34 GHz
+                                  <span style="color: #989072">Memory:</span> 13.48 GiB / 16.00 GiB (84%)
+                                  <span style="color: #989072">Swap:</span> 723 MiB / 2.00 GiB (35%)
+                                  <span style="color: #989072">Disk (/):</span> 220 GiB / 460 GiB (48%) - apfs
+                                  <span style="color: #989072">Battery:</span> 80% [AC Connected]
+                                  <span style="color: #989072">Power Adapter:</span> 60W
+                                  <span style="color: #989072">Locale:</span> en_US.UTF-8
+
+<span style="color: #c3c59c">user</span><span style="color: #697965">@</span><span style="color: #c3c59c">host</span><span style="color: #697965">:</span><span style="color: #c3c59c">~/dotfiles</span><span style="color: #c3c59c; font-weight: 600"> %</span> <span class="cursor">█</span></pre>
+      </div>
+    </div>
+
+    <div class="section-label">Base24 palette</div>
+    <div class="subsection-label">Surfaces &amp; text · base00–07, 10–11</div>
+    <div class="base-grid">
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #1e1e1e"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base00</div>
+          <div class="chip-base-name">Background</div>
+          <div class="chip-base-hex">#1e1e1e</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #252525"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base01</div>
+          <div class="chip-base-name">Lighter BG</div>
+          <div class="chip-base-hex">#252525</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #2a2a2a"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base02</div>
+          <div class="chip-base-name">Selection BG</div>
+          <div class="chip-base-hex">#2a2a2a</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #4e5c4a"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base03</div>
+          <div class="chip-base-name">Dim</div>
+          <div class="chip-base-hex">#4e5c4a</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #697965"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base04</div>
+          <div class="chip-base-name">Dark FG</div>
+          <div class="chip-base-hex">#697965</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #92ad8d"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base05</div>
+          <div class="chip-base-name">Foreground</div>
+          <div class="chip-base-hex">#92ad8d</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #a5bba1"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base06</div>
+          <div class="chip-base-name">Light FG</div>
+          <div class="chip-base-hex">#a5bba1</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #bec8bc"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base07</div>
+          <div class="chip-base-name">Lightest</div>
+          <div class="chip-base-hex">#bec8bc</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #181818"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base10</div>
+          <div class="chip-base-name">Darker BG</div>
+          <div class="chip-base-hex">#181818</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #121212"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base11</div>
+          <div class="chip-base-name">Darkest BG</div>
+          <div class="chip-base-hex">#121212</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-label">Accent colors · base08–0F</div>
+    <div class="base-grid accents">
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #ae8a7e"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base08</div>
+          <div class="chip-base-name">Red</div>
+          <div class="chip-base-hex">#ae8a7e</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #a88d75"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base09</div>
+          <div class="chip-base-name">Orange</div>
+          <div class="chip-base-hex">#a88d75</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #989072"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base0A</div>
+          <div class="chip-base-name">Yellow</div>
+          <div class="chip-base-hex">#989072</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #c3c59c"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base0B</div>
+          <div class="chip-base-name">Green</div>
+          <div class="chip-base-hex">#c3c59c</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #709897"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base0C</div>
+          <div class="chip-base-name">Cyan</div>
+          <div class="chip-base-hex">#709897</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #848fb3"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base0D</div>
+          <div class="chip-base-name">Blue</div>
+          <div class="chip-base-hex">#848fb3</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #9e8a9f"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base0E</div>
+          <div class="chip-base-name">Magenta</div>
+          <div class="chip-base-hex">#9e8a9f</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #8d6b61"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base0F</div>
+          <div class="chip-base-name">Brown</div>
+          <div class="chip-base-hex">#8d6b61</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-label">Bright accents · base12–17</div>
+    <div class="base-grid bright">
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #af8982"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base12</div>
+          <div class="chip-base-name">Br. Red</div>
+          <div class="chip-base-hex">#af8982</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #9c8e72"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base13</div>
+          <div class="chip-base-name">Br. Yellow</div>
+          <div class="chip-base-hex">#9c8e72</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #c8c39a"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base14</div>
+          <div class="chip-base-name">Br. Green</div>
+          <div class="chip-base-hex">#c8c39a</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #719893"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base15</div>
+          <div class="chip-base-name">Br. Cyan</div>
+          <div class="chip-base-hex">#719893</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #8091b2"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base16</div>
+          <div class="chip-base-name">Br. Blue</div>
+          <div class="chip-base-hex">#8091b2</div>
+        </div>
+      </div>
+      <div class="chip-base">
+        <div class="chip-base-block" style="background: #9a8ba7"></div>
+        <div class="chip-base-info">
+          <div class="chip-base-slot">base17</div>
+          <div class="chip-base-name">Br. Magenta</div>
+          <div class="chip-base-hex">#9a8ba7</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">ANSI mapping</div>
+    <div class="subsection-label">Normal (0–7)</div>
+    <div class="chip-grid">
+      <div class="chip">
+        <div class="chip-block" style="background: #2a2a2a"></div>
+        <div class="chip-info">
+          <div class="chip-name">Black</div>
+          <div class="chip-hex">#2a2a2a</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #ae8a7e"></div>
+        <div class="chip-info">
+          <div class="chip-name">Red</div>
+          <div class="chip-hex">#ae8a7e</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #c3c59c"></div>
+        <div class="chip-info">
+          <div class="chip-name">Green</div>
+          <div class="chip-hex">#c3c59c</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #989072"></div>
+        <div class="chip-info">
+          <div class="chip-name">Yellow</div>
+          <div class="chip-hex">#989072</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #848fb3"></div>
+        <div class="chip-info">
+          <div class="chip-name">Blue</div>
+          <div class="chip-hex">#848fb3</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #9e8a9f"></div>
+        <div class="chip-info">
+          <div class="chip-name">Magenta</div>
+          <div class="chip-hex">#9e8a9f</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #709897"></div>
+        <div class="chip-info">
+          <div class="chip-name">Cyan</div>
+          <div class="chip-hex">#709897</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #92ad8d"></div>
+        <div class="chip-info">
+          <div class="chip-name">White</div>
+          <div class="chip-hex">#92ad8d</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-label">Bright (8–15)</div>
+    <div class="chip-grid">
+      <div class="chip">
+        <div class="chip-block" style="background: #4e5c4a"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Black</div>
+          <div class="chip-hex">#4e5c4a</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #af8982"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Red</div>
+          <div class="chip-hex">#af8982</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #c8c39a"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Green</div>
+          <div class="chip-hex">#c8c39a</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #9c8e72"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Yellow</div>
+          <div class="chip-hex">#9c8e72</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #8091b2"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Blue</div>
+          <div class="chip-hex">#8091b2</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #9a8ba7"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Magenta</div>
+          <div class="chip-hex">#9a8ba7</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #719893"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. Cyan</div>
+          <div class="chip-hex">#719893</div>
+        </div>
+      </div>
+      <div class="chip">
+        <div class="chip-block" style="background: #bec8bc"></div>
+        <div class="chip-info">
+          <div class="chip-name">Br. White</div>
+          <div class="chip-hex">#bec8bc</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Color rationale</div>
+    <table class="rationale-table">
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #1e1e1e"></span
+          ><span class="r-slot">base00</span><span class="r-hex">#1e1e1e</span>
+        </td>
+        <td class="r-name">Background</td>
+        <td>
+          macOS-native dark surface, lifted off pure black to avoid OLED
+          halation around bright glyphs.
+        </td>
+      </tr>
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #92ad8d"></span
+          ><span class="r-slot">base05</span><span class="r-hex">#92ad8d</span>
+        </td>
+        <td class="r-name">Foreground</td>
+        <td>
+          OKLCH(0.72, 0.05, 140°) — sage near photopic peak (~555 nm), where
+          cone sensitivity is maximal under monitor luminance. Saturation at the
+          chroma floor (0.05); contrast at WCAG AAA (7.16:1).
+        </td>
+      </tr>
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #c3c59c"></span
+          ><span class="r-slot">base0B</span><span class="r-hex">#c3c59c</span>
+        </td>
+        <td class="r-name">Green (cream)</td>
+        <td>
+          The ANSI 'green' slot — disambiguated from the foreground by lifting
+          lightness (L=0.81) and rotating hue toward yellow-green (h=110°). Pale
+          cream so green-coded markup stays distinct from default sage text.
+        </td>
+      </tr>
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #ae8a7e"></span
+          ><span class="r-slot">base08</span><span class="r-hex">#ae8a7e</span>
+        </td>
+        <td class="r-name">Red</td>
+        <td>
+          Hue warm-shifted to 40° (toward orange) to mitigate longitudinal
+          chromatic aberration — pure red focuses behind the retina, forcing
+          ciliary accommodation.
+        </td>
+      </tr>
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #848fb3"></span
+          ><span class="r-slot">base0D</span><span class="r-hex">#848fb3</span>
+        </td>
+        <td class="r-name">Blue</td>
+        <td>
+          Pinned to chroma and contrast floors by the Gaussian penalty — sits at
+          melanopsin's peak (~482 nm). Cap collapses to the floor; hue alone
+          differentiates from cyan.
+        </td>
+      </tr>
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #709897"></span
+          ><span class="r-slot">base0C</span><span class="r-hex">#709897</span>
+        </td>
+        <td class="r-name">Cyan</td>
+        <td>
+          Same Gaussian regime as blue — chroma and contrast both at the floor.
+          Green-leaning hue (h=195°) to maintain hue separation from blue.
+        </td>
+      </tr>
+      <tr>
+        <td class="r-color">
+          <span class="r-swatch" style="background: #8d6b61"></span
+          ><span class="r-slot">base0F</span><span class="r-hex">#8d6b61</span>
+        </td>
+        <td class="r-name">Brown</td>
+        <td>
+          Tertiary semantic slot, deliberately below the 5.5:1 accent floor
+          (3.5:1). Reserved for de-emphasized warm markup; not used as primary
+          syntax foreground.
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

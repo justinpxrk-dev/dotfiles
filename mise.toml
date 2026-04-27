@@ -1,0 +1,8 @@
+[tools]
+node = "latest"
+pnpm = "latest"
+python = "latest"
+ruff = "latest"
+rust = "latest"
+stylua = "latest"
+lua-language-server = "latest"

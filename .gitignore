@@ -1,0 +1,11 @@
+# Node
+node_modules
+
+# Obsidian
+.obsidian/cache/
+.obsidian/core-plugins.json
+.obsidian/workspace.json
+
+# Python
+.venv
+**/__pycache__

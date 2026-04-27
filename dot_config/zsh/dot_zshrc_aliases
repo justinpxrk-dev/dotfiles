@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash
+
+# Contains aliases for interactive zsh shells.
+
+# Core replacements
+alias cat=bat
+alias df=duf
+alias du=dust
+alias find=fd
+alias grep=rg
+alias ls=eza
+
+# Editor
+alias edit="\$EDITOR"
+# homebrew
+alias brewload="brew update && brew upgrade && brew cleanup"
+# ls
+alias lsa="ls -al"
+# nvim
+alias vi=nvim
+alias vim=nvim
+# zsh
+alias reload="source \$XDG_CONFIG_HOME/zsh/.zshrc"

@@ -1,0 +1,9 @@
+{
+  "showRibbon": true,
+  "accentColor": "#62ba46",
+  "showViewHeader": false,
+  "theme": "system",
+  "enabledCssSnippets": [
+    "nav-folder-hidden-files"
+  ]
+}

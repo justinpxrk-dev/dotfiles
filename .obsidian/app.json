@@ -1,0 +1,14 @@
+{
+  "showInlineTitle": false,
+  "userIgnoreFilters": [
+    "Assets/",
+    "Fonts/",
+    "Library/",
+    "Scripts/",
+    "Themes/",
+    "Unmanaged/",
+    "Wallpapers/",
+    "dot_config/",
+    "dot_claude/"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "runtime.version": "LuaJIT",
+  "workspace": {
+    "library": ["/opt/homebrew/share/nvim/runtime/lua"],
+    "useGitIgnore": true
+  }
+}

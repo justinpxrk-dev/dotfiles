@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Tiling layout
+yabai -m config layout bsp
+yabai -m config auto_balance off
+yabai -m config split_ratio 0.50
+
+# Padding around screen edges
+yabai -m config top_padding 18
+yabai -m config bottom_padding 66
+yabai -m config left_padding 18
+yabai -m config right_padding 18
+
+# Gap between windows
+yabai -m config window_gap 18
+
+# Rules
+yabai -m rule --add app="^Activity Monitor$" manage=off
+yabai -m rule --add app="^App Store$" manage=off
+yabai -m rule --add app="^Copilot$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Font Book$" manage=off
+yabai -m rule --add app="^Messages$" manage=off
+yabai -m rule --add app="^pCloud Drive$" manage=off
+yabai -m rule --add app="^Proton VPN$" manage=off
+yabai -m rule --add app="^Raycast$" manage=off
+yabai -m rule --add app="^Razer$" manage=off
+yabai -m rule --add app="^Reminders$" manage=off
+yabai -m rule --add app="^SF Symbols$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
+
+# Signals
+yabai -m signal --add event=space_created action="sketchybar --trigger spaces_change"
+yabai -m signal --add event=space_destroyed action="sketchybar --trigger spaces_change"
+yabai -m signal --add event=space_changed action="sketchybar --trigger spaces_change"

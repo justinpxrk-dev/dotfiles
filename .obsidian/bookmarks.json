@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "ctime": 1777263180777,
+      "path": "README.md"
+    },
+    {
+      "type": "file",
+      "ctime": 1777263199954,
+      "path": "docs/Dependencies.md"
+    },
+    {
+      "type": "file",
+      "ctime": 1777263208089,
+      "path": "docs/MacOS Manual System Settings.md"
+    },
+    {
+      "type": "file",
+      "ctime": 1777263212589,
+      "path": "docs/MacOS Native Applications.md"
+    },
+    {
+      "type": "file",
+      "ctime": 1777263225602,
+      "path": "docs/sketchybar/TODO.md",
+      "title": "sketchybar/TODO"
+    }
+  ]
+}
