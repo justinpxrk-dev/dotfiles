@@ -5,13 +5,18 @@ Instructions for setting up and configuring developer tools.
 ## Requirements
 
 - `mise`
+- `uv`
 
-## AI Tools
+## Setup
 
-### Claude Code
+Install all tools managed by `mise`, install Node.js packages, and sync Python dev dependencies:
 
-Link the `CLAUDE.md` file Claude Code expects to `AGENTS.md`:
-
+```sh
+mise install
+pnpm install
+uv sync --dev
 ```
-ln -s AGENTS.md CLAUDE.md
-```
+
+## Usage
+
+Format and lint commands are available via `pnpm`. See [AGENTS.md](agent/AGENTS.md) for the full command reference.

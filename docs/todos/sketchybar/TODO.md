@@ -10,9 +10,6 @@
 - When a track is changed but there is no artwork data, the now playing artwork does not get changed. Then, if you pause/unpause, you'll see the previous track's artwork being displayed when there should no be artwork displayed.
   - FIX: Have the media event dispatcher also emit whether artworkMimeType != 'null' when `now_playing_track_change`is triggered. This way, the handler can set the artwork data to the default logo if no artwork data is available.
 
-## `spaces`
-
--
 
 ## Refactors
 

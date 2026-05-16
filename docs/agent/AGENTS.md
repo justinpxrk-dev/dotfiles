@@ -56,19 +56,19 @@ chezmoi apply ~/.config/sketchybar    # Apply a specific path
 
 ## Formatting and Linting
 
-Tools are managed via `mise` (node, pnpm, stylua, lua-language-server). Run `mise install` first.
+Tools are managed via `mise` (node, pnpm, python, ruff, rust, stylua, lua-language-server). Run `mise install` first.
 
 ```sh
-pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua)
+pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
 pnpm run format:check    # Check formatting without writing
-pnpm run lint            # Lint shell (shellcheck) and Lua (lua-language-server)
+pnpm run lint            # Lint shell (shellcheck), Lua (lua-language-server), and Python (ruff, pyright)
 ```
 
 Individual formatters:
 
 ```sh
-pnpm run format:md / format:sh / format:lua
-pnpm run lint:sh / lint:lua
+pnpm run format:md / format:sh / format:lua / format:py
+pnpm run lint:sh / lint:lua / lint:py
 ```
 
 ## Zsh Config
