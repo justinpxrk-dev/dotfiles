@@ -8,11 +8,15 @@ macOS dotfiles managed by `chezmoi`.
 
 <table width="100%">
 	<tr>
-		<th>Terminal (Dark)</th>
-		<th>Terminal (Light)</th>
+		<th align="left">Terminal (Dark)</th>
 	</tr>
 	<tr>
 		<td align="center"><img src="Assets/screenshots/petrichor_dark_terminal.png" width="100%" /></td>
+	</tr>
+	<tr>
+		<th align="left">Terminal (Light)</th>
+	</tr>
+	<tr>
 		<td align="center"><img src="Assets/screenshots/petrichor_light_terminal.png" width="100%" /></td>
 	</tr>
 </table>
@@ -63,7 +67,7 @@ Applies macOS defaults and system preferences. Reboot immediately after — open
 ./Scripts/macos/set_system_settings.sh
 ```
 
-> Some settings, such as those in location services, cannot be scripted. Manually configured settings are documented in [macos-manual-settings.md](docs/macos/macos-manual-settings.md).
+> Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [macos-manual-settings.md](docs/macos/macos-manual-settings.md).
 
 ### `register_launch_agents.sh`
 
