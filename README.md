@@ -11,13 +11,13 @@ macOS dotfiles managed by `chezmoi`.
 		<th align="left">Terminal (Dark)</th>
 	</tr>
 	<tr>
-		<td align="center"><img src="Assets/screenshots/petrichor_dark_terminal.png" width="100%" /></td>
+		<td align="center"><img src="Assets/screenshots/petrichor-dark-terminal.png" width="100%" /></td>
 	</tr>
 	<tr>
 		<th align="left">Terminal (Light)</th>
 	</tr>
 	<tr>
-		<td align="center"><img src="Assets/screenshots/petrichor_light_terminal.png" width="100%" /></td>
+		<td align="center"><img src="Assets/screenshots/petrichor-light-terminal.png" width="100%" /></td>
 	</tr>
 </table>
 

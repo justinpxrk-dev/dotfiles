@@ -15,6 +15,7 @@ AGENTS.md
 CLAUDE.md
 
 # Tools
+dotfiles.code-workspace
 mise.toml
 node_modules
 nvim.yml
