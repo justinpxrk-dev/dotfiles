@@ -97,7 +97,7 @@ zinit for \
 	zdharma-continuum/fast-syntax-highlighting
 
 _title_precmd() { print -n "\e]2; \a"; }
-_title_preexec() { print -n "\e]2;${1}\a"; }
+_title_preexec() { print -n "\e]2; \a"; }
 add-zsh-hook precmd _title_precmd
 add-zsh-hook preexec _title_preexec
 
