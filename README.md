@@ -44,3 +44,39 @@ Then run the following from the repo root (`~/.local/share/chezmoi`):
 ./Scripts/macos/set_system_settings.sh    # apply macOS defaults (reboot after)
 ```
 
+## Project Structure
+
+Both `dot_config/` and `Library/` are applied by chezmoi; all other directories are tracked in git only.
+
+```
+chezmoi/
+├── dot_config/ → ~/.config/
+│   ├── borders/
+│   ├── ghostty/
+│   ├── git/
+│   ├── nvim/
+│   ├── sketchybar/
+│   │   └── lib/
+│   │       ├── SbarLua @
+│   │       └── sketchybar-app-font @
+│   ├── spicetify/
+│   ├── yabai/
+│   └── zsh/
+├── Library/    → ~/Library/
+│   └── LaunchAgents/
+├── Scripts/    — shell scripts
+├── Themes/     — Petrichor theme definitions (see Themes System)
+│   └── lib/
+│       ├── tinted-terminal @ ⑂
+│       └── tinted-vscode @ ⑂
+├── Wallpapers/ — desktop wallpapers
+├── Assets/     — icons and images
+├── Fonts/      — font sources
+│   ├── font-monolisa @ †
+│   └── lib/
+│       └── monolisa-nerdfont-patch @ †
+├── docs/       — documentation
+└── Unmanaged/  — reference configs not managed by chezmoi
+```
+
+`@` submodule · `⑂` fork · `†` private

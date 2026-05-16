@@ -44,7 +44,7 @@ chezmoi/
 └── Unmanaged/  — reference configs not managed by chezmoi
 ```
 
-`@` git submodule · `⑂` fork · `†` private
+`@` submodule · `⑂` fork · `†` private
 
 ## Chezmoi Workflow
 
