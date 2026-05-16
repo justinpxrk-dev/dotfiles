@@ -12,15 +12,15 @@ local M = {}
 --- @type table<ColorschemeOption, ColorschemePalette>
 local colorschemes = {
 	MACOS_TAHOE_DARK = {
-		ACTIVE_SPACE_ICON = 0xff71a05a,
+		ACTIVE_SPACE_ICON = 0xff729f5b,
 		BACKGROUND = 0x991e1e1e,
-		BORDER = 0x992e2e2e,
-		GRAPH = 0xff71a05a,
-		GRAPH_FILL = 0x9962904c,
-		ICON = 0xff71a05a,
-		INACTIVE_LABEL = 0x99699853,
-		INACTIVE_SPACE_ICON = 0x9962904c,
-		LABEL = 0xff71a05a,
+		BORDER = 0x992c2c2c,
+		GRAPH = 0xff729f5b,
+		GRAPH_FILL = 0x996d9a57,
+		ICON = 0xff729f5b,
+		INACTIVE_LABEL = 0x996d9a57,
+		INACTIVE_SPACE_ICON = 0x99638f4d,
+		LABEL = 0xff729f5b,
 	},
 	MACOS_TAHOE_LIGHT = {
 		ACTIVE_SPACE_ICON = 0xff5e5e5e,

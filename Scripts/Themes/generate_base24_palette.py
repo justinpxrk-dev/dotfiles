@@ -9,19 +9,11 @@ import sympy
 # -------- Theme System functions ----------
 
 
-def make_chroma(
-    chroma_min: int, chroma_max: int, *, circadian: bool
-) -> Callable[[int], int]:
+def make_chroma(chroma_min: int, chroma_max: int) -> Callable[[int], int]:
     lam = sympy.Symbol("lam", real=True)
-    gaussian = (
-        0.5 * sympy.exp(-((lam - 485) ** 2) / (2 * sympy.Float(90 / 4.9) ** 2))
-        if circadian
-        else 0
-    )
     expr = (
         0.5
         - 0.5 / (1 + sympy.exp((lam - 440) / 20))
-        - gaussian
         + 0.5 / (1 + sympy.exp(-(lam - 670) / (160 / 6)))
     )
     curve = sympy.lambdify(lam, expr, "math")
@@ -361,9 +353,9 @@ def _generate_palette(
 
 
 def generate_dark() -> list[str]:
-    chroma_curve = make_chroma(30, 50, circadian=True)
-    bright_chroma_curve = make_chroma(40, 60, circadian=True)
-    brown_chroma_curve = make_chroma(20, 40, circadian=True)
+    chroma_curve = make_chroma(30, 50)
+    bright_chroma_curve = make_chroma(40, 60)
+    brown_chroma_curve = make_chroma(20, 40)
 
     # (palette index, hue, contrast ratio, chroma)
     foregrounds: list[tuple[int, int, float, int | None]] = [
@@ -416,9 +408,9 @@ def generate_dark() -> list[str]:
 
 
 def generate_light() -> list[str]:
-    chroma_curve = make_chroma(60, 70, circadian=False)
-    bright_chroma_curve = make_chroma(70, 80, circadian=False)
-    brown_chroma_curve = make_chroma(50, 60, circadian=False)
+    chroma_curve = make_chroma(60, 70)
+    bright_chroma_curve = make_chroma(70, 80)
+    brown_chroma_curve = make_chroma(50, 60)
 
     # (palette index, hue, contrast ratio, chroma)
     # For light mode, base11 is the fixed background foregrounds are generated against. base11 and base00 have a

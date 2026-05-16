@@ -6,47 +6,47 @@
 
 # Color palette
 palette = 0=#1e1e1e
-palette = 1=#c6686f
-palette = 2=#459178
-palette = 3=#968321
-palette = 4=#8e7ab4
-palette = 5=#af6f9f
-palette = 6=#4b8e91
-palette = 7=#71a05a
-palette = 8=#62904c
+palette = 1=#c76b72
+palette = 2=#339376
+palette = 3=#968324
+palette = 4=#8d7bb1
+palette = 5=#ad709d
+palette = 6=#1f9296
+palette = 7=#729f5b
+palette = 8=#638f4d
 palette = 9=#d65b72
-palette = 10=#13966c
+palette = 10=#00966c
 palette = 11=#9e8100
-palette = 12=#8a77ca
-palette = 13=#be65a1
-palette = 14=#1b9594
-palette = 15=#80b068
-palette = 16=#c56a58
-palette = 17=#b8725d
-palette = 18=#262626
-palette = 19=#2e2e2e
-palette = 20=#699853
-palette = 21=#78a861
+palette = 12=#8a77cc
+palette = 13=#bd66a0
+palette = 14=#009392
+palette = 15=#7ead67
+palette = 16=#c46b59
+palette = 17=#b7725e
+palette = 18=#242424
+palette = 19=#2c2c2c
+palette = 20=#6d9a57
+palette = 21=#79a862
 
 # Foreground & background colors
 background = #1e1e1e
-foreground = #71a05a
-cursor-color = #71a05a
+foreground = #729f5b
+cursor-color = #729f5b
 # macOS theme selection background color
 selection-background = #5c7654
 # Dark Reader selection foreground color
-selection-foreground = #71a05a
+selection-foreground = #729f5b
 # Default selection colors
-# selection-background = #71a05a
-# selection-foreground = #2e2e2e
-search-background = #968321
-search-foreground = #262626
-search-selected-background = #c56a58
-search-selected-foreground = #262626
+# selection-background = #729f5b
+# selection-foreground = #2c2c2c
+search-background = #968324
+search-foreground = #242424
+search-selected-background = #c46b59
+search-selected-foreground = #242424
 
 # Set `macos-icon = custom-style` in your main configuration file to enable theming of the app icon.
 #
 # Set the ghost color to the lightest foreground:
-# macos-icon-ghost-color = #80b068
+# macos-icon-ghost-color = #7ead67
 # Replace the official icon's blue background with the designated bright blue color:
-# macos-icon-screen-color = #8a77ca
+# macos-icon-screen-color = #8a77cc
