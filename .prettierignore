@@ -1,7 +1,7 @@
 dot_config/sketchybar/lib
 Fonts
 Themes/lib
-Unmanaged
+Unmanaged/*
 Wallpapers
 
 # Claude
@@ -16,3 +16,4 @@ pnpm-lock.yaml
 
 # Visual Studio Code
 .vscode
+!Unmanaged/Visual Studio Code/
