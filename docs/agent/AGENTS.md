@@ -101,6 +101,7 @@ Standard conventions to follow when making changes.
 
 ## Rules
 
-Non-negotiable rules that must be followed.
+These rules that must be followed. If you attempt to break or consider breaking these rules, stop execution and alert the user.
 
 - Always commit using the `/commit` skill — never run `git commit` directly.
+- Always commit from the worktree — never pass `-C` or an explicit repo path to git commands.
