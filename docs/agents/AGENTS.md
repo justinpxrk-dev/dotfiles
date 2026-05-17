@@ -80,7 +80,7 @@ If you need details about available scripts, read `docs/scripts.md`.
 
 ## Maintenance
 
-After any change, update all relevant documentation to reflect the new state — `docs/agent/AGENTS.md`, other files in `docs/`, and any READMEs.
+After any change, update all relevant documentation to reflect the new state — `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs.
 
 ## Zsh Config
 
