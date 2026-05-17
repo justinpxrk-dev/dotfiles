@@ -13,6 +13,10 @@ alias ls=eza
 
 # Editor
 alias edit="\$EDITOR"
+
+# Dotfiles
+alias edit-aliases="edit \$DOTFILES/dot_config/zsh/dot_zshrc_aliases"
+alias edit-dot="code \$DOTFILES/dotfiles.code-workspace"
 # homebrew
 alias brewload="brew update && brew upgrade && brew cleanup"
 # ls
@@ -20,5 +24,3 @@ alias lsa="ls -al"
 # nvim
 alias vi=nvim
 alias vim=nvim
-# zsh
-alias reload="source \$XDG_CONFIG_HOME/zsh/.zshrc"

@@ -2,7 +2,27 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2296
 
-# Contains my zsh environment path variables for interactive zsh shells.
+# Contains my zsh environment variables for interactive zsh shells.
+
+# XDG Base Directory
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+export XDG_RUNTIME_DIR="/var/folders/b6/4_zp7n2n6p79mqbmg5fj97t40000gn/T/"
+export XDG_DATA_DIRS="/usr/share:/usr/local/share"
+export XDG_CONFIG_DIRS="/etc/xdg"
+
+# zsh
+export ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
+export ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump"
+
+# Dotfiles
+export DOTFILES="${XDG_DATA_HOME}/chezmoi"
+
+# Editor
+export VISUAL=nvim
+export EDITOR="$VISUAL"
 
 # eval-cache
 # Included convenience function _evalcache_clear clears eval-cache/
@@ -41,10 +61,7 @@ export PATH="${homebrew_opt_prefix}/sqlite/bin:${PATH}"
 export PKG_CONFIG_PATH="${homebrew_opt_prefix}/zlib/lib/pkgconfig"
 
 # uv
-export PATH="/Users/justinpxrk/.local/share/../bin:$PATH"
-
-# Zinit
-export ZINIT_HOME="${homebrew_opt_prefix}/zinit"
+export PATH="$HOME/.local/share/../bin:$PATH"
 
 # zlib
 export CPPFLAGS="-I${homebrew_opt_prefix}/zlib/include"
@@ -54,11 +71,8 @@ export PKG_CONFIG_PATH="${homebrew_opt_prefix}/zlib/lib/pkgconfig"
 # zsh-users/zsh-autosuggestions
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128
 
-# dominik-schwabe/zsh-fnm
-export ZSH_FNM_ENV_EXTRA_ARGS="--use-on-cd --version-file-strategy=recursive --corepack-enabled --shell zsh"
-
 # agkozak/zsh-z
 export _Z_DATA="$XDG_CACHE_HOME/z/.z"
 
-# Unset any non exported variables here to avoid memory leaks
+# Release local variables
 unset homebrew_opt_prefix

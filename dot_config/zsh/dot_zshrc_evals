@@ -2,18 +2,10 @@
 # shellcheck shell=bash
 
 # Contains my zsh eval statements for interactive zsh shells. Instead of using
-# eval, use evalcache (plugin managed by zinit) which will cache the results of
-# eval statements and use the cache when available.
-
-# goenv
-_evalcache goenv init -
-# Set path here because GOROOT and GOPATH are not available until above `eval`
-# command has run
-export PATH="${GOROOT}/bin:${PATH}"
-export PATH="${PATH}:${GOPATH}/bin"
+# eval, use evalcache which caches the results of eval statements.
 
 # Homebrew
-_evalcache brew shellenv
+zsh-defer _evalcache brew shellenv
 
 # mise
-_evalcache mise activate zsh
+zsh-defer _evalcache mise activate zsh

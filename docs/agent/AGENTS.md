@@ -71,11 +71,17 @@ pnpm run format:md / format:sh / format:lua / format:py
 pnpm run lint:sh / lint:lua / lint:py
 ```
 
+## Scripts
+
+If you need details about available scripts, read `docs/scripts.md`.
+
 ## Zsh Config
 
-Config lives in `dot_config/zsh/`, split across four files:
+Config lives in `dot_config/zsh/`, split across several files:
 
-- `dot_zshrc` — main init; sources the other three files and loads plugins via zinit
-- `dot_zshrc_paths` — PATH and tool env vars (Homebrew, goenv, gpg, neovim, uv, mise, etc.)
+- `dot_zshrc` — main init; sources all other files and loads plugins via antidote
+- `dot_zshrc_env` — all environment variables (XDG, PATH, Homebrew, gpg, neovim, uv, mise, etc.)
 - `dot_zshrc_aliases` — CLI tool replacements, editor shortcuts, and shell conveniences
-- `dot_zshrc_evals` — cached eval statements via evalcache (goenv, Homebrew, mise)
+- `dot_zshrc_evals` — cached eval statements via evalcache (Homebrew, mise)
+- `dot_zshrc_hooks` — zsh hooks (precmd, preexec)
+- `dot_zsh_plugins.txt` — antidote plugin list

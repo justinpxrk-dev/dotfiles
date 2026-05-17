@@ -1,6 +1,10 @@
 # dotfiles
 
-macOS dotfiles managed by chezmoi.
+_Intended for personal use (some listed features may be under development). Inspect all code and use at your own risk._
+
+macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
+
+A macOS-centric developer setup for a full stack professional. Designed for frictionless portability, productivity, and neat integration with the Apple design philosophy. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 30 ms, tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Rust and Lua, coding agent driven dotfiles management, and more!
 
 ## Theme
 
@@ -21,15 +25,26 @@ macOS dotfiles managed by chezmoi.
 	</tr>
 </table>
 
+## Features
+
+- __[Tinted Theming](https://github.com/tinted-theming) Ecosystem__. Download and build themes with simple commands using templates for any application supported by the [Tinted Theming](https://github.com/tinted-theming) community. Availables themes listed in [Tinted Gallery](https://tinted-theming.github.io/tinted-gallery/).
+- __Dark/Light Mode.__ Integration with macOS system notifications for dark/light mode theme changes for all your applications.
+- __[Ghostty](https://ghostty.org/).__ [Alacritty](https://alacritty.org/) is the hands down fastest terminal but __[Ghostty](https://ghostty.org/)__ is nearly as fast and uses the macOS native window native rendering pipeline for a system-cohesive look.
+- __Fast `zsh` Startup.__ Highly optimized and feature-rich ([`powerlevel10k`](https://github.com/romkatv/powerlevel10k) prompt, syntax highlighting, suggestions, etc.) `zsh` config that starts up between 20 and 30 ms (warm benchmark on 200 runs).
+- __Tiling Window Management__. [`yabai`](https://github.com/asmvik/yabai) + [`skhd`](https://github.com/asmvik/skhd) for keyboard-driven window layout management.
+- __Customizable Menu Bar__. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Rust and Lua to implement a performant, extendable event-driven architecture.
+- __Developer Tool Management.__ [`mise`](https://mise.jdx.dev/) for managing all developer tools and automatic environment activation.
+- __Coding Agent Knowledge Base.__ Use any agent with the agent-agnostic knowledge base under `docs/` to offload dotfiles management and custom feature development to AI.
+
 ## Bootstrap
 
-On a new machine, install chezmoi and apply the dotfiles in one step:
+On a new machine, install `chezmoi` and apply the dotfiles in one step:
 
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply justinpxrk-dev/dotfiles
 ```
 
-Or if chezmoi is already installed:
+Or if `chezmoi` is already installed:
 
 ```sh
 chezmoi init --apply justinpxrk-dev/dotfiles
@@ -46,7 +61,7 @@ Then run the following from the repo root (`~/.local/share/chezmoi`):
 
 ## Project Structure
 
-Both `dot_config/` and `Library/` are applied by chezmoi; all other directories are tracked in git only.
+Both `dot_config/` and `Library/` are applied by `chezmoi`; all other directories are tracked in git only.
 
 ```
 chezmoi/

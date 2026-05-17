@@ -38,12 +38,12 @@
 
 #### `zsh`
 
-- `zinit` (plugin manager)
-  - `romkatv/powerlevel10k`
-  - `mroth/evalcache`
-  - `rupa/z`
-  - `zsh-users/zsh-autosuggestions`
-  - `zdharma-continuum/fast-syntax-highlighting`
+- `antidote` (plugin manager)
+- `romkatv/powerlevel10k`
+- `mroth/evalcache`
+- `rupa/z`
+- `zsh-users/zsh-autosuggestions`
+- `zdharma-continuum/fast-syntax-highlighting`
 
 ### AI
 

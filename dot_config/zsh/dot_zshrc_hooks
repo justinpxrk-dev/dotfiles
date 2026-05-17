@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash
+
+# Contains my zsh hooks for interactive zsh shells.
+
+_title_precmd() { print -n "\e]2; \a"; }
+_title_preexec() { print -n "\e]2; \a"; }
+add-zsh-hook precmd _title_precmd
+add-zsh-hook preexec _title_preexec
