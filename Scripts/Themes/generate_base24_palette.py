@@ -1,9 +1,10 @@
 from collections.abc import Callable
+from typing import cast
 import math
 from pathlib import Path
 
-from materialyoucolor.hct import Hct
-import sympy
+from materialyoucolor.hct import Hct  # pyright: ignore[reportMissingTypeStubs]
+import sympy  # pyright: ignore[reportMissingTypeStubs]
 
 
 # -------- Theme System functions ----------
@@ -16,8 +17,11 @@ def make_chroma(chroma_min: int, chroma_max: int) -> Callable[[int], int]:
         - 0.5 / (1 + sympy.exp((lam - 440) / 20))
         + 0.5 / (1 + sympy.exp(-(lam - 670) / (160 / 6)))
     )
-    curve = sympy.lambdify(lam, expr, "math")
-    deriv = sympy.lambdify(lam, sympy.diff(expr, lam), "math")
+    curve = cast(Callable[[float], float], sympy.lambdify(lam, expr, "math"))  # pyright: ignore[reportUnknownMemberType]
+    deriv = cast(
+        Callable[[float], float],
+        sympy.lambdify(lam, sympy.diff(expr, lam), "math"),  # pyright: ignore[reportUnknownMemberType]
+    )
 
     # Find critical points in [380, 700] via derivative sign changes.
     candidates = [380.0, 700.0]
@@ -61,14 +65,6 @@ def relative_luminance(argb: int) -> float:
     return 0.2126 * R + 0.7152 * G + 0.0722 * B
 
 
-def contrast_ratio(argb1: int, argb2: int) -> float:
-    L1 = relative_luminance(argb1)
-    L2 = relative_luminance(argb2)
-    if L1 < L2:
-        L1, L2 = L2, L1
-    return (L1 + 0.05) / (L2 + 0.05)
-
-
 def hct_to_argb(h: int, c: int, t: int) -> int:
     return Hct.from_hct(h, c, t).argb
 
@@ -88,7 +84,7 @@ def find_luminance(argb: int, ratio: float) -> float:
 
 
 def find_tone(hue: int, chroma: int, target_luminance: float) -> int:
-    """Scan tone 0–100 and return the value whose rendered luminance is
+    """Scan tone 0-100 and return the value whose rendered luminance is
     closest to target_luminance."""
     best_err = float("inf")
     best_tone = 0
@@ -102,7 +98,7 @@ def find_tone(hue: int, chroma: int, target_luminance: float) -> int:
 
 # -------- Dominant wavelength ----------
 
-# CIE 1931 2° CMF (380–700 nm, 5 nm steps): (λ, x̄, ȳ, z̄)
+# CIE 1931 2° CMF (380-700 nm, 5 nm steps): (λ, x̄, ȳ, z̄)
 _CMF: tuple[tuple[int, float, float, float], ...] = (
     (380, 0.001368, 0.000039, 0.006450),
     (385, 0.002236, 0.000064, 0.010550),
@@ -215,7 +211,7 @@ def _ray_segment_intersect(
 
 def wavelength_to_hue(lam: int) -> float:
     """Return the HCT hue whose dominant wavelength is lam (nm).
-    Scans HCT hues 0–359 and returns the one whose reference color lies closest
+    Scans HCT hues 0-359 and returns the one whose reference color lies closest
     to the ray from D65 through the spectral locus point at lam."""
     if not (380 <= lam <= 700):
         raise ValueError(f"wavelength {lam} out of range [380, 700]")
@@ -277,7 +273,7 @@ def hue_to_wavelengths(hue: int) -> list[tuple[int, float]]:
         lam_b, _, _ = _LOCUS[i + 1]
         return [(round(lam_a + s * (lam_b - lam_a)), 1.0)]
 
-    # Purple: ray hits the line of purples — interpolate between the spectral endpoints.
+    # Purple: ray hits the line of purples - interpolate between the spectral endpoints.
     _, p380x, p380y = _LOCUS[0]
     _, p700x, p700y = _LOCUS[-1]
     result = _ray_segment_intersect(wx, wy, dx, dy, p380x, p380y, p700x, p700y)
@@ -313,14 +309,14 @@ def _generate_palette(
     palette[background_base_decimal] = background_hex
     background_argb = int(background_hex.lstrip("#"), 16)
 
-    # 1. Foregrounds — derived from background
+    # 1. Foregrounds - derived from background
     for idx, hue, ratio, chroma in foregrounds:
         target_L = find_luminance(background_argb, ratio)
         chroma = _resolve_chroma(hue, chroma_curve) if chroma is None else chroma
         tone = find_tone(hue, chroma, target_L)
         palette[idx] = argb_to_hex(hct_to_argb(hue, chroma, tone))
 
-    # 2. Backgrounds — derived from base05
+    # 2. Backgrounds - derived from base05
     base05_argb = int(palette[5].lstrip("#"), 16)  # type: ignore[union-attr]
     for idx, hue, ratio in backgrounds:
         if idx == background_base_decimal:

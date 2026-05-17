@@ -27,14 +27,14 @@ A macOS-centric developer setup for a full stack professional. Designed for fric
 
 ## Features
 
-- __[Tinted Theming](https://github.com/tinted-theming) Ecosystem__. Download and build themes with simple commands using templates for any application supported by the [Tinted Theming](https://github.com/tinted-theming) community. Availables themes listed in [Tinted Gallery](https://tinted-theming.github.io/tinted-gallery/).
-- __Dark/Light Mode.__ Integration with macOS system notifications for dark/light mode theme changes for all your applications.
-- __[Ghostty](https://ghostty.org/).__ [Alacritty](https://alacritty.org/) is the hands down fastest terminal but __[Ghostty](https://ghostty.org/)__ is nearly as fast and uses the macOS native window native rendering pipeline for a system-cohesive look.
-- __Fast `zsh` Startup.__ Highly optimized and feature-rich ([`powerlevel10k`](https://github.com/romkatv/powerlevel10k) prompt, syntax highlighting, suggestions, etc.) `zsh` config that starts up between 30 and 40 ms (on Apple M3) (warm benchmark on 200 runs), <20 ms on `source`, ~40 ms on new terminal startup.
-- __Tiling Window Management__. [`yabai`](https://github.com/asmvik/yabai) + [`skhd`](https://github.com/asmvik/skhd) for keyboard-driven window layout management.
-- __Customizable Menu Bar__. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Rust and Lua to implement a performant, extendable event-driven architecture.
-- __Developer Tool Management.__ [`mise`](https://mise.jdx.dev/) for managing all developer tools and automatic environment activation.
-- __Coding Agent Knowledge Base.__ Use any agent with the agent-agnostic knowledge base under `docs/` to offload dotfiles management and custom feature development to AI.
+- **[Tinted Theming](https://github.com/tinted-theming) Ecosystem**. Download and build themes with simple commands using templates for any application supported by the [Tinted Theming](https://github.com/tinted-theming) community. Availables themes listed in [Tinted Gallery](https://tinted-theming.github.io/tinted-gallery/).
+- **Dark/Light Mode.** Integration with macOS system notifications for dark/light mode theme changes for all your applications.
+- **[Ghostty](https://ghostty.org/).** [Alacritty](https://alacritty.org/) is the hands down fastest terminal but **[Ghostty](https://ghostty.org/)** is nearly as fast and uses the macOS native window native rendering pipeline for a system-cohesive look.
+- **Fast `zsh` Startup.** Highly optimized and feature-rich ([`powerlevel10k`](https://github.com/romkatv/powerlevel10k) prompt, syntax highlighting, suggestions, etc.) `zsh` config that starts up between 30 and 40 ms (on Apple M3) (warm benchmark on 200 runs), <20 ms on `source`, ~40 ms on new terminal startup.
+- **Tiling Window Management**. [`yabai`](https://github.com/asmvik/yabai) + [`skhd`](https://github.com/asmvik/skhd) for keyboard-driven window layout management.
+- **Customizable Menu Bar**. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Rust and Lua to implement a performant, extendable event-driven architecture.
+- **Developer Tool Management.** [`mise`](https://mise.jdx.dev/) for managing all developer tools and automatic environment activation.
+- **Coding Agent Knowledge Base.** Use any agent with the agent-agnostic knowledge base under `docs/` to offload dotfiles management and custom feature development to AI.
 
 ## Bootstrap
 
