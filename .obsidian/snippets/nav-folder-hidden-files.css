@@ -1,5 +1,4 @@
 .nav-folder:has(> .nav-folder-title[data-path="dot_config"]),
-.nav-folder:has(> .nav-folder-title[data-path="dot_claude"]),
 .nav-folder:has(> .nav-folder-title[data-path="Assets"]),
 .nav-folder:has(> .nav-folder-title[data-path="Fonts"]),
 .nav-folder:has(> .nav-folder-title[data-path="Library"]),

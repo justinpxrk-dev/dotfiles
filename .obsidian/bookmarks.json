@@ -31,6 +31,12 @@
       "ctime": 1778900108254,
       "path": "docs/agent/AGENTS.md",
       "title": "AGENTS"
+    },
+    {
+      "type": "folder",
+      "ctime": 1779013427015,
+      "path": ".claude/skills",
+      "title": "skills"
     }
   ]
 }

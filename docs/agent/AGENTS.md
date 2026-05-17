@@ -41,6 +41,9 @@ chezmoi/
 │   └── lib/
 │       └── monolisa-nerdfont-patch @ †
 ├── docs/       — documentation
+├── .claude/    — Claude Code config and skills
+│   └── skills/ — custom slash commands
+├── .vscode/    — VSCode workspace settings
 └── Unmanaged/  — reference configs not managed by chezmoi
 ```
 
@@ -75,6 +78,10 @@ pnpm run lint:sh / lint:lua / lint:py
 
 If you need details about available scripts, read `docs/scripts.md`.
 
+## Maintenance
+
+After any change, update all relevant documentation to reflect the new state — `docs/agent/AGENTS.md`, other files in `docs/`, and any READMEs.
+
 ## Zsh Config
 
 Config lives in `dot_config/zsh/`, split across several files:
@@ -87,3 +94,11 @@ Config lives in `dot_config/zsh/`, split across several files:
 - `dot_zshrc_hooks` — zsh hooks (precmd, preexec)
 - `dot_zshrc_opts` — zsh options (history, directory, misc)
 - `dot_zsh_plugins.txt` — antidote plugin list
+
+## Conventions
+
+Standard conventions to follow when making changes.
+
+## Rules
+
+Non-negotiable rules that must be followed.
