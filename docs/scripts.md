@@ -1,6 +1,6 @@
 # Scripts
 
-All scripts live under `Scripts/` and are run from the repo root.
+Scripts live under `Scripts/` and are run from the repo root. Bootstrap scripts (`install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ### `set_system_settings.sh`
 
@@ -14,7 +14,7 @@ Applies macOS defaults and system preferences. Reboot immediately after — open
 
 ### `register_launch_agents.sh`
 
-Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the current login session. Run after `chezmoi apply` whenever LaunchAgent plists are added or changed.
+Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the current login session. Run automatically by chezmoi (`run_once_after_`) on first apply.
 
 ```sh
 ./Scripts/macos/register_launch_agents.sh
@@ -22,7 +22,7 @@ Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the cu
 
 ### `install_submodules.sh`
 
-Initialises all git submodules and builds/installs their outputs (MonoLisa fonts, SbarLua, sketchybar-app-font). Run once after a fresh clone, and again whenever submodules are updated.
+Initialises all git submodules and builds/installs their outputs (MonoLisa fonts, SbarLua, sketchybar-app-font). Run automatically by chezmoi (`run_onchange_`) whenever `.gitmodules` changes.
 
 ```sh
 ./Scripts/git/install_submodules.sh
@@ -30,7 +30,7 @@ Initialises all git submodules and builds/installs their outputs (MonoLisa fonts
 
 ### `install_tools.sh`
 
-Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run once after a fresh clone or when tool versions need updating.
+Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run automatically by chezmoi (`run_once_`) on first apply.
 
 ```sh
 ./Scripts/cargo/install_tools.sh

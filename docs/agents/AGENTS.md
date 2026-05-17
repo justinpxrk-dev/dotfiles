@@ -41,6 +41,7 @@ chezmoi/
 │   └── lib/
 │       └── monolisa-nerdfont-patch @ †
 ├── docs/       — documentation
+├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config and skills
 │   └── skills/ — custom slash commands
 ├── .vscode/    — VSCode workspace settings

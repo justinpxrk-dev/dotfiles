@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# .gitmodules: {{ include ".gitmodules" | sha256sum }}
+
+set -euo pipefail
+
+"$HOME/.local/share/chezmoi/Scripts/git/install_submodules.sh"

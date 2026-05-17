@@ -50,12 +50,9 @@ Or if `chezmoi` is already installed:
 chezmoi init --apply justinpxrk-dev/dotfiles
 ```
 
-Then run the following from the repo root (`~/.local/share/chezmoi`):
+Chezmoi automatically runs bootstrap scripts on first apply (submodules, cargo tools, LaunchAgent registration). Afterwards, apply macOS system defaults and reboot:
 
 ```sh
-./Scripts/git/install_submodules.sh       # build fonts, SbarLua, sketchybar-app-font
-./Scripts/cargo/install_tools.sh          # install tinted-builder-rust
-./Scripts/macos/register_launch_agents.sh # load LaunchAgents into login session
 ./Scripts/macos/set_system_settings.sh    # apply macOS defaults (reboot after)
 ```
 
@@ -97,6 +94,7 @@ chezmoi/
 │   └── lib/
 │       └── monolisa-nerdfont-patch @ †
 ├── docs/       — documentation
+├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi
 └── Unmanaged/  — reference configs not managed by chezmoi
 ```
 
