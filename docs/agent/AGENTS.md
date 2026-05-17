@@ -102,3 +102,5 @@ Standard conventions to follow when making changes.
 ## Rules
 
 Non-negotiable rules that must be followed.
+
+- Always commit using the `/commit` skill — never run `git commit` directly.
