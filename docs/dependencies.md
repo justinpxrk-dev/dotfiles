@@ -12,6 +12,7 @@
 - `macmon`
 - `pipes-sh`
 - `sketchybar`
+- `skhd`
 - `spicetify-cli`
 - `yabai`
 
