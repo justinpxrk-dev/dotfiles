@@ -1,4 +1,4 @@
-Before committing, review all pending changes and update any relevant documentation to reflect the new state. This includes `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs. Apply documentation updates as part of the same commit. Do not ask for confirmation — just commit.
+Before committing, review all pending changes and update any relevant documentation to reflect the new state. This includes `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs. Also review changed code and add missing documentation comments (purpose, parameters, return values) and inline WHY comments. Apply all updates as part of the same commit. Do not ask for confirmation — just commit.
 
 ## Commit Message Format
 

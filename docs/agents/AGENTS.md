@@ -79,10 +79,6 @@ pnpm run lint:sh / lint:lua / lint:py
 
 If you need details about available scripts, read `docs/scripts.md`.
 
-## Maintenance
-
-After any change, update all relevant documentation to reflect the new state — `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs.
-
 ## Zsh Config
 
 Config lives in `dot_config/zsh/`, split across several files:
@@ -99,6 +95,14 @@ Config lives in `dot_config/zsh/`, split across several files:
 ## Conventions
 
 Standard conventions to follow when making changes.
+
+### Comments and Documentation
+
+Write documentation comments on all functions, classes, and modules — describe purpose, parameters, and return values using language-appropriate syntax (e.g. `---` annotations in Lua, docstrings in Python).
+
+Write inline comments for non-obvious *why* — hidden constraints, invariants, workarounds, or behavior that would surprise a reader. Do not describe what the code does; well-named identifiers already do that.
+
+After any change, update all relevant documentation to reflect the new state — `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs.
 
 ## Rules
 
