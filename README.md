@@ -50,7 +50,7 @@ Or if `chezmoi` is already installed:
 chezmoi init --apply justinpxrk-dev/dotfiles
 ```
 
-Chezmoi automatically runs bootstrap scripts on first apply (submodules, cargo tools, LaunchAgent registration). Afterwards, apply macOS system defaults and reboot:
+`chezmoi` automatically runs bootstrap scripts on first apply (submodules, cargo tools, LaunchAgent registration). Afterwards, apply macOS system defaults and reboot:
 
 ```sh
 ./Scripts/macos/set_system_settings.sh    # apply macOS defaults (reboot after)
