@@ -17,7 +17,7 @@ local M = {
 	},
 	RESOURCES = {
 		CPU = "resources_cpu",
-		CPU_GRAPH = "resource_cpu_graph",
+		CPU_GRAPH = "resources_cpu_graph",
 		EVENT_LISTENER = "resources_event_listener",
 	},
 	SPACES = { EVENT_LISTENER = "spaces_event_listener" },

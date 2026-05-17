@@ -60,7 +60,7 @@ export PKG_CONFIG_PATH="$homebrew_opt_prefix/icu4c@78/lib/pkgconfig:$PKG_CONFIG_
 export CPPFLAGS="-I$homebrew_opt_prefix/sqlite/include"
 export LDFLAGS="-L$homebrew_opt_prefix/sqlite/lib"
 export PATH="$homebrew_opt_prefix/sqlite/bin:$PATH"
-export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig"
+export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
@@ -68,7 +68,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # zlib
 export CPPFLAGS="-I$homebrew_opt_prefix/zlib/include"
 export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib"
-export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig"
+export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # zsh-users/zsh-autosuggestions
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128

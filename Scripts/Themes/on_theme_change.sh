@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # dark-notify passes "dark" or "light" as $1; fall back to defaults read
 # when called directly at startup (e.g. from bordersrc)
-if [[ -n "$1" ]]; then
+if [[ -n "${1:-}" ]]; then
 	MODE="$1"
 else
-	RESULT=$(defaults read -g AppleInterfaceStyle 2>/dev/null)
+	# AppleInterfaceStyle only exists in dark mode; defaults read exits 1 in light mode
+	RESULT=$(defaults read -g AppleInterfaceStyle 2>/dev/null) || RESULT="Light"
 	MODE=$([[ "$RESULT" == "Dark" ]] && echo "dark" || echo "light")
 fi
 

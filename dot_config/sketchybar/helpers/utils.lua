@@ -4,7 +4,7 @@ local M = {}
 --- Recursively merges two tables, preserving values from `a` when `a` and `b` conflict.
 --- - Same-type scalar conflicts: `a` wins.
 --- - Same-type table conflicts: recurse.
---- - Type-mismatched conflicts (table vs scalar): `a` wins.
+--- - Type-mismatched conflicts (table vs scalar): `a` wins. (unreachable in practice — sketchybar keys have fixed types)
 --- @param ... table
 --- @return table merged
 function M.merge(...)
