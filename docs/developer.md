@@ -19,4 +19,4 @@ uv sync --dev
 
 ## Usage
 
-Format and lint commands are available via `pnpm`. See [AGENTS.md](agent/AGENTS.md) for the full command reference.
+Format and lint commands are available via `pnpm`. See [AGENTS.md](agents/AGENTS.md) for the full command reference.
