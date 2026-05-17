@@ -11,6 +11,9 @@ alias find=fd
 alias grep=rg
 alias ls=eza
 
+# Claude
+alias claudex="claude --dangerously-skip-permissions --worktree"
+
 # Editor
 alias edit="\$EDITOR"
 
