@@ -80,8 +80,10 @@ If you need details about available scripts, read `docs/scripts.md`.
 Config lives in `dot_config/zsh/`, split across several files:
 
 - `dot_zshrc` — main init; sources all other files and loads plugins via antidote
-- `dot_zshrc_env` — all environment variables (XDG, PATH, Homebrew, gpg, neovim, uv, mise, etc.)
+- `dot_zshrc_env.tmpl` — all environment variables (XDG, PATH, Homebrew, gpg, neovim, uv, mise, etc.)
 - `dot_zshrc_aliases` — CLI tool replacements, editor shortcuts, and shell conveniences
+- `dot_zshrc_bindings` — keybindings
 - `dot_zshrc_evals` — cached eval statements via evalcache (Homebrew, mise)
 - `dot_zshrc_hooks` — zsh hooks (precmd, preexec)
+- `dot_zshrc_opts` — zsh options (history, directory, misc)
 - `dot_zsh_plugins.txt` — antidote plugin list

@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash disable=SC2034
+
+# zsh options
+
+# Directory
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+
+# History
+mkdir -p "$ZSH_STATE_HOME"
+HISTFILE="$ZSH_STATE_HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY
+
+# Misc
+setopt INTERACTIVE_COMMENTS

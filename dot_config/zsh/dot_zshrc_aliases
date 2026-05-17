@@ -14,6 +14,11 @@ alias ls=eza
 # Editor
 alias edit="\$EDITOR"
 
+# zsh
+alias ..="cd .."
+alias back="popd"
+alias recomp="compinit -d \$ZSH_COMPDUMP"
+alias reload="source \$ZSH_CONFIG_HOME/.zshrc"
 # Dotfiles
 alias edit-aliases="edit \$DOTFILES/dot_config/zsh/dot_zshrc_aliases"
 alias edit-dot="code \$DOTFILES/dotfiles.code-workspace"

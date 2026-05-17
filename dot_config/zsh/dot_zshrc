@@ -16,6 +16,22 @@ _zsh_start_time=$EPOCHREALTIME
 
 autoload -Uz add-zsh-hook compinit
 
+# Recompile config files if source is newer than bytecode.
+() {
+	local f
+	for f in \
+		"$HOME/.config/zsh/.zshrc" \
+		"$HOME/.config/zsh/.zshrc_env" \
+		"$HOME/.config/zsh/.zshrc_evals" \
+		"$HOME/.config/zsh/.zshrc_aliases" \
+		"$HOME/.config/zsh/.zshrc_hooks" \
+		"$HOME/.config/zsh/.zshrc_bindings" \
+		"$HOME/.config/zsh/.zshrc_opts" \
+		"$HOME/.config/zsh/.p10k.zsh"; do
+		[[ -f "$f" && "${f}.zwc" -nt "$f" ]] || zcompile "$f" 2>/dev/null
+	done
+}
+
 # Environment variables
 source "$HOME/.config/zsh/.zshrc_env"
 
@@ -27,21 +43,6 @@ if [[ -f "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 	# shellcheck disable=SC1090
 	source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# Recompile config files if source is newer than bytecode.
-() {
-	local f
-	for f in \
-		"${HOME}/.config/zsh/.zshrc" \
-		"${HOME}/.config/zsh/.zshrc_env" \
-		"${HOME}/.config/zsh/.zshrc_aliases" \
-		"${HOME}/.config/zsh/.zshrc_evals" \
-		"${HOME}/.config/zsh/.zshrc_hooks" \
-		"${HOME}/.config/zsh/.p10k.zsh"; do
-		[[ -f "$f" && "${f}.zwc" -nt "$f" ]] || zcompile "$f" 2>/dev/null
-	done
-}
-
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 if [[ -f "$XDG_CONFIG_HOME/zsh/.p10k.zsh" ]]; then
 	source "$XDG_CONFIG_HOME/zsh/.p10k.zsh"
@@ -49,22 +50,27 @@ fi
 
 # Load antidote and plugins
 source "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh"
-zsh_config_home="${XDG_CONFIG_HOME}/zsh"
-if [[ ! -f "$zsh_config_home/.zsh_plugins.zsh" || "$zsh_config_home/.zsh_plugins.txt" -nt "$zsh_config_home/.zsh_plugins.zsh" ]]; then
-	antidote bundle < "$zsh_config_home/.zsh_plugins.txt" > "$zsh_config_home/.zsh_plugins.zsh"
+if [[ ! -f "$ZSH_CONFIG_HOME/.zsh_plugins.zsh" || "$ZSH_CONFIG_HOME/.zsh_plugins.txt" -nt "$ZSH_CONFIG_HOME/.zsh_plugins.zsh" ]]; then
+	antidote bundle <"$ZSH_CONFIG_HOME/.zsh_plugins.txt" >"$ZSH_CONFIG_HOME/.zsh_plugins.zsh"
 fi
-source "$zsh_config_home/.zsh_plugins.zsh"
+source "$ZSH_CONFIG_HOME/.zsh_plugins.zsh"
 
-# Lazy load evals, and completions
-source "$zsh_config_home/.zshrc_evals"
-zsh-defer compinit
+# Lazy load evals
+source "$ZSH_CONFIG_HOME/.zshrc_evals"
 
-# Load aliases and hooks
-source "$zsh_config_home/.zshrc_aliases"
-source "$zsh_config_home/.zshrc_hooks"
+# Load aliases, bindings, hooks, and options
+source "$ZSH_CONFIG_HOME/.zshrc_aliases"
+source "$ZSH_CONFIG_HOME/.zshrc_bindings"
+source "$ZSH_CONFIG_HOME/.zshrc_hooks"
+source "$ZSH_CONFIG_HOME/.zshrc_opts"
 
-# Release local variables
-unset zsh_config_home
+# Recache completions if older than 24 hours
+local compdump_is_stale=($ZSH_COMPDUMP(Nmh+24))
+if (($#compdump_is_stale)); then
+	compinit -d $ZSH_COMPDUMP
+else
+	compinit -C -d $ZSH_COMPDUMP
+fi
 
 ####### Benchmark Tools #######
 # zprof

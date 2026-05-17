@@ -1,8 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 
-# Contains my zsh hooks for interactive zsh shells.
-
+# Set title to blank space before each prompt/command (Override Ghostty's default title icon)
 _title_precmd() { print -n "\e]2; \a"; }
 _title_preexec() { print -n "\e]2; \a"; }
 add-zsh-hook precmd _title_precmd

@@ -1,7 +1,5 @@
 [user]
-    {{- if eq .profile "personal"}}
     email = 192945419+justinpxrk-dev@users.noreply.github.com
-    {{- end }}
     name = Justin Park
 
 [url "ssh://git@github.com"]
@@ -34,7 +32,6 @@
 
 [rerere]
     enabled = true
-{{ if eq .profile "personal" }}
 [fetch]
     prune = true
 
@@ -47,4 +44,3 @@
 [rebase]
     autoStash = true
     autoSquash = true
-{{- end }}

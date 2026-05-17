@@ -4,7 +4,7 @@ _Intended for personal use (some listed features may be under development). Insp
 
 macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
 
-A macOS-centric developer setup for a full stack professional. Designed for frictionless portability, productivity, and neat integration with the Apple design philosophy. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 30 ms, tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Rust and Lua, coding agent driven dotfiles management, and more!
+A macOS-centric developer setup for a full stack professional. Designed for frictionless portability, productivity, and neat integration with the Apple design philosophy. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 40 ms (on Apple M3), tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Rust and Lua, coding agent driven dotfiles management, and more!
 
 ## Theme
 
@@ -30,7 +30,7 @@ A macOS-centric developer setup for a full stack professional. Designed for fric
 - __[Tinted Theming](https://github.com/tinted-theming) Ecosystem__. Download and build themes with simple commands using templates for any application supported by the [Tinted Theming](https://github.com/tinted-theming) community. Availables themes listed in [Tinted Gallery](https://tinted-theming.github.io/tinted-gallery/).
 - __Dark/Light Mode.__ Integration with macOS system notifications for dark/light mode theme changes for all your applications.
 - __[Ghostty](https://ghostty.org/).__ [Alacritty](https://alacritty.org/) is the hands down fastest terminal but __[Ghostty](https://ghostty.org/)__ is nearly as fast and uses the macOS native window native rendering pipeline for a system-cohesive look.
-- __Fast `zsh` Startup.__ Highly optimized and feature-rich ([`powerlevel10k`](https://github.com/romkatv/powerlevel10k) prompt, syntax highlighting, suggestions, etc.) `zsh` config that starts up between 20 and 30 ms (warm benchmark on 200 runs).
+- __Fast `zsh` Startup.__ Highly optimized and feature-rich ([`powerlevel10k`](https://github.com/romkatv/powerlevel10k) prompt, syntax highlighting, suggestions, etc.) `zsh` config that starts up between 30 and 40 ms (on Apple M3) (warm benchmark on 200 runs), <20 ms on `source`, ~40 ms on new terminal startup.
 - __Tiling Window Management__. [`yabai`](https://github.com/asmvik/yabai) + [`skhd`](https://github.com/asmvik/skhd) for keyboard-driven window layout management.
 - __Customizable Menu Bar__. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Rust and Lua to implement a performant, extendable event-driven architecture.
 - __Developer Tool Management.__ [`mise`](https://mise.jdx.dev/) for managing all developer tools and automatic environment activation.
@@ -41,7 +41,7 @@ A macOS-centric developer setup for a full stack professional. Designed for fric
 On a new machine, install `chezmoi` and apply the dotfiles in one step:
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply justinpxrk-dev/dotfiles
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply justinpxrk-dev
 ```
 
 Or if `chezmoi` is already installed:
@@ -57,6 +57,12 @@ Then run the following from the repo root (`~/.local/share/chezmoi`):
 ./Scripts/cargo/install_tools.sh          # install tinted-builder-rust
 ./Scripts/macos/register_launch_agents.sh # load LaunchAgents into login session
 ./Scripts/macos/set_system_settings.sh    # apply macOS defaults (reboot after)
+```
+
+## Update Dotfiles
+
+```
+chezmoi update
 ```
 
 ## Project Structure

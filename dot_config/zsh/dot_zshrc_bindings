@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash
+
+# History
+bindkey '^[[A' history-substring-search-up   # Up
+bindkey '^[[B' history-substring-search-down # Down
