@@ -4,7 +4,7 @@ _Intended for personal use (some listed features may be under development). Insp
 
 macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
 
-A macOS-centric developer setup for a full stack professional. Designed for frictionless portability, productivity, and neat integration with the Apple design philosophy. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 40 ms (on Apple M3), tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Rust and Lua, coding agent driven dotfiles management, and more!
+A macOS-centric developer setup for a software engineer focused on agentic coding. Designed for frictionless portability, productivity, and neat integration with the Apple design philosophy. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 40 ms (on Apple M3), tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Rust and Lua, coding agent driven dotfiles management, and more!
 
 ## Theme
 
