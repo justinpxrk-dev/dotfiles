@@ -27,7 +27,10 @@ Merge a branch into main by rebasing it onto main and fast-forward merging it.
    - If this reports "Already up to date.", the branch had no unique commits — note this to the user but treat it as success.
    - If it fails for any other reason, report the error and stop.
 
-9. **Report success** — show a one-line summary: branch name, number of commits landed (0 if already up to date), and the new HEAD sha.
+9. **Report success** — show:
+   - Branch name, number of commits landed (0 if already up to date), and the new HEAD sha.
+   - A brief human-readable summary of what the changes do, inferred from commit messages and the diff.
+   - A list of touched files from `git diff --name-only <previous-HEAD> HEAD`.
 
 10. **Offer cleanup** — ask the user: "Delete branch `<branch>` and remove its worktree?" If yes:
    - If a worktree path was found in step 4, remove it first: `git worktree remove <path>`.
