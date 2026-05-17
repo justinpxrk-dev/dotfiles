@@ -1,10 +1,13 @@
-# Node
-node_modules
+# Claude
+.claude/worktrees
 
 # Obsidian
-.obsidian/cache/
+.obsidian/cache
 .obsidian/core-plugins.json
 .obsidian/workspace.json
+
+# Node
+node_modules
 
 # Python
 .venv
