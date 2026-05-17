@@ -1,5 +1,5 @@
 ---
-description: Use when the user asks to commit changes, or when it is appropriate to commit during an agentic task. Stages all unstaged files and commits with the project's standard message format.
+description: "Use when the user asks to commit changes, or when it is appropriate to commit during an agentic task. Stages all unstaged files and commits with the project's standard message format."
 ---
 
 Before committing, review all pending changes and update any relevant documentation to reflect the new state. This includes `docs/agent/AGENTS.md`, other files in `docs/`, and any READMEs. Apply documentation updates as part of the same commit. Do not ask for confirmation — just commit.

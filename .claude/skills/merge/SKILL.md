@@ -1,5 +1,5 @@
 ---
-description: Merge a worktree branch into main. Rebases the branch onto main, fast-forward merges it, then asks whether to delete the branch and remove its worktree. Usage: /merge <branch-name>
+description: "Merge a worktree branch into main. Rebases the branch onto main, fast-forward merges it, then asks whether to delete the branch and remove its worktree. Usage: /merge <branch-name>"
 ---
 
 Merge a branch into main by rebasing it onto main and fast-forward merging it.
