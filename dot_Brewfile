@@ -24,8 +24,10 @@ brew "ripgrep"
 
 # CLI — Tools
 brew "delta"
+brew "fzf"
 brew "git-lfs"
 brew "hyperfine"
+brew "tig"
 
 # Zsh
 brew "antidote"

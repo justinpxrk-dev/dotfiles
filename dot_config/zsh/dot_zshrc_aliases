@@ -33,3 +33,11 @@ alias lsa="ls -al"
 # nvim
 alias vi=nvim
 alias vim=nvim
+
+# git
+# Browse worktrees interactively in tig
+function twig() {
+  local worktree
+  worktree=$(git worktree list --porcelain | awk '/^worktree/ {print $2}' | fzf)
+  [[ -n "$worktree" ]] && tig -C "$worktree"
+}
