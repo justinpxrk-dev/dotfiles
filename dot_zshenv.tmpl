@@ -1,8 +1,6 @@
-#!/usr/bin/env zsh
-# shellcheck shell=bash
-# shellcheck disable=SC2296
+[[ "$HOME/.zshenv.zwc" -nt "$HOME/.zshenv" ]] || zcompile "$HOME/.zshenv" 2>/dev/null
 
-# Contains my zsh environment variables for interactive zsh shells.
+export ZDOTDIR="$HOME/.config/zsh"
 
 # XDG Base Directory
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -13,12 +11,6 @@ export XDG_RUNTIME_DIR="$TMPDIR"
 export XDG_DATA_DIRS="/usr/share:/usr/local/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
 
-# zsh
-export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
-export ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump"
-export ZSH_CONFIG_HOME="$XDG_CONFIG_HOME/zsh"
-export ZSH_STATE_HOME="$XDG_STATE_HOME/zsh"
-
 # Dotfiles
 export DOTFILES="{{ .chezmoi.sourceDir }}"
 
@@ -26,25 +18,13 @@ export DOTFILES="{{ .chezmoi.sourceDir }}"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-# eval-cache
-# Included convenience function _evalcache_clear clears eval-cache/
-export ZSH_EVALCACHE_DIR="$XDG_CACHE_HOME/eval-cache"
-# export ZSH_EVALCACHE_DISABLE=true   # Bypass evalcache
-
 # Homebrew
 export HOMEBREW_PREFIX="/opt/homebrew"
 homebrew_opt_prefix="$HOMEBREW_PREFIX/opt"
 export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
-# gpg
-export GPG_TTY="$TTY"
-
 # gnu-getopt
 export PATH="$homebrew_opt_prefix/gnu-getopt/bin:$PATH"
-
-# goenv
-export GOENV_ROOT="$homebrew_opt_prefix/goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
 
 # grep
 export PATH="$homebrew_opt_prefix/grep/libexec/gnubin:$PATH"
@@ -57,24 +37,16 @@ export VIMRUNTIME="$homebrew_opt_prefix/neovim/share/nvim/runtime/"
 export PKG_CONFIG_PATH="$homebrew_opt_prefix/icu4c@78/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # sqlite
-export CPPFLAGS="-I$homebrew_opt_prefix/sqlite/include"
-export LDFLAGS="-L$homebrew_opt_prefix/sqlite/lib"
+export CPPFLAGS="-I$homebrew_opt_prefix/sqlite/include:$CPPFLAGS"
+export LDFLAGS="-L$homebrew_opt_prefix/sqlite/lib:$LDFLAGS"
 export PATH="$homebrew_opt_prefix/sqlite/bin:$PATH"
-export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
 
 # zlib
-export CPPFLAGS="-I$homebrew_opt_prefix/zlib/include"
-export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib"
+export CPPFLAGS="-I$homebrew_opt_prefix/zlib/include:$CPPFLAGS"
+export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib:$LDFLAGS"
 export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
 
-# zsh-users/zsh-autosuggestions
-export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128
-
-# agkozak/zsh-z
-export _Z_DATA="$XDG_CACHE_HOME/z/.z"
-
-# Release local variables
 unset homebrew_opt_prefix

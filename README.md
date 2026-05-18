@@ -4,7 +4,7 @@ _Intended for personal use (some listed features may be under development). Insp
 
 macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
 
-A macOS-centric developer setup for a software engineer focused on agentic coding. Designed for frictionless portability, productivity, and neat integration with the Apple design philosophy. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 40 ms (on Apple M3), tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Rust and Lua, coding agent driven dotfiles management, and more!
+A macOS-centric developer setup for a software engineer focused on agentic coding. Designed for frictionless portability, productivity, and neat integration with the macOS design system. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 40 ms (on Apple M3), tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Lua, and more!
 
 ## Theme
 
@@ -32,7 +32,7 @@ A macOS-centric developer setup for a software engineer focused on agentic codin
 - **[Ghostty](https://ghostty.org/).** [Alacritty](https://alacritty.org/) is the hands down fastest terminal but **[Ghostty](https://ghostty.org/)** is nearly as fast and uses the macOS native window native rendering pipeline for a system-cohesive look.
 - **Fast `zsh` Startup.** Highly optimized and feature-rich ([`powerlevel10k`](https://github.com/romkatv/powerlevel10k) prompt, syntax highlighting, suggestions, etc.) `zsh` config that starts up between 30 and 40 ms (on Apple M3) (warm benchmark on 200 runs), <20 ms on `source`, ~40 ms on new terminal startup.
 - **Tiling Window Management**. [`yabai`](https://github.com/asmvik/yabai) + [`skhd`](https://github.com/asmvik/skhd) for keyboard-driven window layout management.
-- **Customizable Menu Bar**. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Rust and Lua to implement a performant, extendable event-driven architecture.
+- **Customizable Menu Bar**. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Lua to implement a performant, extendable event-driven architecture.
 - **Developer Tool Management.** [`mise`](https://mise.jdx.dev/) for managing all developer tools and automatic environment activation.
 - **Package Management.** Homebrew formulae and casks tracked in `Brewfile` and auto-installed on `chezmoi apply`.
 - **Coding Agent Knowledge Base.** Use any agent with the agent-agnostic knowledge base under `docs/` to support dotfiles management and custom feature development.

@@ -35,7 +35,7 @@ chezmoi/
 │   ├── spicetify/
 │   ├── yabai/
 │   └── zsh/
-├── dot_zshenv            → ~/.zshenv
+├── dot_zshenv.tmpl       → ~/.zshenv
 ├── empty_dot_hushlogin   → ~/.hushlogin
 ├── Assets/     — icons and images
 ├── Fonts/      — font sources
@@ -86,10 +86,10 @@ If you need details about available scripts, read `docs/scripts.md`.
 
 ## Zsh Config
 
-Config lives in `dot_config/zsh/`, split across several files:
+`dot_zshenv.tmpl` → `~/.zshenv` is sourced for all shells (interactive, non-interactive, login). `dot_config/zsh/` contains files sourced only for interactive shells:
 
 - `dot_zshrc` — main init; sources all other files and loads plugins via antidote
-- `dot_zshrc_env.tmpl` — all environment variables (XDG, PATH, Homebrew, gpg, neovim, uv, mise, etc.)
+- `dot_zshrc_env` — interactive-only environment variables (zsh plugin dirs, evalcache, autosuggestions, zsh-z)
 - `dot_zshrc_aliases` — CLI tool replacements, editor shortcuts, and shell conveniences
 - `dot_zshrc_bindings` — keybindings
 - `dot_zshrc_evals` — cached eval statements via evalcache (Homebrew, mise)
