@@ -89,12 +89,12 @@ If you need details about available scripts, read `docs/scripts.md`.
 `dot_zshenv.tmpl` → `~/.zshenv` is sourced for all shells (interactive, non-interactive, login). `dot_config/zsh/` contains files sourced only for interactive shells:
 
 - `dot_zshrc` — main init; sources all other files and loads plugins via antidote
-- `dot_zshrc_env` — interactive-only environment variables (zsh plugin dirs, evalcache, autosuggestions, zsh-z)
+- `dot_zshrc_env` — interactive-only environment variables (zsh dirs)
 - `dot_zshrc_aliases` — CLI tool replacements, editor shortcuts, and shell conveniences
 - `dot_zshrc_bindings` — keybindings
 - `dot_zshrc_evals` — cached eval statements via evalcache (Homebrew, mise)
 - `dot_zshrc_hooks` — zsh hooks (precmd, preexec)
-- `dot_zshrc_opts` — zsh options (history, directory, misc)
+- `dot_zshrc_opts` — zsh options and plugin config (history, directory, misc, plugins)
 - `dot_zsh_plugins.txt` — antidote plugin list
 
 ## Conventions
@@ -105,7 +105,7 @@ Standard conventions to follow when making changes.
 
 Write documentation comments on all functions, classes, and modules — describe purpose, parameters, and return values using language-appropriate syntax (e.g. `---` annotations in Lua, docstrings in Python).
 
-Write inline comments for non-obvious *why* — hidden constraints, invariants, workarounds, or behavior that would surprise a reader. Do not describe what the code does; well-named identifiers already do that.
+Write inline comments for non-obvious _why_ — hidden constraints, invariants, workarounds, or behavior that would surprise a reader. Do not describe what the code does; well-named identifiers already do that.
 
 After any change, update all relevant documentation to reflect the new state — `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs.
 

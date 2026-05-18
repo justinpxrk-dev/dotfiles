@@ -18,3 +18,15 @@ setopt SHARE_HISTORY
 
 # Misc
 setopt INTERACTIVE_COMMENTS
+
+# mroth/evalcache
+# Included convenience function _evalcache_clear clears eval-cache/
+ZSH_EVALCACHE_DIR="$XDG_CACHE_HOME/eval-cache"
+# ZSH_EVALCACHE_DISABLE=true   # Bypass evalcache
+
+# rupa/z
+_Z_DATA="$XDG_CACHE_HOME/z/.z"
+
+# zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)

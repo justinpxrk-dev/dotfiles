@@ -29,9 +29,10 @@ Merge a branch into main by rebasing it onto main and fast-forward merging it.
    - A list of touched files from `git diff --name-only <previous-HEAD> HEAD`.
 
 10. **Offer cleanup** — ask the user: "Delete branch `<branch>` and remove its worktree?" If yes:
-   - If a worktree path was found in step 4, remove it first: `git worktree remove <path>`.
-   - Then delete the branch: `git branch -d <branch>`.
-   - If no worktree was found, just delete the branch.
+
+- If a worktree path was found in step 4, remove it first: `git worktree remove <path>`.
+- Then delete the branch: `git branch -d <branch>`.
+- If no worktree was found, just delete the branch.
 
 ## Rules
 

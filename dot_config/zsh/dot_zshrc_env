@@ -8,14 +8,3 @@ export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 export ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump"
 export ZSH_CONFIG_HOME="$XDG_CONFIG_HOME/zsh"
 export ZSH_STATE_HOME="$XDG_STATE_HOME/zsh"
-
-# eval-cache
-# Included convenience function _evalcache_clear clears eval-cache/
-export ZSH_EVALCACHE_DIR="$XDG_CACHE_HOME/eval-cache"
-# export ZSH_EVALCACHE_DISABLE=true   # Bypass evalcache
-
-# zsh-users/zsh-autosuggestions
-export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=128
-
-# agkozak/zsh-z
-export _Z_DATA="$XDG_CACHE_HOME/z/.z"
