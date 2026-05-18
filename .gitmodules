@@ -18,3 +18,7 @@
 	path = Themes/lib/tinted-vscode
 	url = git@github.com:justinpxrk-dev/tinted-vscode.git
 	branch = justinpxrk-dev
+[submodule "Themes/lib/tinted-shell"]
+	path = Themes/lib/tinted-shell
+	url = git@github.com:justinpxrk-dev/tinted-shell.git
+	branch = justinpxrk-dev

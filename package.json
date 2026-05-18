@@ -12,9 +12,9 @@
     "format:py": "ruff format .",
     "format:check:py": "ruff format --check .",
     "lint:py": "ruff check . && pyright",
-    "lint:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' | xargs shellcheck",
-    "format:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' | xargs shfmt -w",
-    "format:check:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' | xargs shfmt -d",
+    "lint:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' | xargs shellcheck",
+    "format:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' | xargs shfmt -w",
+    "format:check:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' | xargs shfmt -d",
     "lint:lua": "lua-language-server --check=dot_config/nvim --checklevel=Warning && lua-language-server --check=dot_config/sketchybar --checklevel=Warning",
     "format:lua": "stylua .",
     "format:check:lua": "stylua --check ."

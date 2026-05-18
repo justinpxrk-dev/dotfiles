@@ -47,6 +47,7 @@ chezmoi/
 ├── Scripts/    — shell scripts
 ├── Themes/     — Petrichor theme definitions (see Themes System)
 │   └── lib/
+│       ├── tinted-shell @ ⑂
 │       ├── tinted-terminal @ ⑂
 │       └── tinted-vscode @ ⑂
 ├── Unmanaged/  — reference configs not managed by chezmoi
