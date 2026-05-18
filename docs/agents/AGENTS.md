@@ -101,13 +101,20 @@ If you need details about available scripts, read `docs/scripts.md`.
 
 Standard conventions to follow when making changes.
 
-### Comments and Documentation
+### Comments
 
 Write documentation comments on all functions, classes, and modules — describe purpose, parameters, and return values using language-appropriate syntax (e.g. `---` annotations in Lua, docstrings in Python).
 
 Write inline comments for non-obvious _why_ — hidden constraints, invariants, workarounds, or behavior that would surprise a reader. Do not describe what the code does; well-named identifiers already do that.
 
-After any change, update all relevant documentation to reflect the new state — `docs/agents/AGENTS.md`, other files in `docs/`, and any READMEs.
+### Keeping Config in Sync
+
+After any change, update all relevant files to reflect the new state:
+
+- **Docs:** `docs/agents/AGENTS.md`, other files in `docs/`, READMEs
+- **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.shfmtignore`, `.styluaignore`
+- **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
+- **Tool scripts:** `package.json` (pnpm lint/format scripts), `mise.toml` (tool versions)
 
 ## Rules
 
