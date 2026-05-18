@@ -28,13 +28,13 @@ non-authorized machines.
 
 Change these 5 entries (SSH → HTTPS):
 
-| Path | Old | New |
-|---|---|---|
-| `dot_config/sketchybar/lib/SbarLua` | `git@github.com:FelixKratz/SbarLua.git` | `https://github.com/FelixKratz/SbarLua.git` |
-| `dot_config/sketchybar/lib/sketchybar-app-font` | `git@github.com:kvndrsslr/sketchybar-app-font.git` | `https://github.com/kvndrsslr/sketchybar-app-font.git` |
-| `Themes/lib/tinted-terminal` | `git@github.com:justinpxrk-dev/tinted-terminal.git` | `https://github.com/justinpxrk-dev/tinted-terminal.git` |
-| `Themes/lib/tinted-vscode` | `git@github.com:justinpxrk-dev/tinted-vscode.git` | `https://github.com/justinpxrk-dev/tinted-vscode.git` |
-| `Themes/lib/tinted-shell` | `git@github.com:justinpxrk-dev/tinted-shell.git` | `https://github.com/justinpxrk-dev/tinted-shell.git` |
+| Path                                            | Old                                                 | New                                                     |
+| ----------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
+| `dot_config/sketchybar/lib/SbarLua`             | `git@github.com:FelixKratz/SbarLua.git`             | `https://github.com/FelixKratz/SbarLua.git`             |
+| `dot_config/sketchybar/lib/sketchybar-app-font` | `git@github.com:kvndrsslr/sketchybar-app-font.git`  | `https://github.com/kvndrsslr/sketchybar-app-font.git`  |
+| `Themes/lib/tinted-terminal`                    | `git@github.com:justinpxrk-dev/tinted-terminal.git` | `https://github.com/justinpxrk-dev/tinted-terminal.git` |
+| `Themes/lib/tinted-vscode`                      | `git@github.com:justinpxrk-dev/tinted-vscode.git`   | `https://github.com/justinpxrk-dev/tinted-vscode.git`   |
+| `Themes/lib/tinted-shell`                       | `git@github.com:justinpxrk-dev/tinted-shell.git`    | `https://github.com/justinpxrk-dev/tinted-shell.git`    |
 
 Keep SSH (private, require auth):
 

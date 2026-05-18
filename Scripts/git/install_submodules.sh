@@ -7,7 +7,22 @@ echo "==> Changing directory to $REPO_ROOT"
 cd "$REPO_ROOT" || exit
 
 echo "==> Syncing git submodules"
-git submodule update --init --recursive --quiet
+# Public submodules use HTTPS; GIT_CONFIG_GLOBAL=/dev/null bypasses the global
+# SSH rewrite rule so they clone via HTTPS directly without SSH auth.
+GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
+	dot_config/sketchybar/lib/SbarLua \
+	dot_config/sketchybar/lib/sketchybar-app-font \
+	Themes/lib/tinted-terminal \
+	Themes/lib/tinted-vscode \
+	Themes/lib/tinted-shell
+
+# Private submodules require SSH auth. Failure is silenced so a missing SSH
+# key on non-authorized machines does not block the rest of the script.
+# --recursive is omitted: these submodules are owner-maintained and have no
+# nested submodules.
+git submodule update --init --quiet -- \
+	Fonts/font-monolisa \
+	Fonts/lib/monolisa-nerdfont-patch || true
 
 failed=()
 
@@ -25,6 +40,7 @@ in_submodule() {
 
 install_font_monolisa() {
 	local name="font-monolisa" path="Fonts/font-monolisa"
+	[[ -f "$path/fonts/MonoLisa-normal.ttf" ]] || return 0
 	mkdir -p "$HOME/Library/Fonts/MonoLisa"
 	in_submodule "$name" "$path" "Linking fonts" ln -sf "$REPO_ROOT/$path/fonts/MonoLisa-normal.ttf" "$HOME/Library/Fonts/MonoLisa/"
 }
@@ -33,6 +49,7 @@ install_monolisa_nerdfont_patch() {
 	local name="monolisa-nerdfont-patch" path="Fonts/lib/monolisa-nerdfont-patch"
 	local source="$HOME/Library/Fonts/MonoLisa/MonoLisa-normal.ttf"
 	local destination="$HOME/Library/Fonts/"
+	[[ -f "$path/patch-monolisa" ]] || return 0
 	mkdir -p "$destination"
 	if [[ ! -f "$destination/MonoLisa/MonoLisaNerdFont-Regular.ttf" ]]; then
 		in_submodule "$name" "$path" "Patching fonts" ./patch-monolisa -f "$source" -c -o "$destination"

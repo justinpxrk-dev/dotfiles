@@ -22,7 +22,7 @@ Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the cu
 
 ### `install_submodules.sh`
 
-Initialises all git submodules and builds/installs their outputs (MonoLisa fonts, SbarLua, sketchybar-app-font). Run automatically by chezmoi (`run_onchange_`) whenever `.gitmodules` changes.
+Initialises all git submodules and builds/installs their outputs (MonoLisa fonts, SbarLua, sketchybar-app-font). Public submodules are cloned via HTTPS; private submodules (font-monolisa, monolisa-nerdfont-patch) require SSH and are silently skipped when SSH auth is unavailable. Run automatically by chezmoi (`run_onchange_`) whenever `.gitmodules` changes.
 
 ```sh
 ./Scripts/git/install_submodules.sh
