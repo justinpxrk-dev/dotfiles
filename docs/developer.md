@@ -32,6 +32,12 @@ pnpm run format:md / format:sh / format:lua / format:py
 pnpm run lint:sh / lint:lua / lint:py
 ```
 
+shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths are excluded there. The `--apply-ignore` flag must be passed for shfmt to respect them.
+
+## CI
+
+GitHub Actions runs `format:check` and `lint` on every push and pull request to `main`. The workflow mirrors local setup: mise installs all tools, then `pnpm install --frozen-lockfile` and `uv sync --dev` install package dependencies before running checks.
+
 ## Worktrees
 
 When working in a worktree, some tools require per-path trust or registration before they function. Run any required setup after creating a worktree, and clean up before removing it — the `/merge` skill handles cleanup automatically.

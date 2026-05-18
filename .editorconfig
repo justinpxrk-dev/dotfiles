@@ -1,0 +1,11 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Submodules and third-party code — shfmt ignores these via --apply-ignore
+[{dot_config/sketchybar/lib,Fonts/lib,Themes/lib,node_modules,.obsidian}/**]
+ignore = true

@@ -45,10 +45,6 @@ brew "uv"
 # Rust
 brew "rustup"
 
-# Shell
-brew "shellcheck"
-brew "shfmt"
-
 # General
 brew "chezmoi"
 brew "mise"

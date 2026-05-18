@@ -1,5 +1,6 @@
 {
   "runtime.version": "LuaJIT",
+  "diagnostics.globals": ["vim"],
   "workspace": {
     "library": ["/opt/homebrew/share/nvim/runtime/lua"],
     "useGitIgnore": true

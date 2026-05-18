@@ -18,6 +18,8 @@ chezmoi/
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config and skills
 │   └── skills/ — custom slash commands
+├── .github/    — GitHub Actions workflows
+│   └── workflows/
 ├── .vscode/    — VSCode workspace settings
 ├── Assets/     — icons and images
 ├── Fonts/      — font sources
@@ -101,7 +103,8 @@ Write inline comments for non-obvious _why_ — hidden constraints, invariants, 
 After any change, update all relevant files to reflect the new state:
 
 - **Docs:** `docs/agents/AGENTS.md`, other files in `docs/`, READMEs
-- **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.shfmtignore`, `.styluaignore`
+- **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`
+- **Editor config:** `.editorconfig`
 - **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
 - **Tool scripts:** `package.json` (pnpm lint/format scripts), `mise.toml` (tool versions)
 

@@ -7,6 +7,8 @@ rust = "latest"
 stylua = "latest"
 lua-language-server = "latest"
 lefthook = "latest"
+shellcheck = "latest"
+shfmt = "latest"
 
 [tasks."brew:install"]
 description = "Install Homebrew packages declared in ~/.Brewfile"
