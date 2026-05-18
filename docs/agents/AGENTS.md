@@ -24,6 +24,7 @@ chezmoi/
 ├── dot_claude/           → ~/.claude
 ├── dot_config/ → ~/.config/
 │   ├── borders/
+│   ├── chezmoi/
 │   ├── ghostty/
 │   ├── git/
 │   ├── nvim/
