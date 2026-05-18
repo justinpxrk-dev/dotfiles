@@ -39,6 +39,7 @@ brew "neovim"
 brew "lua"
 
 # Python
+brew "python3"
 brew "uv"
 
 # Rust
