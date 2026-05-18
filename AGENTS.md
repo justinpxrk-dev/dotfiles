@@ -1,3 +1,3 @@
 # AGENTS.md
 
-Read and follow docs/agent/AGENTS.md before making changes.
+Read and follow docs/agents/AGENTS.md before making changes.
