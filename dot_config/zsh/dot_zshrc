@@ -10,8 +10,8 @@
 # this script as well.
 #
 # zmodload zsh/zprof
-zmodload zsh/datetime
-_zsh_start_time=$EPOCHREALTIME
+# zmodload zsh/datetime
+# _zsh_start_time=$EPOCHREALTIME
 ####### Benchmark Tools #######
 
 autoload -Uz add-zsh-hook compinit
@@ -74,5 +74,5 @@ fi
 
 ####### Benchmark Tools #######
 # zprof
-printf 'zsh startup time: %.0f ms\n' "$(((EPOCHREALTIME - _zsh_start_time) * 1000))"
+# printf 'zsh startup time: %.0f ms\n' "$(((EPOCHREALTIME - _zsh_start_time) * 1000))"
 ####### Benchmark Tools #######
