@@ -1,6 +1,6 @@
 # Scripts
 
-Scripts live under `Scripts/` and are run from the repo root. Bootstrap scripts (`install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts live under `Scripts/` and are run from the repo root. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ### `set_system_settings.sh`
 
@@ -26,6 +26,14 @@ Initialises all git submodules and builds/installs their outputs (MonoLisa fonts
 
 ```sh
 ./Scripts/git/install_submodules.sh
+```
+
+### `install_packages.sh`
+
+Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes.
+
+```sh
+./Scripts/brew/install_packages.sh
 ```
 
 ### `install_tools.sh`

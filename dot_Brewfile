@@ -1,0 +1,59 @@
+tap "FelixKratz/formulae"
+tap "spicetify/tap"
+
+# Desktop Environment
+brew "cbonsai"
+brew "cmatrix"
+brew "dark-notify"
+brew "fastfetch"
+brew "borders"
+brew "macmon"
+brew "pipes-sh"
+brew "sketchybar"
+brew "skhd"
+brew "spicetify-cli"
+brew "yabai"
+
+# CLI — Core Replacements
+brew "bat"
+brew "duf"
+brew "dust"
+brew "eza"
+brew "fd"
+brew "ripgrep"
+
+# CLI — Tools
+brew "delta"
+brew "git-lfs"
+brew "hyperfine"
+
+# Zsh
+brew "antidote"
+
+# Editors
+brew "neovim"
+
+# Lua
+brew "lua"
+
+# Python
+brew "uv"
+
+# Rust
+brew "rustup"
+
+# Shell
+brew "shellcheck"
+brew "shfmt"
+
+# General
+brew "chezmoi"
+brew "mise"
+
+# Media
+brew "imagemagick"
+brew "media-control"
+
+# Fonts
+cask "font-sf-pro"
+brew "fontforge"
