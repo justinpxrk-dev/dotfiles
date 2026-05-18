@@ -1,13 +1,14 @@
 {
-  "autoMemoryEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); branch=$(git -C \"$(echo \"$input\" | jq -r '.workspace.current_dir')\" --no-optional-locks branch --show-current 2>/dev/null); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); dir=$(basename \"$cwd\"); out=\"$dir\"; [ -n \"$branch\" ] && out=\"$out  $branch\"; printf '%s' \"$out\""
+  },
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true
   },
   "tui": "default",
+  "autoMemoryEnabled": false,
   "theme": "auto",
-  "statusLine": {
-    "type": "command",
-    "command": "input=$(cat); branch=$(git -C \"$(echo \"$input\" | jq -r '.workspace.current_dir')\" --no-optional-locks branch --show-current 2>/dev/null); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); dir=$(basename \"$cwd\"); out=\"$dir\"; [ -n \"$branch\" ] && out=\"$out  $branch\"; printf '%s' \"$out\""
-  }
+  "model": "opus"
 }

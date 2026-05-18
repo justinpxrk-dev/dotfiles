@@ -20,7 +20,7 @@ GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
 # key on non-authorized machines does not block the rest of the script.
 # --recursive is omitted: these submodules are owner-maintained and have no
 # nested submodules.
-git submodule update --init --quiet -- \
+git submodule update --init --checkout --quiet -- \
 	Fonts/font-monolisa \
 	Fonts/lib/monolisa-nerdfont-patch || true
 
@@ -65,6 +65,10 @@ install_sbarlua() {
 
 install_sketchybar_app_font() {
 	local name="sketchybar-app-font" path="dot_config/sketchybar/lib/sketchybar-app-font"
+	# pnpm 11+ refuses to run dependency build scripts unless they are
+	# explicitly approved via `allowBuilds` in pnpm-workspace.yaml. Upstream
+	# doesn't ship one, so write it locally; `git clean -fd` below removes it.
+	printf 'allowBuilds:\n  ttf2woff2: true\n' >"$path/pnpm-workspace.yaml"
 	in_submodule "$name" "$path" "Installing dependencies" mise exec -- pnpm install || return
 	in_submodule "$name" "$path" "Building" mise exec -- pnpm run build:install || return
 	rm -f "$HOME/.config/sketchybar/helpers/icon_map.sh"

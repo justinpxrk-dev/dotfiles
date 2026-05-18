@@ -10,6 +10,8 @@ jobs:
   format:
     name: Format
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -29,6 +31,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -49,6 +53,8 @@ jobs:
     name: Deploy (macOS)
     needs: [format, lint]
     runs-on: macos-26
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Deploy dotfiles
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply justinpxrk-dev
