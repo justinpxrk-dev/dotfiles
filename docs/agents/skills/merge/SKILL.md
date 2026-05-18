@@ -6,7 +6,7 @@ Merge a branch into main by rebasing it onto main and fast-forward merging it.
 
 2. **Identify the branch** — use the branch name passed as the skill argument. If no argument was given, ask the user which branch to merge.
 
-3. **Confirm the branch exists** — run `git branch --list <branch>`. If it doesn't exist, stop and tell the user.
+3. **Resolve the branch name** — run `git branch --list <branch>`. If it exists, use it as-is. If it doesn't exist, also try `worktree-<branch>` (e.g. the argument `foo` may map to the branch `worktree-foo`). If neither exists, stop and tell the user.
 
 4. **Find the worktree path** — run `git worktree list --porcelain` and check if `branch refs/heads/<branch>` appears. If it does, extract the associated `worktree` path — you'll need it in steps 5 and 8.
 
