@@ -1,4 +1,4 @@
-# dotfiles [![CI](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/ci.yml)
+# dotfiles [![CI](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/ci.yml) [![Deploy (public)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-public.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-public.yml) [![Deploy (authenticated)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-authenticated.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-authenticated.yml)
 
 _Intended for personal use (some listed features may be under development). Inspect all code and use at your own risk._
 

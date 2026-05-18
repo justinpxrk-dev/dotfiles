@@ -36,7 +36,12 @@ shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths 
 
 ## CI
 
-GitHub Actions runs `format:check` and `lint` on every push and pull request to `main`. The workflow mirrors local setup: mise installs all tools, then `pnpm install --frozen-lockfile` and `uv sync --dev` install package dependencies before running checks.
+GitHub Actions runs `format:check` and `lint` on every push and pull request to any branch. The workflow mirrors local setup: mise installs all tools, then `pnpm install --frozen-lockfile` and `uv sync --dev` install package dependencies before running checks.
+
+Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
+
+- `deploy-public.yml` — runs on every push and pull request (any branch) plus `workflow_dispatch`. No secrets, so fork PRs are safe; private submodules fail silently.
+- `deploy-authenticated.yml` — runs on every push (any branch) plus `workflow_dispatch`. Uses `webfactory/ssh-agent` with deploy keys for private submodules. `pull_request` is intentionally excluded so deploy-key secrets are never exposed to fork PRs.
 
 ## Worktrees
 

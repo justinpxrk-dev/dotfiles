@@ -1,0 +1,29 @@
+name: Deploy (public)
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy (macOS)
+    runs-on: macos-26
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+
+      - name: Link checkout as chezmoi source dir
+        run: |
+          mkdir -p "$HOME/.local/share"
+          ln -sfn "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Apply dotfiles
+        run: chezmoi apply
