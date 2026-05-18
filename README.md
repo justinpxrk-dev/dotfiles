@@ -51,6 +51,8 @@ Or if `chezmoi` is already installed:
 chezmoi init --apply justinpxrk-dev/dotfiles
 ```
 
+`chezmoi init` clones this repo to `~/.local/share/chezmoi` (the default source directory on macOS).
+
 `chezmoi` automatically runs bootstrap scripts on first apply (submodules, cargo tools, LaunchAgent registration). Afterwards, apply macOS system defaults and reboot:
 
 ```sh
