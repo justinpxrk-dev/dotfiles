@@ -46,7 +46,7 @@ Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run automatically by c
 
 ### `build_themes.sh`
 
-Builds theme outputs (Ghostty colorscheme, VS Code extension) from a Base24 scheme directory and installs them. Run after modifying any palette in `Themes/`.
+Builds theme outputs (zsh script, Ghostty colorscheme, VS Code extension) from a Base24 scheme directory and installs them. Run after modifying any palette in `Themes/`.
 
 ```sh
 ./Scripts/Themes/build_themes.sh <theme-name>

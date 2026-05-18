@@ -9,6 +9,14 @@ if [[ ! -d "$REPO_ROOT/Themes/$THEME" ]]; then
 	exit 1
 fi
 
+tinted-builder-rust build "$REPO_ROOT/Themes/lib/tinted-shell" \
+	--schemes-dir "$REPO_ROOT/Themes/$THEME"
+cp "$REPO_ROOT/Themes/lib/tinted-shell/profile_helper.sh" \
+	"$REPO_ROOT/dot_config/zsh/themes/profile_helper.sh"
+mv "$REPO_ROOT/Themes/lib/tinted-shell/scripts/"*.sh \
+	"$REPO_ROOT/dot_config/zsh/themes/scripts/"
+rm -rf "$REPO_ROOT/Themes/lib/tinted-shell/scripts"
+
 tinted-builder-rust build "$REPO_ROOT/Themes/lib/tinted-terminal" \
 	--schemes-dir "$REPO_ROOT/Themes/$THEME"
 mv "$REPO_ROOT/Themes/lib/tinted-terminal/themes/ghostty/"* \
