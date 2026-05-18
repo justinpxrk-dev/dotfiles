@@ -25,6 +25,7 @@ jobs:
 
       - name: Check formatting
         run: pnpm run format:check
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -43,3 +44,11 @@ jobs:
 
       - name: Lint
         run: pnpm run lint
+
+  deploy:
+    name: Deploy (macOS)
+    needs: [format, lint]
+    runs-on: macos-26
+    steps:
+      - name: Deploy dotfiles
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply justinpxrk-dev

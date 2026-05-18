@@ -1,18 +1,20 @@
+tap "asmvik/formulae"
+tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
 tap "spicetify/tap"
 
 # Desktop Environment
 brew "cbonsai"
 brew "cmatrix"
-brew "dark-notify"
+brew "cormacrelf/tap/dark-notify"
 brew "fastfetch"
-brew "borders"
+brew "FelixKratz/formulae/borders"
 brew "macmon"
 brew "pipes-sh"
-brew "sketchybar"
-brew "skhd"
+brew "FelixKratz/formulae/sketchybar"
+brew "asmvik/formulae/skhd"
 brew "spicetify-cli"
-brew "yabai"
+brew "asmvik/formulae/yabai"
 
 # CLI — Core Replacements
 brew "bat"

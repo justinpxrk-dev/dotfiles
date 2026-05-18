@@ -65,8 +65,8 @@ install_sbarlua() {
 
 install_sketchybar_app_font() {
 	local name="sketchybar-app-font" path="dot_config/sketchybar/lib/sketchybar-app-font"
-	in_submodule "$name" "$path" "Installing dependencies" pnpm install || return
-	in_submodule "$name" "$path" "Building" pnpm run build:install || return
+	in_submodule "$name" "$path" "Installing dependencies" mise exec -- pnpm install || return
+	in_submodule "$name" "$path" "Building" mise exec -- pnpm run build:install || return
 	rm -f "$HOME/.config/sketchybar/helpers/icon_map.sh"
 	in_submodule "$name" "$path" "Resetting" git restore . || return
 	in_submodule "$name" "$path" "Cleaning" git clean -fd

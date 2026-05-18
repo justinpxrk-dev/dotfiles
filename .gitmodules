@@ -1,9 +1,11 @@
 [submodule "Fonts/font-monolisa"]
 	path = Fonts/font-monolisa
 	url = git@github.com:justinpxrk-dev/font-monolisa.git
+	update = none
 [submodule "Fonts/lib/monolisa-nerdfont-patch"]
 	path = Fonts/lib/monolisa-nerdfont-patch
 	url = git@github.com:justinpxrk-dev/monolisa-nerdfont-patch.git
+	update = none
 [submodule "dot_config/sketchybar/lib/SbarLua"]
 	path = dot_config/sketchybar/lib/SbarLua
 	url = https://github.com/FelixKratz/SbarLua.git

@@ -1,2 +1,8 @@
 [diff]
     pager = "delta"
+
+[git]
+    # Private SSH submodules use `update = none` in .gitmodules to prevent
+    # auto-init on fresh installs. install-submodules.sh manages all submodules
+    # explicitly, so chezmoi should not recurse into them on `chezmoi update`.
+    recurseSubmodules = false
