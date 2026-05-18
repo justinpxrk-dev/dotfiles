@@ -9,6 +9,7 @@
     "Unmanaged/",
     "Wallpapers/",
     "dot_config/",
-    ".claude/worktrees/"
+    ".claude/worktrees/",
+    "dot_claude/"
   ]
 }

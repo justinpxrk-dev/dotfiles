@@ -102,6 +102,25 @@
       "type": "file",
       "ctime": 1779093271940,
       "path": "docs/developer.md"
+    },
+    {
+      "type": "group",
+      "ctime": 1779106647933,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1779106665922,
+          "path": "docs/keyboard-shortcuts/macos/keyboard-shortcuts.md.md",
+          "title": "macos"
+        },
+        {
+          "type": "file",
+          "ctime": 1779106688607,
+          "path": "docs/keyboard-shortcuts/skhd/keyboard-shortcuts.md.md",
+          "title": "skhd"
+        }
+      ],
+      "title": "keyboard-shortcuts"
     }
   ]
 }
