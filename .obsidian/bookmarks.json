@@ -36,6 +36,12 @@
       "type": "file",
       "ctime": 1779019177485,
       "path": "docs/agents/AGENTS.md"
+    },
+    {
+      "type": "file",
+      "ctime": 1779072020137,
+      "path": "docs/notes.md",
+      "title": "notes"
     }
   ]
 }
