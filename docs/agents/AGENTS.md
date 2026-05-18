@@ -85,7 +85,7 @@ pnpm run lint:sh / lint:lua / lint:py
 
 ## Scripts
 
-If you need details about available scripts, read `docs/scripts.md`.
+Scripts live under `Scripts/` and are all available as mise tasks. Run `mise tasks` to list them or `mise run <task>` to invoke one (e.g. `mise run themes:build -- petrichor-dark`). For full per-script documentation, read `docs/scripts.md`.
 
 ## Zsh Config
 

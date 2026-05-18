@@ -1,6 +1,6 @@
 # Scripts
 
-Scripts live under `Scripts/` and are run from the repo root. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts live under `Scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ### `set_system_settings.sh`
 
@@ -8,6 +8,8 @@ Applies macOS defaults and system preferences. Reboot immediately after — open
 
 ```sh
 ./Scripts/macos/set_system_settings.sh
+# or
+mise run macos:settings
 ```
 
 > Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [macos-manual-settings.md](macos/macos-manual-settings.md).
@@ -18,6 +20,8 @@ Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the cu
 
 ```sh
 ./Scripts/macos/register_launch_agents.sh
+# or
+mise run macos:launch-agents
 ```
 
 ### `install_submodules.sh`
@@ -26,6 +30,8 @@ Initialises all git submodules and builds/installs their outputs (MonoLisa fonts
 
 ```sh
 ./Scripts/git/install_submodules.sh
+# or
+mise run git:submodules
 ```
 
 ### `install_packages.sh`
@@ -34,6 +40,8 @@ Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run 
 
 ```sh
 ./Scripts/brew/install_packages.sh
+# or
+mise run brew:install
 ```
 
 ### `install_tools.sh`
@@ -42,6 +50,8 @@ Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run automatically by c
 
 ```sh
 ./Scripts/cargo/install_tools.sh
+# or
+mise run cargo:install
 ```
 
 ### `build_themes.sh`
@@ -50,6 +60,18 @@ Builds theme outputs (zsh script, Ghostty colorscheme, VS Code extension) from a
 
 ```sh
 ./Scripts/Themes/build_themes.sh <theme-name>
+# or
+mise run themes:build -- <theme-name>
+```
+
+### `generate_base24_palette.py`
+
+Generates Base24 dark and light palette YAML files using HCT color space algorithms. Run after modifying the palette generation logic in `Scripts/Themes/`.
+
+```sh
+uv run ./Scripts/Themes/generate_base24_palette.py
+# or
+mise run themes:generate-palette
 ```
 
 ### `on_theme_change.sh`
@@ -57,7 +79,11 @@ Builds theme outputs (zsh script, Ghostty colorscheme, VS Code extension) from a
 Applies the correct accent colors to `borders` for the current light/dark mode. Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
 
 ```sh
-./Scripts/Themes/on_theme_change.sh [dark|light]
+./Scripts/Themes/on_theme_change.sh            # detect from system
+./Scripts/Themes/on_theme_change.sh dark|light
+# or
+mise run themes:change-mode                    # detect from system
+mise run themes:change-mode -- dark|light
 ```
 
 ### `benchmark_startup.sh`
@@ -66,4 +92,6 @@ Benchmarks Zsh startup time using `hyperfine` (200 runs, 10 warmups). Useful whe
 
 ```sh
 ./Scripts/zsh/benchmark_startup.sh
+# or
+mise run zsh:benchmark
 ```

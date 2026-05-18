@@ -7,3 +7,39 @@ rust = "latest"
 stylua = "latest"
 lua-language-server = "latest"
 lefthook = "latest"
+
+[tasks."brew:install"]
+description = "Install Homebrew packages declared in ~/.Brewfile"
+run = "./Scripts/brew/install_packages.sh"
+
+[tasks."cargo:install"]
+description = "Install Cargo-managed CLI tools (tinted-builder-rust)"
+run = "./Scripts/cargo/install_tools.sh"
+
+[tasks."git:submodules"]
+description = "Initialise all git submodules and build/install their outputs"
+run = "./Scripts/git/install_submodules.sh"
+
+[tasks."macos:launch-agents"]
+description = "Register com.justinpxrk.* LaunchAgents into the current login session"
+run = "./Scripts/macos/register_launch_agents.sh"
+
+[tasks."macos:settings"]
+description = "Apply macOS defaults and system preferences"
+run = "./Scripts/macos/set_system_settings.sh"
+
+[tasks."themes:build"]
+description = "Build theme outputs (zsh, Ghostty, VS Code) from a Base24 scheme directory"
+run = "./Scripts/Themes/build_themes.sh"
+
+[tasks."themes:change-mode"]
+description = "Apply accent colors to borders for the current light/dark mode; pass dark|light to force, omit to detect from system"
+run = "./Scripts/Themes/on_theme_change.sh"
+
+[tasks."themes:generate-palette"]
+description = "Generate Base24 dark and light palette YAML files"
+run = "uv run ./Scripts/Themes/generate_base24_palette.py"
+
+[tasks."zsh:benchmark"]
+description = "Benchmark Zsh startup time with hyperfine (200 runs, 50 warmups)"
+run = "./Scripts/zsh/benchmark_startup.sh"
