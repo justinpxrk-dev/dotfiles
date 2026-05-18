@@ -67,9 +67,9 @@ source "$ZSH_CONFIG_HOME/.zshrc_opts"
 # Recache completions if older than 24 hours
 local compdump_is_stale=($ZSH_COMPDUMP(Nmh+24))
 if (($#compdump_is_stale)); then
-	compinit -d $ZSH_COMPDUMP
+	compinit -d "$ZSH_COMPDUMP"
 else
-	compinit -C -d $ZSH_COMPDUMP
+	compinit -C -d "$ZSH_COMPDUMP"
 fi
 
 ####### Benchmark Tools #######

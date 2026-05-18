@@ -8,7 +8,7 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 
 # History
-mkdir -p "$ZSH_STATE_HOME"
+[[ -d "$ZSH_STATE_HOME" ]] || mkdir -p "$ZSH_STATE_HOME"
 HISTFILE="$ZSH_STATE_HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000

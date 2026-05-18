@@ -21,32 +21,32 @@ export EDITOR="$VISUAL"
 # Homebrew
 export HOMEBREW_PREFIX="/opt/homebrew"
 homebrew_opt_prefix="$HOMEBREW_PREFIX/opt"
-export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/bin${PATH:+:$PATH}"
 
 # gnu-getopt
-export PATH="$homebrew_opt_prefix/gnu-getopt/bin:$PATH"
+export PATH="$homebrew_opt_prefix/gnu-getopt/bin${PATH:+:$PATH}"
 
 # grep
-export PATH="$homebrew_opt_prefix/grep/libexec/gnubin:$PATH"
+export PATH="$homebrew_opt_prefix/grep/libexec/gnubin${PATH:+:$PATH}"
 
 # nvim
 export VIM="$XDG_CONFIG_HOME/nvim"
 export VIMRUNTIME="$homebrew_opt_prefix/neovim/share/nvim/runtime/"
 
 # Postgres
-export PKG_CONFIG_PATH="$homebrew_opt_prefix/icu4c@78/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$homebrew_opt_prefix/icu4c@78/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
 # sqlite
-export CPPFLAGS="-I$homebrew_opt_prefix/sqlite/include:$CPPFLAGS"
-export LDFLAGS="-L$homebrew_opt_prefix/sqlite/lib:$LDFLAGS"
-export PATH="$homebrew_opt_prefix/sqlite/bin:$PATH"
+export CPPFLAGS="-I$homebrew_opt_prefix/sqlite/include${CPPFLAGS:+ $CPPFLAGS}"
+export LDFLAGS="-L$homebrew_opt_prefix/sqlite/lib${LDFLAGS:+ $LDFLAGS}"
+export PATH="$homebrew_opt_prefix/sqlite/bin${PATH:+:$PATH}"
 
 # uv
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin${PATH:+:$PATH}"
 
 # zlib
-export CPPFLAGS="-I$homebrew_opt_prefix/zlib/include:$CPPFLAGS"
-export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib:$LDFLAGS"
-export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
+export CPPFLAGS="-I$homebrew_opt_prefix/zlib/include${CPPFLAGS:+ $CPPFLAGS}"
+export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib${LDFLAGS:+ $LDFLAGS}"
+export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
 unset homebrew_opt_prefix
