@@ -2,7 +2,7 @@
 
 _Intended for personal use (some listed features may be under development). Inspect all code and use at your own risk._
 
-macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
+macOS (Tahoe 26.4.1) dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
 
 A macOS-centric developer setup for a software engineer focused on agentic coding. Designed for frictionless portability, productivity, and neat integration with the macOS design system. Featuring [Tinted Theming](https://github.com/tinted-theming) integration with a custom luminance-balancing color generation script for automatic dark/light mode theme changes, shell startup times under 40 ms (on Apple M3), tiling window management from [`yabai`](https://github.com/asmvik/yabai) (SIP-enabled mode for workplace compatibility), [`sketchybar`](https://github.com/felixkratz/sketchybar) config written in Lua, and more!
 
