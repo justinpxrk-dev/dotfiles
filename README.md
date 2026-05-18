@@ -2,8 +2,8 @@
 
 ## Health Check
 
-| CI | Deploy (public) | Deploy (authenticated) |
-|----|-----------------|------------------------|
+| CI                                                                                                                                                          | Deploy (public)                                                                                                                                                                                | Deploy (authenticated)                                                                                                                                                                                              |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![CI](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/ci.yml) | [![Deploy (public)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-public.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-public.yml) | [![Deploy (authenticated)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-authenticated.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-authenticated.yml) |
 
 macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/).
