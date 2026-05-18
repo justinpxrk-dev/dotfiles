@@ -4,6 +4,7 @@
     "prettier": "^3.8.3"
   },
   "scripts": {
+    "prepare": "lefthook install",
     "format": "pnpm run format:md && pnpm run format:sh && pnpm run format:lua && pnpm run format:py",
     "format:check": "pnpm run format:check:md && pnpm run format:check:sh && pnpm run format:check:lua && pnpm run format:check:py",
     "lint": "pnpm run lint:sh && pnpm run lint:lua && pnpm run lint:py",
@@ -11,7 +12,7 @@
     "format:check:md": "prettier --check .",
     "format:py": "ruff format .",
     "format:check:py": "ruff format --check .",
-    "lint:py": "ruff check . && pyright",
+    "lint:py": "uv run ruff check . && uv run pyright",
     "lint:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' | xargs shellcheck",
     "format:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' | xargs shfmt -w",
     "format:check:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' | xargs shfmt -d",

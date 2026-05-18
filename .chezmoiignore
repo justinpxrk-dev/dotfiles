@@ -16,6 +16,7 @@ CLAUDE.md
 
 # Tools
 dotfiles.code-workspace
+lefthook.yml
 mise.toml
 node_modules
 nvim.yml

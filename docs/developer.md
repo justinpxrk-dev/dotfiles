@@ -9,7 +9,7 @@ Instructions for setting up and configuring developer tools.
 
 ## Setup
 
-Install all tools managed by `mise`, install Node.js packages, and sync Python dev dependencies:
+Install all tools managed by `mise`, install Node.js packages, and sync Python dev dependencies. The `pnpm install` step also runs `lefthook install` via the `prepare` script, which sets up the pre-commit hook. The `uv sync --dev` step creates the virtual environment at `.venv/` and installs all Python dependencies into it.
 
 ```sh
 mise install

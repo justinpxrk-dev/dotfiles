@@ -66,7 +66,9 @@ chezmoi apply ~/.config/sketchybar    # Apply a specific path
 
 ## Formatting and Linting
 
-Tools are managed via `mise` (node, pnpm, python, ruff, rust, stylua, lua-language-server). Run `mise install` first.
+Tools are managed via `mise` (node, pnpm, python, ruff, rust, stylua, lua-language-server, lefthook). Run `mise install` first.
+
+A pre-commit hook enforces `format:check` and `lint` on every commit. It is configured in `lefthook.yml` and installed automatically by `pnpm install` via the `prepare` script.
 
 ```sh
 pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
