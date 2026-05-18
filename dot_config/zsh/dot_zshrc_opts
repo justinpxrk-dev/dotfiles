@@ -3,13 +3,18 @@
 
 # zsh options
 
+# Completions
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path "$ZSH_CACHE_HOME/.zcompcache"
+
 # Directory
+setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 
 # History
-[[ -d "$ZSH_STATE_HOME" ]] || mkdir -p "$ZSH_STATE_HOME"
-HISTFILE="$ZSH_STATE_HOME/.zsh_history"
+[[ -d "$ZSH_DATA_HOME" ]] || mkdir -p "$ZSH_DATA_HOME"
+HISTFILE="$ZSH_DATA_HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
 setopt HIST_IGNORE_ALL_DUPS

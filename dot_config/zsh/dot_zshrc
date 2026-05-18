@@ -32,7 +32,7 @@ autoload -Uz add-zsh-hook compinit
 	done
 }
 
-# Environment variables
+# Interactive shell environment variables
 source "$HOME/.config/zsh/.zshrc_env"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of
@@ -64,13 +64,29 @@ source "$ZSH_CONFIG_HOME/.zshrc_bindings"
 source "$ZSH_CONFIG_HOME/.zshrc_hooks"
 source "$ZSH_CONFIG_HOME/.zshrc_opts"
 
-# Recache completions if older than 24 hours
-local compdump_is_stale=($ZSH_COMPDUMP(Nmh+24))
-if (($#compdump_is_stale)); then
-	compinit -d "$ZSH_COMPDUMP"
-else
-	compinit -C -d "$ZSH_COMPDUMP"
-fi
+# Add completions directory to fpath
+fpath=("$ZSH_CONFIG_HOME/completions" $fpath)
+
+# Regenerate mise completions if missing or mise binary has been updated
+() {
+	local mise_comp="$ZSH_COMPLETIONS_HOME/_mise"
+	local mise_bin="${commands[mise]}"
+	if [[ ! -f "$mise_comp" || "$mise_bin" -nt "$mise_comp" ]]; then
+		[[ ! -d "${mise_comp:h}" ]] && mkdir -p "${mise_comp:h}"
+		mise completion zsh >|"$mise_comp" 2>/dev/null
+		rm -f "$ZSH_COMPDUMP"
+	fi
+}
+
+# Initialize completions; rebuild dump if missing or older than 24 hours
+() {
+	setopt LOCAL_OPTIONS EXTENDED_GLOB
+	if [[ -n "$ZSH_COMPDUMP"(#qN.mh+24) ]]; then
+		compinit -d "$ZSH_COMPDUMP"
+	else
+		compinit -C -d "$ZSH_COMPDUMP"
+	fi
+}
 
 ####### Benchmark Tools #######
 # zprof
