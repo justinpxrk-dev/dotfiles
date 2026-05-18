@@ -17,6 +17,30 @@ pnpm install
 uv sync --dev
 ```
 
-## Usage
+## Formatting and Linting
 
-Format and lint commands are available via `pnpm`. See [AGENTS.md](agents/AGENTS.md) for the full command reference.
+```sh
+pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
+pnpm run format:check    # Check formatting without writing
+pnpm run lint            # Lint shell (shellcheck), Lua (lua-language-server), and Python (ruff, pyright)
+```
+
+Individual formatters:
+
+```sh
+pnpm run format:md / format:sh / format:lua / format:py
+pnpm run lint:sh / lint:lua / lint:py
+```
+
+## Worktrees
+
+When working in a worktree, some tools require per-path trust or registration before they function. Run any required setup after creating a worktree, and clean up before removing it — the `/merge` skill handles cleanup automatically.
+
+**mise** — trust the config before any mise command, then install tools and bootstrap Node packages using the mise-managed PATH:
+
+```sh
+mise trust                          # required before mise install or mise run
+mise install                        # install tools
+mise exec -- pnpm install           # bootstrap lefthook and other PATH-dependent tools
+mise trust --untrust mise.toml      # on exit (handled by /merge)
+```

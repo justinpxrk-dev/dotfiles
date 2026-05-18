@@ -64,24 +64,9 @@ chezmoi apply                         # Apply all managed files to home dir
 chezmoi apply ~/.config/sketchybar    # Apply a specific path
 ```
 
-## Formatting and Linting
+## Developer Workflow
 
-Tools are managed via `mise` (node, pnpm, python, ruff, rust, stylua, lua-language-server, lefthook). Run `mise install` first.
-
-A pre-commit hook enforces `format:check` and `lint` on every commit. It is configured in `lefthook.yml` and installed automatically by `pnpm install` via the `prepare` script.
-
-```sh
-pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
-pnpm run format:check    # Check formatting without writing
-pnpm run lint            # Lint shell (shellcheck), Lua (lua-language-server), and Python (ruff, pyright)
-```
-
-Individual formatters:
-
-```sh
-pnpm run format:md / format:sh / format:lua / format:py
-pnpm run lint:sh / lint:lua / lint:py
-```
+See [`docs/developer.md`](../developer.md) for setup, formatting, linting, and worktree tool lifecycle (e.g. `mise trust`).
 
 ## Scripts
 
