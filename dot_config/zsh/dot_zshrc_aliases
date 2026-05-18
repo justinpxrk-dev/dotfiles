@@ -25,6 +25,7 @@ alias reload="source \$ZSH_CONFIG_HOME/.zshrc"
 # Dotfiles
 alias edit-aliases="edit \$DOTFILES/dot_config/zsh/dot_zshrc_aliases"
 alias edit-dot="code \$DOTFILES/dotfiles.code-workspace"
+alias edit-skhd="edit \$DOTFILES/dot_config/skhd/skhdrc"
 # homebrew
 alias brewload="brew update && brew upgrade && brew cleanup"
 # ls
