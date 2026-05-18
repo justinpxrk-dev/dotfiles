@@ -19,6 +19,21 @@ chezmoi/
 ├── .claude/    — Claude Code config and skills
 │   └── skills/ — custom slash commands
 ├── .vscode/    — VSCode workspace settings
+├── Assets/     — icons and images
+├── Fonts/      — font sources
+│   ├── font-monolisa @ †
+│   └── lib/
+│       └── monolisa-nerdfont-patch @ †
+├── Library/    → ~/Library/
+│   └── LaunchAgents/
+├── Scripts/    — shell scripts
+├── Themes/     — Petrichor theme definitions (see Themes System)
+│   └── lib/
+│       ├── tinted-shell @ ⑂
+│       ├── tinted-terminal @ ⑂
+│       └── tinted-vscode @ ⑂
+├── Unmanaged/  — reference configs not managed by chezmoi
+├── Wallpapers/ — desktop wallpapers
 ├── docs/       — documentation
 ├── dot_Brewfile          → ~/.Brewfile
 ├── dot_claude/           → ~/.claude
@@ -37,22 +52,7 @@ chezmoi/
 │   ├── yabai/
 │   └── zsh/
 ├── dot_zshenv.tmpl       → ~/.zshenv
-├── empty_dot_hushlogin   → ~/.hushlogin
-├── Assets/     — icons and images
-├── Fonts/      — font sources
-│   ├── font-monolisa @ †
-│   └── lib/
-│       └── monolisa-nerdfont-patch @ †
-├── Library/    → ~/Library/
-│   └── LaunchAgents/
-├── Scripts/    — shell scripts
-├── Themes/     — Petrichor theme definitions (see Themes System)
-│   └── lib/
-│       ├── tinted-shell @ ⑂
-│       ├── tinted-terminal @ ⑂
-│       └── tinted-vscode @ ⑂
-├── Unmanaged/  — reference configs not managed by chezmoi
-└── Wallpapers/ — desktop wallpapers
+└── empty_dot_hushlogin   → ~/.hushlogin
 ```
 
 `@` submodule · `⑂` fork · `†` private

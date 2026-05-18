@@ -72,24 +72,6 @@ Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by `chezmo
 ```
 chezmoi/
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi
-├── docs/       — documentation
-├── dot_Brewfile → ~/.Brewfile
-├── dot_claude/ → ~/.claude
-├── dot_config/ → ~/.config/
-│   ├── borders/
-│   ├── ghostty/
-│   ├── git/
-│   ├── nvim/
-│   ├── sketchybar/
-│   │   └── lib/
-│   │       ├── sketchybar-app-font @
-│   │       └── SbarLua @
-│   ├── skhd/
-│   ├── spicetify/
-│   ├── yabai/
-│   └── zsh/
-├── dot_zshenv  → ~/.zshenv
-├── empty_dot_hushlogin → ~/.hushlogin
 ├── Assets/     — icons and images
 ├── Fonts/      — font sources
 │   ├── font-monolisa @ †
@@ -103,7 +85,26 @@ chezmoi/
 │       ├── tinted-terminal @ ⑂
 │       └── tinted-vscode @ ⑂
 ├── Unmanaged/  — reference configs not managed by chezmoi
-└── Wallpapers/ — desktop wallpapers
+├── Wallpapers/ — desktop wallpapers
+├── docs/       — documentation
+├── dot_Brewfile → ~/.Brewfile
+├── dot_claude/ → ~/.claude
+├── dot_config/ → ~/.config/
+│   ├── borders/
+│   ├── chezmoi/
+│   ├── ghostty/
+│   ├── git/
+│   ├── nvim/
+│   ├── sketchybar/
+│   │   └── lib/
+│   │       ├── sketchybar-app-font @
+│   │       └── SbarLua @
+│   ├── skhd/
+│   ├── spicetify/
+│   ├── yabai/
+│   └── zsh/
+├── dot_zshenv  → ~/.zshenv
+└── empty_dot_hushlogin → ~/.hushlogin
 ```
 
 `@` submodule · `⑂` fork · `†` private
