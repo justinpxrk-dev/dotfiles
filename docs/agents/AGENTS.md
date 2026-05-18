@@ -11,10 +11,17 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Project Structure
 
-Both `dot_config/` and `Library/` are applied by chezmoi; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by chezmoi; all other directories are tracked in git only.
 
 ```
 chezmoi/
+├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
+├── .claude/    — Claude Code config and skills
+│   └── skills/ — custom slash commands
+├── .vscode/    — VSCode workspace settings
+├── docs/       — documentation
+├── dot_Brewfile          → ~/.Brewfile
+├── dot_claude/           → ~/.claude
 ├── dot_config/ → ~/.config/
 │   ├── borders/
 │   ├── ghostty/
@@ -22,11 +29,19 @@ chezmoi/
 │   ├── nvim/
 │   ├── sketchybar/
 │   │   └── lib/
-│   │       ├── SbarLua @
-│   │       └── sketchybar-app-font @
+│   │       ├── sketchybar-app-font @
+│   │       └── SbarLua @
+│   ├── skhd/
 │   ├── spicetify/
 │   ├── yabai/
 │   └── zsh/
+├── dot_zshenv            → ~/.zshenv
+├── empty_dot_hushlogin   → ~/.hushlogin
+├── Assets/     — icons and images
+├── Fonts/      — font sources
+│   ├── font-monolisa @ †
+│   └── lib/
+│       └── monolisa-nerdfont-patch @ †
 ├── Library/    → ~/Library/
 │   └── LaunchAgents/
 ├── Scripts/    — shell scripts
@@ -34,18 +49,8 @@ chezmoi/
 │   └── lib/
 │       ├── tinted-terminal @ ⑂
 │       └── tinted-vscode @ ⑂
-├── Wallpapers/ — desktop wallpapers
-├── Assets/     — icons and images
-├── Fonts/      — font sources
-│   ├── font-monolisa @ †
-│   └── lib/
-│       └── monolisa-nerdfont-patch @ †
-├── docs/       — documentation
-├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
-├── .claude/    — Claude Code config and skills
-│   └── skills/ — custom slash commands
-├── .vscode/    — VSCode workspace settings
-└── Unmanaged/  — reference configs not managed by chezmoi
+├── Unmanaged/  — reference configs not managed by chezmoi
+└── Wallpapers/ — desktop wallpapers
 ```
 
 `@` submodule · `⑂` fork · `†` private

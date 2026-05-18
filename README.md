@@ -34,7 +34,8 @@ A macOS-centric developer setup for a software engineer focused on agentic codin
 - **Tiling Window Management**. [`yabai`](https://github.com/asmvik/yabai) + [`skhd`](https://github.com/asmvik/skhd) for keyboard-driven window layout management.
 - **Customizable Menu Bar**. [`sketchybar`](https://github.com/felixkratz/sketchybar)config written in Rust and Lua to implement a performant, extendable event-driven architecture.
 - **Developer Tool Management.** [`mise`](https://mise.jdx.dev/) for managing all developer tools and automatic environment activation.
-- **Coding Agent Knowledge Base.** Use any agent with the agent-agnostic knowledge base under `docs/` to offload dotfiles management and custom feature development to AI.
+- **Package Management.** Homebrew formulae and casks tracked in `Brewfile` and auto-installed on `chezmoi apply`.
+- **Coding Agent Knowledge Base.** Use any agent with the agent-agnostic knowledge base under `docs/` to support dotfiles management and custom feature development.
 
 ## Bootstrap
 
@@ -64,10 +65,14 @@ chezmoi update
 
 ## Project Structure
 
-Both `dot_config/` and `Library/` are applied by `chezmoi`; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by `chezmoi`; all other directories are tracked in git only.
 
 ```
 chezmoi/
+├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi
+├── docs/       — documentation
+├── dot_Brewfile → ~/.Brewfile
+├── dot_claude/ → ~/.claude
 ├── dot_config/ → ~/.config/
 │   ├── borders/
 │   ├── ghostty/
@@ -75,11 +80,19 @@ chezmoi/
 │   ├── nvim/
 │   ├── sketchybar/
 │   │   └── lib/
-│   │       ├── SbarLua @
-│   │       └── sketchybar-app-font @
+│   │       ├── sketchybar-app-font @
+│   │       └── SbarLua @
+│   ├── skhd/
 │   ├── spicetify/
 │   ├── yabai/
 │   └── zsh/
+├── dot_zshenv  → ~/.zshenv
+├── empty_dot_hushlogin → ~/.hushlogin
+├── Assets/     — icons and images
+├── Fonts/      — font sources
+│   ├── font-monolisa @ †
+│   └── lib/
+│       └── monolisa-nerdfont-patch @ †
 ├── Library/    → ~/Library/
 │   └── LaunchAgents/
 ├── Scripts/    — shell scripts
@@ -87,15 +100,8 @@ chezmoi/
 │   └── lib/
 │       ├── tinted-terminal @ ⑂
 │       └── tinted-vscode @ ⑂
-├── Wallpapers/ — desktop wallpapers
-├── Assets/     — icons and images
-├── Fonts/      — font sources
-│   ├── font-monolisa @ †
-│   └── lib/
-│       └── monolisa-nerdfont-patch @ †
-├── docs/       — documentation
-├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi
-└── Unmanaged/  — reference configs not managed by chezmoi
+├── Unmanaged/  — reference configs not managed by chezmoi
+└── Wallpapers/ — desktop wallpapers
 ```
 
 `@` submodule · `⑂` fork · `†` private
