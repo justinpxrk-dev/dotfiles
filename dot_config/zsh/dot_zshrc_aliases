@@ -9,14 +9,10 @@
 (($+commands[duf])) && alias df=duf
 (($+commands[dust])) && alias du=dust
 (($+commands[eza])) && alias ls=eza
-
 # fd/rg have incompatible CLIs vs find/grep — use distinct aliases instead
 # of shadowing the POSIX commands so copy-pasted invocations still work.
 (($+commands[fd])) && alias f=fd
 (($+commands[rg])) && alias g=rg
-
-# Editor
-alias edit="\$EDITOR"
 
 # zsh
 alias ..="cd .."
@@ -24,12 +20,19 @@ alias back="popd"
 alias recomp="compinit -d \$ZSH_COMPDUMP"
 alias reload="source \$ZSH_CONFIG_HOME/.zshrc"
 # Dotfiles
-alias dot="cd \$DOTFILES"
+alias .cd="cd \$DOTFILES"
 # Run claude in the dotfiles dir without changing the caller's cwd.
-(($+commands[claude])) && alias dot-claude="(cd \$DOTFILES && claude)"
-alias dot-edit="code \$DOTFILES/dotfiles.code-workspace"
-alias edit-aliases="edit \$DOTFILES/dot_config/zsh/dot_zshrc_aliases"
-alias edit-skhd="edit \$DOTFILES/dot_config/skhd/skhdrc"
+(($+commands[claude])) && alias .claude="(cd \$DOTFILES && claude)"
+alias .aliases="\$EDITOR \$DOTFILES/dot_config/zsh/dot_zshrc_aliases"
+alias .borders="\$EDITOR \$DOTFILES/dot_config/borders/executable_bordersrc.tmpl"
+alias .chezmoi="\$EDITOR \$DOTFILES/dot_config/chezmoi/chezmoi.toml"
+(($+commands[code])) && alias .code="code \$DOTFILES/dotfiles.code-workspace"
+alias .ghostty="\$EDITOR \$DOTFILES/dot_config/ghostty/config.ghostty"
+alias .git="\$EDITOR \$DOTFILES/dot_config/git/config.tmpl"
+alias .nvim="\$EDITOR \$DOTFILES/dot_config/nvim/init.lua"
+alias .skhd="\$EDITOR \$DOTFILES/dot_config/skhd/skhdrc"
+alias .tmux="\$EDITOR \$DOTFILES/dot_config/tmux/tmux.conf"
+alias .yabai="\$EDITOR \$DOTFILES/dot_config/yabai/executable_yabairc"
 # homebrew
 (($+commands[brew])) && alias brewload="brew update && brew upgrade && brew cleanup"
 # ls
