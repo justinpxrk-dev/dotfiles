@@ -51,6 +51,7 @@ chezmoi/
 │   │       └── SbarLua @
 │   ├── skhd/
 │   ├── spicetify/
+│   ├── tmux/
 │   ├── yabai/
 │   └── zsh/
 ├── dot_zshenv.tmpl       → ~/.zshenv

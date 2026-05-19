@@ -14,6 +14,7 @@ brew "pipes-sh"
 brew "FelixKratz/formulae/sketchybar"
 brew "asmvik/formulae/skhd"
 brew "spicetify-cli"
+brew "tmux"
 brew "asmvik/formulae/yabai"
 
 # CLI — Core Replacements
