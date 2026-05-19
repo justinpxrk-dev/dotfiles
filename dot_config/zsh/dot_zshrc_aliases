@@ -25,6 +25,8 @@ alias recomp="compinit -d \$ZSH_COMPDUMP"
 alias reload="source \$ZSH_CONFIG_HOME/.zshrc"
 # Dotfiles
 alias dot="cd \$DOTFILES"
+# Run claude in the dotfiles dir without changing the caller's cwd.
+(($+commands[claude])) && alias dot-claude="(cd \$DOTFILES && claude)"
 alias dot-edit="code \$DOTFILES/dotfiles.code-workspace"
 alias edit-aliases="edit \$DOTFILES/dot_config/zsh/dot_zshrc_aliases"
 alias edit-skhd="edit \$DOTFILES/dot_config/skhd/skhdrc"
