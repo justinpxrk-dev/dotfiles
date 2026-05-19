@@ -1,4 +1,5 @@
 # Claude
+.claude/settings.local.json
 .claude/worktrees
 
 # Obsidian
@@ -12,3 +13,7 @@ node_modules
 # Python
 .venv
 **/__pycache__
+
+# VSCode
+dotfiles.code-workspace
+.vscode/

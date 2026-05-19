@@ -67,7 +67,6 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   └── skills/                         — custom slash commands
 ├── .github/                            — GitHub metadata
 │   └── workflows/                      — GitHub Actions workflows
-├── .vscode/                            — VSCode workspace settings
 ├── Assets/                             — icons and images
 ├── Fonts/                              — font sources
 │   ├── font-monolisa @ †               — MonoLisa font source (private)

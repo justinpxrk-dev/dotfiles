@@ -20,7 +20,6 @@ chezmoi/
 │   └── skills/ — custom slash commands
 ├── .github/    — GitHub Actions workflows
 │   └── workflows/
-├── .vscode/    — VSCode workspace settings
 ├── Assets/     — icons and images
 ├── Fonts/      — font sources
 │   ├── font-monolisa @ †
