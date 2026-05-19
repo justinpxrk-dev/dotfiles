@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": ["*.json", "*.jsonc", "*.json5"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

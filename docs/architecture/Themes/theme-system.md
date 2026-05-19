@@ -74,7 +74,7 @@ Dark mode hues sidestep the melanopic peak (~485 nm) and the foreground hue (~55
 
 `make_chroma(chroma_min, chroma_max)` produces a wavelength → chroma mapping. The raw expression:
 
-```
+```text
 C(λ) = 0.5 − 0.5/(1 + e^((λ−440)/20)) + 0.5/(1 + e^(−(λ−670)/(160/6)))
 ```
 

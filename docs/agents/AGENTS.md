@@ -13,7 +13,7 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by chezmoi; all other directories are tracked in git only.
 
-```
+```text
 chezmoi/
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config and skills
@@ -104,7 +104,7 @@ Write inline comments for non-obvious _why_ — hidden constraints, invariants, 
 After any change, update all relevant files to reflect the new state:
 
 - **Docs:** `docs/agents/AGENTS.md`, other files in `docs/`, READMEs
-- **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`
+- **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
 - **Editor config:** `.editorconfig`
 - **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
 - **Tool scripts:** `package.json` (pnpm lint/format scripts), `mise.toml` (tool versions)

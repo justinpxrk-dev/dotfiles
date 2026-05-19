@@ -1,8 +1,8 @@
-Before committing, review all pending changes and update any relevant files to reflect the new state. This includes `docs/agents/AGENTS.md`, other files in `docs/`, READMEs, ignore files (`.gitignore`, `.prettierignore`, `.chezmoiignore`, `.shfmtignore`, `.styluaignore`), formatter/linter configs (`pyproject.toml`, `.luarc.json` files), and tool scripts (`package.json`, `mise.toml`). Also review changed code and add missing documentation comments (purpose, parameters, return values) and inline WHY comments. Apply all updates as part of the same commit. Do not ask for confirmation — just commit.
+Before committing, review all pending changes and update any relevant files to reflect the new state. This includes `docs/agents/AGENTS.md`, other files in `docs/`, READMEs, ignore files (`.gitignore`, `.prettierignore`, `.chezmoiignore`, `.shfmtignore`, `.styluaignore`, `.markdownlint-cli2.jsonc`), formatter/linter configs (`pyproject.toml`, `.luarc.json` files), and tool scripts (`package.json`, `mise.toml`). Also review changed code and add missing documentation comments (purpose, parameters, return values) and inline WHY comments. Apply all updates as part of the same commit. Do not ask for confirmation — just commit.
 
 ## Commit Message Format
 
-```
+```text
 [tool1,tool2] Title Case Summary
 
 - Bullet describing change one
@@ -21,18 +21,18 @@ Before committing, review all pending changes and update any relevant files to r
 
 ## Examples
 
-```
+```text
 [zsh] Suppress Login Message
 ```
 
-```
+```text
 [python,pyright] Enable Strict Type Checking
 
 - Set strict mode in pyproject.toml
 - Resolved all resulting type errors
 ```
 
-```
+```text
 [nvim,lua] Add Telescope Keybindings
 
 - Bound <leader>ff to find_files

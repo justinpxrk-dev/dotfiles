@@ -13,7 +13,7 @@
 
 ## Modifier Keys
 
-_macOS modifier key settings are per-keyboard. The following are for a standard external keyboard. For the standard Apple MacBook keyboard, do not switch ⌥ (Option) and ⌘ (Command)_
+> **Note:** macOS modifier key settings are per-keyboard. The following are for a standard external keyboard. For the standard Apple MacBook keyboard, do not switch ⌥ (Option) and ⌘ (Command)
 
 | Modifier Key | Action      |
 | ------------ | ----------- |

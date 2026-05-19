@@ -1,15 +1,17 @@
 {
   "packageManager": "pnpm@11.0.9",
   "devDependencies": {
+    "markdownlint-cli2": "^0.22.1",
     "prettier": "^3.8.3"
   },
   "scripts": {
     "prepare": "lefthook install",
     "format": "pnpm run format:md && pnpm run format:sh && pnpm run format:lua && pnpm run format:py",
     "format:check": "pnpm run format:check:md && pnpm run format:check:sh && pnpm run format:check:lua && pnpm run format:check:py",
-    "lint": "pnpm run lint:sh && pnpm run lint:lua && pnpm run lint:py",
+    "lint": "pnpm run lint:lua && pnpm run lint:md && pnpm run lint:py && pnpm run lint:sh",
     "format:md": "prettier --write .",
     "format:check:md": "prettier --check .",
+    "lint:md": "markdownlint-cli2",
     "format:py": "ruff format .",
     "format:check:py": "ruff format --check .",
     "lint:py": "uv run ruff check . && uv run pyright",

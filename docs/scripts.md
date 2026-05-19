@@ -2,7 +2,7 @@
 
 Scripts live under `Scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
-### `set_system_settings.sh`
+## `set_system_settings.sh`
 
 Applies macOS defaults and system preferences. Reboot immediately after — opening System Settings can overwrite changes, and some settings only take effect on reboot.
 
@@ -14,7 +14,7 @@ mise run macos:settings
 
 > Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [macos-manual-settings.md](macos/macos-manual-settings.md).
 
-### `register_launch_agents.sh`
+## `register_launch_agents.sh`
 
 Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the current login session. Run automatically by chezmoi (`run_once_after_`) on first apply.
 
@@ -24,7 +24,7 @@ Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the cu
 mise run macos:launch-agents
 ```
 
-### `install_submodules.sh`
+## `install_submodules.sh`
 
 Initialises all git submodules and builds/installs their outputs (MonoLisa fonts, SbarLua, sketchybar-app-font). Public submodules are cloned via HTTPS; private submodules (font-monolisa, monolisa-nerdfont-patch) require SSH and are silently skipped when SSH auth is unavailable. Run automatically by chezmoi (`run_onchange_`) whenever `.gitmodules` changes.
 
@@ -34,7 +34,7 @@ Initialises all git submodules and builds/installs their outputs (MonoLisa fonts
 mise run git:submodules
 ```
 
-### `install_packages.sh`
+## `install_packages.sh`
 
 Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes.
 
@@ -44,7 +44,7 @@ Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run 
 mise run brew:install
 ```
 
-### `install_tools.sh`
+## `install_tools.sh`
 
 Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run automatically by chezmoi (`run_once_`) on first apply.
 
@@ -54,7 +54,7 @@ Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run automatically by c
 mise run cargo:install
 ```
 
-### `build_themes.sh`
+## `build_themes.sh`
 
 Builds theme outputs (zsh script, Ghostty colorscheme, VS Code extension) from a Base24 scheme directory and installs them. Run after modifying any palette in `Themes/`.
 
@@ -64,7 +64,7 @@ Builds theme outputs (zsh script, Ghostty colorscheme, VS Code extension) from a
 mise run themes:build -- <theme-name>
 ```
 
-### `generate_base24_palette.py`
+## `generate_base24_palette.py`
 
 Generates Base24 dark and light palette YAML files using HCT color space algorithms. Run after modifying the palette generation logic in `Scripts/Themes/`.
 
@@ -74,7 +74,7 @@ uv run ./Scripts/Themes/generate_base24_palette.py
 mise run themes:generate-palette
 ```
 
-### `on_theme_change.sh`
+## `on_theme_change.sh`
 
 Applies the correct accent colors to `borders` for the current light/dark mode. Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
 
@@ -86,7 +86,7 @@ mise run themes:change-mode                    # detect from system
 mise run themes:change-mode -- dark|light
 ```
 
-### `benchmark_startup.sh`
+## `benchmark_startup.sh`
 
 Benchmarks Zsh startup time using `hyperfine` (200 runs, 10 warmups). Useful when tuning the Zsh config.
 
