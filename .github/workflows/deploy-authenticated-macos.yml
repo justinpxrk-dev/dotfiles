@@ -1,13 +1,15 @@
-name: Deploy (authenticated)
+name: Deploy Authenticated (macOS)
 
 on:
   push:
-    branches: ["**"]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
-    name: Deploy (macOS)
+    name: Deploy Authenticated (macOS)
     runs-on: macos-26
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
