@@ -1,4 +1,4 @@
-name: Zsh Startup Benchmark
+name: Zsh Benchmark Startup
 
 on:
   push:
@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   benchmark:
-    name: Zsh Startup Benchmark
+    name: Zsh Benchmark Startup
     runs-on: macos-26
     timeout-minutes: 15
     env:
