@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# shellcheck shell=bash
 set -euo pipefail
 
 ################################################################################
@@ -29,6 +30,8 @@ defaults write com.apple.dock show-recents -bool false
 # Keyboard Shortcuts                                                           #
 ################################################################################
 
+defaults write -g ApplePressAndHoldEnabled -bool false
+
 # 64 = Show Spotlight search
 /usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:64:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
 
@@ -36,7 +39,7 @@ defaults write com.apple.dock show-recents -bool false
 # Menu Bar                                                                     #
 ###############################################################################
 
-defaults -currentHost write com.apple.Spotlight MenuItemHidden -int 1
+# defaults -currentHost write com.apple.Spotlight MenuItemHidden -int 1
 defaults write NSGlobalDomain _HIHideMenuBar -bool true
 defaults write NSGlobalDomain AppleMenuBarVisibleInFullscreen -bool false
 defaults write NSGlobalDomain SLSMenuBarUseBlurredAppearance -bool false
@@ -75,8 +78,8 @@ defaults write com.apple.assistant.support "Assistant Enabled" -bool false
 # Spotlight                                                                    #
 ################################################################################
 
-defaults delete com.apple.Spotlight EnabledPreferenceRules -array
-defaults write com.apple.Spotlight PasteboardHistoryEnabled -bool false
+# defaults delete com.apple.Spotlight EnabledPreferenceRules
+# defaults write com.apple.Spotlight PasteboardHistoryEnabled -bool false
 
 ################################################################################
 # Post-Execution                                                               #
