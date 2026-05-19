@@ -57,5 +57,4 @@ jobs:
           printf 'Mean startup: %.1f ms (limit %s ms)\n' "$mean_ms" "$THRESHOLD_MS"
           printf 'Mean startup: %.1f ms (limit %s ms)\n' "$mean_ms" "$THRESHOLD_MS" >>"$GITHUB_STEP_SUMMARY"
           awk -v m="$mean_ms" -v t="$THRESHOLD_MS" 'BEGIN { exit !(m > t) }' \
-            && { echo "::error::Zsh startup regressed above $THRESHOLD_MS ms"; exit 1; } \
-            || echo "::info::Zsh startup $mean_ms below threshold ($THRESHOLD_MS)"
+            && { echo "::error::Zsh startup regressed above $THRESHOLD_MS ms"; exit 1; }
