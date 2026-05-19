@@ -4,7 +4,6 @@ local padding = require("constants.padding")
 local colorschemes = require("helpers.colorschemes")
 local utils = require("helpers.utils")
 
---- TODO: Write better typings for this file.
 --- @class Option
 --- @field BAR table<BarOption, table<string, any>>
 --- @field DEFAULT table<DefaultOption, table<string, any>>

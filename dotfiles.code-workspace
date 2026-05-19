@@ -19,5 +19,6 @@
         "packageManager": "ms-python.python:pip",
       },
     ],
+    "markdown.validate.enabled": true,
   },
 }
