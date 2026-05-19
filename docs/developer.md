@@ -40,8 +40,10 @@ GitHub Actions runs `format:check` and `lint` on every push and pull request to 
 
 Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
 
-- `deploy-public-macos.yml` — runs on every push and pull request (any branch), `workflow_dispatch`, and a 12-hour schedule (`cron: 3 */12 * * *`). No secrets, so fork PRs are safe; private submodules fail silently.
-- `deploy-authenticated-macos.yml` — runs on every push (any branch), `workflow_dispatch`, and a 12-hour schedule (`cron: 7 */12 * * *`). Uses `webfactory/ssh-agent` with deploy keys for private submodules. `pull_request` is intentionally excluded so deploy-key secrets are never exposed to fork PRs.
+- `deploy-public-macos.yml` — runs on every push and pull request (any branch), `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 3 3,15 * * *`). No secrets, so fork PRs are safe; private submodules fail silently.
+- `deploy-authenticated-macos.yml` — runs on every push (any branch), `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 7 7,19 * * *`, offset from the public deploy to avoid runner contention). Uses `webfactory/ssh-agent` with deploy keys for private submodules. `pull_request` is intentionally excluded so deploy-key secrets are never exposed to fork PRs.
+
+`zsh-benchmark-startup.yml` measures shell startup time on the macOS runner. It runs on `workflow_dispatch` and on push/pull request when `dot_config/zsh/**` changes: it applies the branch's dotfiles, warms up the shell, benchmarks startup, then evaluates and reports the result.
 
 ## Worktrees
 
