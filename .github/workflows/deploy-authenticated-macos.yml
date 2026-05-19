@@ -3,6 +3,8 @@ name: Deploy Authenticated (macOS)
 on:
   push:
   workflow_dispatch:
+  schedule:
+    - cron: "7 */12 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
