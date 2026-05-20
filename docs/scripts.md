@@ -16,7 +16,7 @@ mise run macos:settings
 
 ## `register_launch_agents.sh`
 
-Bootstraps all `com.justinpxrk.*` plists in `~/Library/LaunchAgents` into the current login session. Run automatically by chezmoi (`run_once_after_`) on first apply.
+Bootstraps all `me.justinpxrk.*` plists in `~/Library/LaunchAgents` into the current login session. Run automatically by chezmoi (`run_once_after_`) on first apply.
 
 ```sh
 ./Scripts/macos/register_launch_agents.sh

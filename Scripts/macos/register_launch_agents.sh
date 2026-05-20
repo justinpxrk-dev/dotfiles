@@ -2,35 +2,43 @@
 
 set -euo pipefail
 
-LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
-UID_NUM="$(id -u)"
+main() {
+	local launch_agents_dir="$HOME/Library/LaunchAgents"
+	local log_dir="$HOME/Library/Logs/me.justinpxrk"
+	local uid_num
+	uid_num="$(id -u)"
 
-failed=()
+	[[ -d "$log_dir" ]] || mkdir -p "$log_dir"
 
-shopt -s nullglob
-plists=("$LAUNCH_AGENTS_DIR"/com.justinpxrk.*.plist)
+	shopt -s nullglob
+	local plists=("$launch_agents_dir"/me.justinpxrk.*.plist)
 
-if ((${#plists[@]} == 0)); then
-	echo "==> No com.justinpxrk LaunchAgents found in $LAUNCH_AGENTS_DIR"
-	exit 0
-fi
-
-for plist in "${plists[@]}"; do
-	label="$(defaults read "$plist" Label 2>/dev/null)"
-	echo "==> $label"
-	if launchctl list "$label" &>/dev/null; then
-		echo "  > Already registered, skipping"
-		continue
+	if ((${#plists[@]} == 0)); then
+		echo "==> No me.justinpxrk LaunchAgents found in $launch_agents_dir"
+		return 0
 	fi
-	if ! launchctl bootstrap "gui/$UID_NUM" "$plist" 2>&1; then
-		failed+=("$label")
+
+	local failed=()
+	local plist label
+	for plist in "${plists[@]}"; do
+		label="$(defaults read "$plist" Label 2>/dev/null)"
+		echo "==> $label"
+		if launchctl list "$label" &>/dev/null; then
+			echo "  > Already registered, skipping"
+			continue
+		fi
+		if ! launchctl bootstrap "gui/$uid_num" "$plist" 2>&1; then
+			failed+=("$label")
+		fi
+	done
+
+	if ((${#failed[@]} > 0)); then
+		echo "==> The following agents failed to register:" >&2
+		printf '  > %s\n' "${failed[@]}" >&2
+		return 1
 	fi
-done
 
-if ((${#failed[@]} > 0)); then
-	echo "==> The following agents failed to register:" >&2
-	printf '  > %s\n' "${failed[@]}" >&2
-	exit 1
-fi
+	echo "==> Done"
+}
 
-echo "==> Done"
+main "$@"

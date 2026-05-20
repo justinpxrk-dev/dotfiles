@@ -23,7 +23,7 @@ description = "Initialise all git submodules and build/install their outputs"
 run = "./Scripts/git/install_submodules.sh"
 
 [tasks."macos:launch-agents"]
-description = "Register com.justinpxrk.* LaunchAgents into the current login session"
+description = "Register me.justinpxrk.* LaunchAgents into the current login session"
 run = "./Scripts/macos/register_launch_agents.sh"
 
 [tasks."macos:settings"]
