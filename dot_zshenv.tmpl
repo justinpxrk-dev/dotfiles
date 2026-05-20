@@ -17,10 +17,6 @@ export XDG_CONFIG_DIRS="/etc/xdg"
 # Dotfiles
 export DOTFILES="{{ .chezmoi.sourceDir }}"
 
-# Editor
-(($+commands[nvim])) && export EDITOR='nvim' ||  export EDITOR='vim'
-(($+commands[code])) && export VISUAL='code --wait' || export VISUAL="$EDITOR"
-
 # uv
 export PATH="$HOME/.local/bin${PATH:+:$PATH}"
 
@@ -36,10 +32,6 @@ export PATH="$HOME/.local/bin${PATH:+:$PATH}"
 	# grep
 	export PATH="$homebrew_opt_prefix/grep/libexec/gnubin${PATH:+:$PATH}"
 
-	# nvim
-	export VIM="$XDG_CONFIG_HOME/nvim"
-	export VIMRUNTIME="$homebrew_opt_prefix/neovim/share/nvim/runtime/"
-
 	# Postgres
 	export PKG_CONFIG_PATH="$homebrew_opt_prefix/icu4c@78/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
@@ -53,3 +45,7 @@ export PATH="$HOME/.local/bin${PATH:+:$PATH}"
 	export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib${LDFLAGS:+ $LDFLAGS}"
 	export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 }
+
+# Editor
+(($+commands[nvim])) && export EDITOR='nvim' || export EDITOR='vim'
+(($+commands[code])) && export VISUAL='code --wait' || export VISUAL="$EDITOR"
