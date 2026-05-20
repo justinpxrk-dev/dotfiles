@@ -10,8 +10,11 @@ main() {
 
 	[[ -d "$log_dir" ]] || mkdir -p "$log_dir"
 
+	local prev_nullglob
+	prev_nullglob=$(shopt -p nullglob) || true
 	shopt -s nullglob
 	local plists=("$launch_agents_dir"/me.justinpxrk.*.plist)
+	eval "$prev_nullglob"
 
 	if ((${#plists[@]} == 0)); then
 		echo "==> No me.justinpxrk LaunchAgents found in $launch_agents_dir"
