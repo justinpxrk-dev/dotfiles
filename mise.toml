@@ -36,7 +36,7 @@ run = "./Scripts/Themes/build_themes.sh"
 
 [tasks."themes:change-mode"]
 description = "Apply per-appearance theme state (borders colors, delta zebra feature) for the current light/dark mode; pass dark|light to force, omit to detect from system"
-run = "./Scripts/Themes/on_theme_change.sh"
+run = "./Scripts/Themes/handle_theme_change.sh"
 
 [tasks."themes:generate-palette"]
 description = "Generate Base24 dark and light palette YAML files"

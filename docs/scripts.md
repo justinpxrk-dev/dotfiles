@@ -74,7 +74,7 @@ uv run ./Scripts/Themes/generate_base24_palette.py
 mise run themes:generate-palette
 ```
 
-## `on_theme_change.sh`
+## `handle_theme_change.sh`
 
 Orchestrator for per-appearance theme state. Detects (or accepts) the current light/dark mode, then:
 
@@ -84,8 +84,8 @@ Orchestrator for per-appearance theme state. Detects (or accepts) the current li
 Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
 
 ```sh
-./Scripts/Themes/on_theme_change.sh            # detect from system
-./Scripts/Themes/on_theme_change.sh dark|light
+./Scripts/Themes/handle_theme_change.sh            # detect from system
+./Scripts/Themes/handle_theme_change.sh dark|light
 # or
 mise run themes:change-mode                    # detect from system
 mise run themes:change-mode -- dark|light
@@ -93,7 +93,7 @@ mise run themes:change-mode -- dark|light
 
 ## `borders_apply_mode.sh`
 
-Applies the correct accent colors to `borders` for the current light/dark mode. Invoked by `bordersrc` at borders startup (with no args; self-detects) and by `on_theme_change.sh` on every appearance change (with the resolved mode passed in).
+Applies the correct accent colors to `borders` for the current light/dark mode. Invoked by `bordersrc` at borders startup (with no args; self-detects) and by `handle_theme_change.sh` on every appearance change (with the resolved mode passed in).
 
 ```sh
 ./Scripts/Themes/borders_apply_mode.sh            # detect from system
