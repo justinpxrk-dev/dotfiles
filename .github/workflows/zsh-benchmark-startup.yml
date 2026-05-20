@@ -8,6 +8,8 @@ on:
     paths:
       - "dot_config/zsh/**"
   workflow_dispatch:
+  schedule:
+    - cron: "9 9,21 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
