@@ -19,6 +19,9 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 10
     env:
+      # Force Node 24 for actions that still ship with Node 20 (e.g. webfactory/ssh-agent@v0.9.0).
+      # Remove once all actions in this workflow publish Node 24 builds.
+      ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: node24
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Configure SSH for private submodules
