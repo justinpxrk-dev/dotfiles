@@ -76,7 +76,12 @@ mise run themes:generate-palette
 
 ## `on_theme_change.sh`
 
-Applies the correct accent colors to `borders` for the current light/dark mode. Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
+Orchestrator for per-appearance theme state. Detects (or accepts) the current light/dark mode, then:
+
+- Calls `borders_apply_mode.sh` to recolor [JankyBorders](https://github.com/FelixKratz/JankyBorders).
+- Writes `~/.config/delta/mode.gitconfig` with `features = zebra-dark` (or `zebra-light`), which the main git config includes — driving [delta](https://github.com/dandavison/delta)'s `colorMoved` feature for shell `git diff` output.
+
+Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
 
 ```sh
 ./Scripts/Themes/on_theme_change.sh            # detect from system
@@ -84,6 +89,15 @@ Applies the correct accent colors to `borders` for the current light/dark mode. 
 # or
 mise run themes:change-mode                    # detect from system
 mise run themes:change-mode -- dark|light
+```
+
+## `borders_apply_mode.sh`
+
+Applies the correct accent colors to `borders` for the current light/dark mode. Invoked by `bordersrc` at borders startup (with no args; self-detects) and by `on_theme_change.sh` on every appearance change (with the resolved mode passed in).
+
+```sh
+./Scripts/Themes/borders_apply_mode.sh            # detect from system
+./Scripts/Themes/borders_apply_mode.sh dark|light
 ```
 
 ## `benchmark_startup.sh`

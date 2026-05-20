@@ -23,13 +23,17 @@
     prune = true
 
 [filter "lfs"]
+    clean = git-lfs clean -- %f
     process = git-lfs filter-process
     required = true
-    clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
 
 [help]
     autocorrect = prompt
+
+[include]
+    path = /opt/homebrew/share/git-delta/themes.gitconfig
+    path = ~/.config/delta/mode.gitconfig
 
 [init]
     defaultBranch = main
@@ -52,8 +56,8 @@
     updateRefs = true
 
 [rerere]
-    required = true
     enabled = true
+    required = true
 
 [url "ssh://git@github.com"]
     insteadOf = https://github.com
