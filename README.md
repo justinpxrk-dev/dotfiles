@@ -15,6 +15,12 @@ _Intended for personal use. macOS dotfiles managed by [`chezmoi`](https://www.ch
 	<tr>
 		<td align="center"><img src="Assets/screenshots/terminal-petrichor-dark.png" width="100%" alt="Terminal with the Petrichor Dark theme" /></td>
 	</tr>
+	<tr>
+		<th align="left">Productivity (<a href="Themes/Petrichor/petrichor-dark.yml">Petrichor Dark</a>)</th>
+	</tr>
+	<tr>
+		<td align="center"><img src="Assets/screenshots/productivity-petrichor-dark.png" width="100%" alt="Productivity workspace with the Petrichor Dark theme" /></td>
+	</tr>
 </table>
 
 ## Bootstrap
