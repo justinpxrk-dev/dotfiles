@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash disable=SC1072,SC1073
 
-[[ "$HOME/.zshenv.zwc" -nt "$HOME/.zshenv" ]] || zcompile -U -R "$HOME/.zshenv" 2>/dev/null
+if [[ ! "$HOME/.zshenv.zwc" -nt "$HOME/.zshenv" ]]; then
+	zcompile -U -R "$HOME/.zshenv" 2>/dev/null
+fi
 
 export ZDOTDIR="$HOME/.config/zsh"
 
