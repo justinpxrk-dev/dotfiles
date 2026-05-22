@@ -7,6 +7,10 @@ Wallpapers
 # Claude
 .claude
 
+# Gemini
+!Unmanaged/gemini
+!Unmanaged/gemini/gems
+
 # Node
 pnpm-lock.yaml
 
@@ -16,4 +20,4 @@ pnpm-lock.yaml
 
 # Visual Studio Code
 .vscode
-!Unmanaged/Visual Studio Code/
+!Unmanaged/Visual Studio Code
