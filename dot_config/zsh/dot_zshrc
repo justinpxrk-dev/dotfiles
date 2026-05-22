@@ -16,7 +16,7 @@
 
 autoload -Uz add-zsh-hook compinit
 
-# Recompile config files if source is newer than bytecode.
+# Compile config files when bytecode is missing or stale.
 () {
 	local f
 	for f in \
@@ -26,9 +26,17 @@ autoload -Uz add-zsh-hook compinit
 		"$HOME/.config/zsh/.zshrc_aliases" \
 		"$HOME/.config/zsh/.zshrc_hooks" \
 		"$HOME/.config/zsh/.zshrc_bindings" \
-		"$HOME/.config/zsh/.zshrc_opts" \
+		"$HOME/.config/zsh/.zshrc_opts"; do
+		if [[ -f "$f" && ! "$f.zwc" -nt "$f" ]]; then
+			zcompile -U -R "$f" 2>/dev/null
+		fi
+	done
+
+	for f in \
 		"$HOME/.config/zsh/.p10k.zsh"; do
-		[[ -f "$f" && "${f}.zwc" -nt "$f" ]] || zcompile "$f" 2>/dev/null
+		if [[ -f "$f" && ! "$f.zwc" -nt "$f" ]]; then
+			zcompile -U -M "$f" 2>/dev/null
+		fi
 	done
 }
 
@@ -54,10 +62,8 @@ if [[ ! -f "$ZSH_CONFIG_HOME/.zsh_plugins.zsh" || "$ZSH_CONFIG_HOME/.zsh_plugins
 	antidote bundle <"$ZSH_CONFIG_HOME/.zsh_plugins.txt" >"$ZSH_CONFIG_HOME/.zsh_plugins.zsh"
 fi
 source "$ZSH_CONFIG_HOME/.zsh_plugins.zsh"
-
 # Lazy load evals
 source "$ZSH_CONFIG_HOME/.zshrc_evals"
-
 # Load aliases, bindings, hooks, and options
 source "$ZSH_CONFIG_HOME/.zshrc_aliases"
 source "$ZSH_CONFIG_HOME/.zshrc_bindings"
@@ -66,7 +72,6 @@ source "$ZSH_CONFIG_HOME/.zshrc_opts"
 
 # Add completions directory to fpath
 fpath=("$ZSH_CONFIG_HOME/completions" $fpath)
-
 # Regenerate mise completions if missing or mise binary has been updated
 () {
 	local mise_comp="$ZSH_COMPLETIONS_HOME/_mise"
@@ -77,7 +82,6 @@ fpath=("$ZSH_CONFIG_HOME/completions" $fpath)
 		rm -f "$ZSH_COMPDUMP"
 	fi
 }
-
 # Initialize completions; rebuild dump if missing or older than 24 hours
 () {
 	setopt LOCAL_OPTIONS EXTENDED_GLOB
@@ -85,6 +89,10 @@ fpath=("$ZSH_CONFIG_HOME/completions" $fpath)
 		compinit -d "$ZSH_COMPDUMP"
 	else
 		compinit -C -d "$ZSH_COMPDUMP"
+	fi
+
+	if [[ -f "$ZSH_COMPDUMP" && ! "$ZSH_COMPDUMP.zwc" -nt "$ZSH_COMPDUMP" ]]; then
+		zcompile -U -R "$ZSH_COMPDUMP" 2>/dev/null
 	fi
 }
 
