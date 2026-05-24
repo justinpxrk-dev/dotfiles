@@ -17,10 +17,13 @@ yabai -m config window_gap 18
 # Rules
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^App Store$" manage=off
+yabai -m rule --add app="^Bitwarden$" manage=off
 yabai -m rule --add app="^Claude$" manage=off
 yabai -m rule --add app="^Copilot$" manage=off
+yabai -m rule --add app="^Equinox$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Font Book$" manage=off
+yabai -m rule --add app="^Ghostty$" title="^􀩼$" manage=off grid=8:8:3:2:2:4
 yabai -m rule --add app="^Messages$" manage=off
 yabai -m rule --add app="^pCloud Drive$" manage=off
 yabai -m rule --add app="^Proton VPN$" manage=off
