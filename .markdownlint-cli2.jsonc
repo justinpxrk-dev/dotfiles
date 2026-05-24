@@ -7,6 +7,7 @@
     "node_modules",
     ".venv",
     ".claude",
+    ".codex",
     "Fonts",
     "Wallpapers",
     "Themes/lib",
