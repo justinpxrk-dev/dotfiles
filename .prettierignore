@@ -4,9 +4,6 @@ Themes/lib
 Unmanaged/*
 Wallpapers
 
-# Claude
-.claude
-
 # Gemini
 !Unmanaged/gemini
 !Unmanaged/gemini/gems
@@ -19,5 +16,4 @@ pnpm-lock.yaml
 !.obsidian/snippets
 
 # Visual Studio Code
-.vscode
 !Unmanaged/Visual Studio Code
