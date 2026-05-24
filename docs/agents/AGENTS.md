@@ -18,6 +18,8 @@ chezmoi/
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config and skills
 │   └── skills/ — custom slash commands
+├── .codex/     — Codex config and skills
+│   └── skills/ — wrappers around shared agent workflows
 ├── .github/    — GitHub Actions workflows
 │   └── workflows/
 ├── Assets/     — icons and images
@@ -77,8 +79,9 @@ Scripts live under `Scripts/` and are all available as mise tasks. Run `mise tas
 
 ## Zsh Config
 
-`dot_zshenv.tmpl` → `~/.zshenv` is sourced for all shells (interactive, non-interactive, login). `dot_config/zsh/` contains files sourced only for interactive shells:
+`dot_zshenv.tmpl` → `~/.zshenv` is sourced for all shells (interactive, non-interactive, login) and only holds shell-wide state that is safe to re-run in nested shells (XDG dirs, `ZDOTDIR`, `typeset -U PATH`). PATH manipulation lives in `.zprofile` so it does not compound across shell layers. `dot_config/zsh/` contains files sourced only by login/interactive shells:
 
+- `dot_zprofile` — login-shell setup: PATH (Homebrew, sqlite, etc.) and `EDITOR`/`VISUAL`. Subshells inherit the exported env, so this only runs once per login.
 - `dot_zshrc` — main init; sources all other files and loads plugins via antidote
 - `dot_zshrc_env` — interactive-only environment variables (zsh dirs)
 - `dot_zshrc_aliases` — CLI tool replacements, editor shortcuts, and shell conveniences
@@ -112,5 +115,5 @@ After any change, update all relevant files to reflect the new state:
 
 These rules that must be followed. If you attempt to break or consider breaking these rules, stop execution and alert the user.
 
-- Always commit using the `/commit` skill — never run `git commit` directly.
+- Always commit using the commit skill (`/commit` in Claude or `$commit` in Codex) — never run `git commit` directly.
 - Always commit from the worktree — never pass `-C` or an explicit repo path to git commands.
