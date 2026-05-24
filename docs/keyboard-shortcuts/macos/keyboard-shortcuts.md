@@ -4,12 +4,12 @@
 
 | Shortcut | Action                |
 | -------- | --------------------- |
-| ⌃W       | Mission Control       |
-| ⌃X       | Application Windows   |
-| ⌃S       | Show Desktop          |
-| ⌃1-9     | Switch to Desktop 1-9 |
-| ⌃Q       | Move left a space     |
-| ⌃E       | Move right a space    |
+| ⌥x       | Mission Control       |
+| ⌥c       | Move left a space     |
+| ⌥v       | Move right a space    |
+| ⌥b       | Application Windows   |
+| F11      | Show Desktop          |
+| **OFF**  | Switch to Desktop 1-9 |
 
 ## Modifier Keys
 
