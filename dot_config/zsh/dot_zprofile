@@ -1,0 +1,45 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash disable=SC1072,SC1073
+
+# Login-shell PATH and editor setup. Runs per login shell (which on macOS is
+# typically once per terminal tab); non-interactive subshells inherit the
+# exported env, so PATH manipulation does not need to live in .zshenv where
+# it would compound across nested shells. `typeset -U PATH` in .zshenv keeps
+# repeated logins from accumulating duplicates.
+
+if [[ ! "$ZDOTDIR/.zprofile.zwc" -nt "$ZDOTDIR/.zprofile" ]]; then
+	zcompile -U -R "$ZDOTDIR/.zprofile" 2>/dev/null
+fi
+
+# uv
+export PATH="$HOME/.local/bin${PATH:+:$PATH}"
+
+() {
+	# Homebrew
+	export HOMEBREW_PREFIX="/opt/homebrew"
+	local homebrew_opt_prefix="$HOMEBREW_PREFIX/opt"
+	export PATH="$HOMEBREW_PREFIX/bin${PATH:+:$PATH}"
+
+	# gnu-getopt
+	export PATH="$homebrew_opt_prefix/gnu-getopt/bin${PATH:+:$PATH}"
+
+	# grep
+	export PATH="$homebrew_opt_prefix/grep/libexec/gnubin${PATH:+:$PATH}"
+
+	# Postgres
+	export PKG_CONFIG_PATH="$homebrew_opt_prefix/icu4c@78/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+
+	# sqlite
+	export CPPFLAGS="-I$homebrew_opt_prefix/sqlite/include${CPPFLAGS:+ $CPPFLAGS}"
+	export LDFLAGS="-L$homebrew_opt_prefix/sqlite/lib${LDFLAGS:+ $LDFLAGS}"
+	export PATH="$homebrew_opt_prefix/sqlite/bin${PATH:+:$PATH}"
+
+	# zlib
+	export CPPFLAGS="-I$homebrew_opt_prefix/zlib/include${CPPFLAGS:+ $CPPFLAGS}"
+	export LDFLAGS="-L$homebrew_opt_prefix/zlib/lib${LDFLAGS:+ $LDFLAGS}"
+	export PKG_CONFIG_PATH="$homebrew_opt_prefix/zlib/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+}
+
+# Editor
+(($+commands[nvim])) && export EDITOR='nvim' || export EDITOR='vim'
+(($+commands[code])) && export VISUAL='code --wait' || export VISUAL="$EDITOR"
