@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commit"
+  short_description: "Commit dotfiles changes safely"
+  default_prompt: "Use $commit to commit the current repository changes."
