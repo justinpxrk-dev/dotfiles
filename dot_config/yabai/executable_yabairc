@@ -25,6 +25,7 @@ yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Font Book$" manage=off
 yabai -m rule --add app="^Ghostty$" title="^􀩼$" manage=off grid=8:8:3:2:2:4
 yabai -m rule --add app="^Messages$" manage=off
+yabai -m rule --add app="^OrbStack$" manage=off
 yabai -m rule --add app="^pCloud Drive$" manage=off
 yabai -m rule --add app="^Proton VPN$" manage=off
 yabai -m rule --add app="^Raycast$" manage=off
