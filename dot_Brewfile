@@ -64,4 +64,9 @@ cask "font-sf-pro"
 brew "fontforge"
 
 # AI
-brew "anomalyco/tap/opencode"
+cask "claude"
+cask "claude-code@latest"
+
+# Secrets
+cask "bitwarden"
+brew "bitwarden-cli"
