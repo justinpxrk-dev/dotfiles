@@ -3,12 +3,8 @@ name: Zsh Benchmark Startup
 on:
   push:
     branches: [main]
-    paths:
-      - "dot_config/zsh/**"
   pull_request:
     branches: [main]
-    paths:
-      - "dot_config/zsh/**"
   workflow_dispatch:
   schedule:
     - cron: "9 9,21 * * *"
@@ -34,28 +30,66 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
+      # Detect whether any zsh config files changed. Runs only on push/PR;
+      # schedule and manual dispatch always benchmark unconditionally.
+      - name: Detect zsh config changes
+        id: filter
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            zsh:
+              - 'dot_config/zsh/**'
+
+      # Single gate evaluated once so every downstream step shares one
+      # condition. The job always reports success when skipped, satisfying
+      # required-check branch protection without forcing the benchmark on every
+      # PR.
+      - name: Decide whether to benchmark
+        id: gate
+        run: |
+          case "${{ github.event_name }}" in
+            schedule|workflow_dispatch)
+              echo "run=true" >>"$GITHUB_OUTPUT"
+              ;;
+            *)
+              if [[ "${{ steps.filter.outputs.zsh }}" == "true" ]]; then
+                echo "run=true" >>"$GITHUB_OUTPUT"
+              else
+                echo "run=false" >>"$GITHUB_OUTPUT"
+                echo "Skipping benchmark: no changes under dot_config/zsh/" >>"$GITHUB_STEP_SUMMARY"
+              fi
+              ;;
+          esac
+
       - name: Link checkout as chezmoi source dir
+        if: steps.gate.outputs.run == 'true'
         run: |
           mkdir -p "$HOME/.local/share"
           ln -sfn "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
 
       - name: Install chezmoi
+        if: steps.gate.outputs.run == 'true'
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
       - name: Apply dotfiles
+        if: steps.gate.outputs.run == 'true'
         run: chezmoi apply
 
       - name: Warm up shell
+        if: steps.gate.outputs.run == 'true'
         # The first interactive shells do one-time work (zcompile *.zwc,
         # antidote bundle, compinit dump) that must not pollute the measurement.
         run: |
           for i in {1..3}; do zsh -i -l -c exit; done
 
       - name: Benchmark startup
+        if: steps.gate.outputs.run == 'true'
         run: |
           hyperfine --warmup 50 --runs 200 --export-json result.json 'zsh -i -l -c exit'
 
       - name: Evaluate and report
+        if: steps.gate.outputs.run == 'true'
         run: |
           mean_ms=$(jq '.results[0].mean * 1000' result.json)
           printf 'Mean startup: %.1f ms (limit %s ms)\n' "$mean_ms" "$THRESHOLD_MS"
