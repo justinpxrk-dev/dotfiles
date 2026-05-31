@@ -2,9 +2,11 @@ name: Zsh Benchmark Startup
 
 on:
   push:
+    branches: [main]
     paths:
       - "dot_config/zsh/**"
   pull_request:
+    branches: [main]
     paths:
       - "dot_config/zsh/**"
   workflow_dispatch:
