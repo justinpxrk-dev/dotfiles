@@ -20,7 +20,6 @@ local utils = require("helpers.utils")
 local M = {
 	BAR = {
 		OPTIONS = utils.merge(colorschemes.get_bar_color_options(), {
-			blur_radius = 60,
 			border_width = 4,
 			corner_radius = 19,
 			display = "main",
