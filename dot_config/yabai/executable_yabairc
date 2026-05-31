@@ -17,6 +17,7 @@ yabai -m config window_gap 18
 # Rules
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^App Store$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
 yabai -m rule --add app="^Bitwarden$" manage=off
 yabai -m rule --add app="^Claude$" manage=off
 yabai -m rule --add app="^Copilot$" manage=off
