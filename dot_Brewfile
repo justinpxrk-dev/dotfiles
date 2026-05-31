@@ -18,6 +18,7 @@ brew "asmvik/formulae/skhd"
 brew "spicetify-cli"
 brew "tmux"
 brew "asmvik/formulae/yabai"
+cask "zen"
 
 # CLI — Core Replacements
 brew "bat"
