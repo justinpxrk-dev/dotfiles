@@ -1,6 +1,6 @@
 # Scripts
 
-Scripts live under `Scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `install_tools.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts live under `Scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ## `set_system_settings.sh`
 
@@ -42,16 +42,6 @@ Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run 
 ./Scripts/brew/install_packages.sh
 # or
 mise run brew:install
-```
-
-## `install_tools.sh`
-
-Installs Cargo-managed CLI tools (`tinted-builder-rust`). Run automatically by chezmoi (`run_once_`) on first apply.
-
-```sh
-./Scripts/cargo/install_tools.sh
-# or
-mise run cargo:install
 ```
 
 ## `build_themes.sh`
