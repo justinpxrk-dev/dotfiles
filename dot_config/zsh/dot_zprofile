@@ -19,6 +19,8 @@ export PATH="$HOME/.local/bin${PATH:+:$PATH}"
 	export HOMEBREW_PREFIX="/opt/homebrew"
 	local homebrew_opt_prefix="$HOMEBREW_PREFIX/opt"
 	export PATH="$HOMEBREW_PREFIX/bin${PATH:+:$PATH}"
+	export HOMEBREW_AUTO_UPDATE_SECS=86400
+	export HOMEBREW_REQUIRE_TAP_TRUST=1
 
 	# gnu-getopt
 	export PATH="$homebrew_opt_prefix/gnu-getopt/bin${PATH:+:$PATH}"
