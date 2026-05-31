@@ -1,5 +1,4 @@
 # Formulas
-tap "anomalyco/tap"
 tap "asmvik/formulae"
 tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
@@ -35,6 +34,9 @@ brew "git-lfs"
 brew "hyperfine"
 brew "tig"
 
+# CLI - Shell
+brew "bash"
+brew "dash-shell"
 # Zsh
 brew "antidote"
 
@@ -45,7 +47,6 @@ brew "neovim"
 brew "lua"
 
 # Python
-brew "python3"
 brew "uv"
 
 # Rust
