@@ -13,6 +13,7 @@ There's nothing here yet!
 ## Low Priority
 
 - Configure macos system settings script.
+- Decide whether to enable the commented-out `yabai --start-service` / `skhd --start-service` lines in `.chezmoiscripts/run_onchange_install-brew-packages.sh.tmpl` (consider `--restart-service` so upgrades pick up the new binary).
 - Rename scripts to be more concise, imperative, and kebab-case
 - Write comment headers for all zsh, lua, python.
 - Write type annotations for all lua.

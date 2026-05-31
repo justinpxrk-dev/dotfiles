@@ -10,10 +10,10 @@ brew "cbonsai"
 brew "cmatrix"
 brew "cormacrelf/tap/dark-notify"
 brew "fastfetch"
-brew "FelixKratz/formulae/borders"
+brew "FelixKratz/formulae/borders", restart_service: :changed
 brew "macmon"
 brew "pipes-sh"
-brew "FelixKratz/formulae/sketchybar"
+brew "FelixKratz/formulae/sketchybar", restart_service: :changed
 brew "asmvik/formulae/skhd"
 brew "spicetify-cli"
 brew "tmux"
