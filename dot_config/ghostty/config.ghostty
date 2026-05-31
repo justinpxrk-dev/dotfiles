@@ -42,7 +42,7 @@
 # resize-overlay-duration = 4s 200ms
 
 background-blur = 60
-background-opacity = 0.95
+background-opacity = 0.9
 background-opacity-cells = true
 font-family = MonoLisa Nerd Font
 font-size = 14.0
@@ -51,6 +51,7 @@ font-thicken-strength = 0
 macos-titlebar-proxy-icon = hidden
 shell-integration-features = cursor, no-path, ssh-env, no-ssh-terminfo, sudo, no-title
 theme = dark:base24-petrichor-dark, light:base24-petrichor-light
+unfocused-split-opacity = 0.4
 window-padding-balance = true
 window-padding-color = extend
 window-padding-x = 16, 16
