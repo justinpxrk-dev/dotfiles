@@ -3,7 +3,6 @@ node = "latest"
 "npm:pnpm" = "latest"
 python = "latest"
 ruff = "latest"
-rust = "latest"
 stylua = "latest"
 lua-language-server = "latest"
 lefthook = "latest"
@@ -13,10 +12,6 @@ shfmt = "latest"
 [tasks."brew:install"]
 description = "Install Homebrew packages declared in ~/.Brewfile"
 run = "./Scripts/brew/install_packages.sh"
-
-[tasks."cargo:install"]
-description = "Install Cargo-managed CLI tools (tinted-builder-rust)"
-run = "./Scripts/cargo/install_tools.sh"
 
 [tasks."git:submodules"]
 description = "Initialise all git submodules and build/install their outputs"

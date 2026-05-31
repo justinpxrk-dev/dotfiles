@@ -37,7 +37,7 @@ Or if `chezmoi` is already installed:
 chezmoi init --apply justinpxrk-dev/dotfiles
 ```
 
-`chezmoi` automatically runs bootstrap scripts on first apply (submodules, cargo tools, LaunchAgent registration). Install developer environment and run setup scripts from the repo:
+`chezmoi` automatically runs bootstrap scripts on first apply (submodules, LaunchAgent registration). Install developer environment and run setup scripts from the repo:
 
 ```sh
 mise trust          # trust config file (mise.toml)

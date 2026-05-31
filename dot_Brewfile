@@ -3,6 +3,7 @@ tap "asmvik/formulae"
 tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
 tap "spicetify/tap"
+tap "tinted-theming/tinted"
 
 # Desktop Environment
 brew "cbonsai"
@@ -49,8 +50,8 @@ brew "lua"
 # Python
 brew "uv"
 
-# Rust
-brew "rustup"
+# Themes
+brew "tinted-theming/tinted/tinted-builder-rust"
 
 # General
 brew "chezmoi"
