@@ -1,4 +1,4 @@
-# developer.md
+# Developer
 
 Instructions for setting up and configuring developer tools.
 
