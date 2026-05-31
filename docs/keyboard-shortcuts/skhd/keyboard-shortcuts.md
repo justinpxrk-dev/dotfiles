@@ -1,4 +1,4 @@
-# skhd Keyboard Shortcuts
+# `skhd` Keyboard Shortcuts
 
 ## Focus Window
 
