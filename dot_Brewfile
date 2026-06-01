@@ -63,6 +63,7 @@ brew "imagemagick"
 brew "media-control"
 
 # Fonts
+cask "font-new-york"
 cask "font-sf-pro"
 brew "fontforge"
 
