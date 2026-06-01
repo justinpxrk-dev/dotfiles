@@ -6,32 +6,30 @@ local themes = require("helpers.themes")
 --- @field COLORSCHEMES table<ColorschemeOption, ColorschemePalette>
 --- @alias ColorschemeOption "MACOS_TAHOE_DARK" | "MACOS_TAHOE_LIGHT"
 --- @alias ColorschemePalette table<ColorschemePaletteOption, integer>
---- @alias ColorschemePaletteOption "ACTIVE_SPACE_ICON" | "BACKGROUND" | "BORDER" | "GRAPH" | "GRAPH_FILL" | "ICON" | "INACTIVE_LABEL" | "INACTIVE_SPACE_ICON" | "LABEL"
+--- @alias ColorschemePaletteOption "ACTIVE_SPACE_ICON" | "BACKGROUND" | "GRAPH" | "GRAPH_FILL" | "ICON" | "INACTIVE_LABEL" | "INACTIVE_SPACE_ICON" | "LABEL"
 local M = {}
 
 --- @type table<ColorschemeOption, ColorschemePalette>
 local colorschemes = {
 	MACOS_TAHOE_DARK = {
-		ACTIVE_SPACE_ICON = 0xff729f5b,
-		BACKGROUND = 0xff1e1e1e,
-		BORDER = 0xff2c2c2c,
-		GRAPH = 0xff729f5b,
-		GRAPH_FILL = 0xff6d9a57,
-		ICON = 0xff729f5b,
-		INACTIVE_LABEL = 0xff6d9a57,
-		INACTIVE_SPACE_ICON = 0xff638f4d,
-		LABEL = 0xff729f5b,
+		ACTIVE_SPACE_ICON = 0xffa9b1d6,
+		BACKGROUND = 0xf21a1b26,
+		GRAPH = 0xffa9b1d6,
+		GRAPH_FILL = 0xf2444b6a,
+		ICON = 0xffa9b1d6,
+		INACTIVE_LABEL = 0xf2444b6a,
+		INACTIVE_SPACE_ICON = 0xf2787c99,
+		LABEL = 0xffa9b1d6,
 	},
 	MACOS_TAHOE_LIGHT = {
-		ACTIVE_SPACE_ICON = 0xff5e5e5e,
-		BACKGROUND = 0xffebebeb,
-		BORDER = 0xff555555,
-		GRAPH = 0xff5e5e5e,
-		GRAPH_FILL = 0xff595959,
-		ICON = 0xff5e5e5e,
-		INACTIVE_LABEL = 0xff555555,
-		INACTIVE_SPACE_ICON = 0xff595959,
-		LABEL = 0xff5e5e5e,
+		ACTIVE_SPACE_ICON = 0xff343b59,
+		BACKGROUND = 0xf2d5d6db,
+		GRAPH = 0xff343b59,
+		GRAPH_FILL = 0xf29699a3,
+		ICON = 0xff343b59,
+		INACTIVE_LABEL = 0xf29699a3,
+		INACTIVE_SPACE_ICON = 0xf24c505e,
+		LABEL = 0xff343b59,
 	},
 }
 
@@ -40,7 +38,6 @@ local colors = colorschemes.MACOS_TAHOE_LIGHT
 
 function M.get_bar_color_options()
 	return {
-		border_color = colors.BORDER,
 		color = colors.BACKGROUND,
 	}
 end

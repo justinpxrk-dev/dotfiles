@@ -17,3 +17,7 @@ pnpm-lock.yaml
 
 # Visual Studio Code
 !Unmanaged/Visual Studio Code
+
+# Zen Browser
+!Unmanaged/Zen Browser
+!Unmanaged/Zen Browser/chrome
