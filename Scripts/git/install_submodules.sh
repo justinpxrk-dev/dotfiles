@@ -12,6 +12,7 @@ echo "==> Syncing git submodules"
 GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
 	dot_config/sketchybar/lib/SbarLua \
 	dot_config/sketchybar/lib/sketchybar-app-font \
+	Themes/lib/spicetify \
 	Themes/lib/tinted-terminal \
 	Themes/lib/tinted-vscode \
 	Themes/lib/tinted-shell
