@@ -44,6 +44,7 @@ brew "antidote"
 
 # Editors
 brew "neovim"
+cask "zed"
 
 # Lua
 brew "lua"
