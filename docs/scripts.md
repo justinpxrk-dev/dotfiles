@@ -70,6 +70,7 @@ Orchestrator for per-appearance theme state. Detects (or accepts) the current li
 
 - Calls `borders_apply_mode.sh` to recolor [JankyBorders](https://github.com/FelixKratz/JankyBorders).
 - Writes `~/.config/delta/mode.gitconfig` with `features = zebra-dark` (or `zebra-light`), which the main git config includes — driving [delta](https://github.com/dandavison/delta)'s `colorMoved` feature for shell `git diff` output.
+- Re-applies Spotify's [Spicetify](https://spicetify.app) Catppuccin scheme (`mocha` in dark, `latte` in light), quitting and restoring Spotify around the patch — reopened only if it was running, playback resumed only if it was playing.
 
 Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
 

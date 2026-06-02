@@ -12,6 +12,9 @@
 [submodule "dot_config/sketchybar/lib/sketchybar-app-font"]
 	path = dot_config/sketchybar/lib/sketchybar-app-font
 	url = https://github.com/kvndrsslr/sketchybar-app-font.git
+[submodule "Themes/lib/spicetify"]
+	path = Themes/lib/spicetify
+	url = https://github.com/justinpxrk-dev/spicetify.git
 [submodule "Themes/lib/tinted-terminal"]
 	path = Themes/lib/tinted-terminal
 	url = https://github.com/justinpxrk-dev/tinted-terminal.git

@@ -32,6 +32,7 @@ chezmoi/
 ├── Scripts/    — shell scripts
 ├── Themes/     — Petrichor theme definitions (see Themes System)
 │   └── lib/
+│       ├── spicetify @ ⑂
 │       ├── tinted-shell @ ⑂
 │       ├── tinted-terminal @ ⑂
 │       └── tinted-vscode @ ⑂
@@ -51,7 +52,7 @@ chezmoi/
 │   │       ├── sketchybar-app-font @
 │   │       └── SbarLua @
 │   ├── skhd/
-│   ├── spicetify/
+│   ├── spicetify/ — Themes/catppuccin symlinks to Themes/lib/spicetify @ ⑂
 │   ├── tmux/
 │   ├── yabai/
 │   └── zsh/
