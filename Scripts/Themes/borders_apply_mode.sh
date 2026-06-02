@@ -14,7 +14,7 @@ else
 fi
 
 if [[ "$MODE" == "dark" ]]; then
-	borders active_color=0xf2a9b1d6 inactive_color=0xf21a1b26
+	borders active_color=0xd6b4befe inactive_color=0xd61e1e2e
 else
-	borders active_color=0xf2343b59 inactive_color=0xf2d5d6db
+	borders active_color=0xd67287fd inactive_color=0xd6eff1f5
 fi
