@@ -66,6 +66,7 @@ brew "media-control"
 # Fonts
 cask "font-new-york"
 cask "font-sf-pro"
+cask "font-symbols-only-nerd-font"
 brew "fontforge"
 
 # AI
