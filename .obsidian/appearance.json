@@ -1,9 +1,14 @@
 {
-  "showRibbon": true,
+  "showRibbon": false,
   "accentColor": "#62ba46",
-  "showViewHeader": false,
+  "showViewHeader": true,
   "theme": "system",
   "enabledCssSnippets": [
     "nav-folder-hidden-files"
-  ]
+  ],
+  "interfaceFontFamily": "SF Pro Display",
+  "textFontFamily": "SF Pro Text",
+  "monospaceFontFamily": "MonoLisa Nerd Font",
+  "cssTheme": "Catppuccin",
+  "translucency": true
 }
