@@ -1,25 +1,38 @@
 # dotfiles
 
-## Health Check
+_Intended for personal use. macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/)._
+
+## Dashboard
 
 | Format, Lint                                                                                                                                                                            | Deploy Public (macOS)                                                                                                                                                                                            | Deploy Authenticated (macOS)                                                                                                                                                                                                          | Zsh Benchmark Startup                                                                                                                                                                                                |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Format, Lint](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/format-lint.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/format-lint.yml) | [![Deploy Public (macOS)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-public-macos.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-public-macos.yml) | [![Deploy Authenticated (macOS)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-authenticated-macos.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/deploy-authenticated-macos.yml) | [![Zsh Benchmark Startup](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/zsh-benchmark-startup.yml/badge.svg)](https://github.com/justinpxrk-dev/dotfiles/actions/workflows/zsh-benchmark-startup.yml) |
 
-_Intended for personal use. macOS dotfiles managed by [`chezmoi`](https://www.chezmoi.io/)._
+## Showcase
+
+### Desktop
 
 <table width="100%">
 	<tr>
-		<th align="left">Desktop (<a href="https://catppuccin.com">Catppuccin Mocha</a>)</th>
+		<th align="left" width="50%">Dark (<a href="https://catppuccin.com">Catppuccin Mocha</a>)</th>
+		<th align="left" width="50%">Light (<a href="https://catppuccin.com">Catppuccin Latte</a>)</th>
 	</tr>
 	<tr>
-		<td align="center"><img src="Assets/screenshots/Desktop-Catppuccin-Mocha.png" width="100%" alt="Desktop with the Catppuccin Mocha theme" /></td>
+		<td align="center" width="50%"><img src="Assets/screenshots/Desktop-Catppuccin-Mocha.png" width="100%" alt="Desktop with the Catppuccin Mocha theme" /></td>
+		<td align="center" width="50%"><img src="Assets/screenshots/Desktop-Catppuccin-Latte.png" width="100%" alt="Desktop with the Catppuccin Latte theme" /></td>
+	</tr>
+</table>
+
+### Development
+
+<table width="100%">
+	<tr>
+		<th align="left" width="50%">Dark (<a href="https://catppuccin.com">Catppuccin Mocha</a>)</th>
+		<th align="left" width="50%">Light (<a href="https://catppuccin.com">Catppuccin Latte</a>)</th>
 	</tr>
 	<tr>
-		<th align="left">Desktop (<a href="https://catppuccin.com">Catppuccin Latte</a>)</th>
-	</tr>
-	<tr>
-		<td align="center"><img src="Assets/screenshots/Desktop-Catppuccin-Latte.png" width="100%" alt="Desktop with the Catppuccin Latte theme" /></td>
+		<td align="center" width="50%"><img src="Assets/screenshots/Development-Catppuccin-Mocha.png" width="100%" alt="Development environment with the Catppuccin Mocha theme" /></td>
+		<td align="center" width="50%"><img src="Assets/screenshots/Development-Catppuccin-Latte.png" width="100%" alt="Development environment with the Catppuccin Latte theme" /></td>
 	</tr>
 </table>
 
