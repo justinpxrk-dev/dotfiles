@@ -11,5 +11,6 @@
     "dot_config/",
     ".claude/worktrees/",
     "dot_claude/"
-  ]
+  ],
+  "readableLineLength": true
 }
