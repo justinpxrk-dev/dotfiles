@@ -1,5 +1,4 @@
 {
-  "packageManager": "pnpm@11.0.9",
   "devDependencies": {
     "markdownlint-cli2": "^0.22.1",
     "prettier": "^3.8.3"
