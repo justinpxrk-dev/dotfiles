@@ -5,20 +5,23 @@ tap "FelixKratz/formulae"
 tap "spicetify/tap"
 tap "tinted-theming/tinted"
 
-# Desktop Environment
-brew "cbonsai"
-brew "cmatrix"
-brew "cormacrelf/tap/dark-notify"
-brew "fastfetch"
+# Window Manager
 brew "FelixKratz/formulae/borders", restart_service: :changed
-brew "macmon"
-brew "pipes-sh"
 brew "FelixKratz/formulae/sketchybar", restart_service: :changed
 brew "asmvik/formulae/skhd"
-brew "spicetify-cli"
-brew "tmux"
 brew "asmvik/formulae/yabai"
-cask "zen"
+
+# Terminal
+brew "tmux"
+
+# Terminal Toys
+brew "cbonsai"
+brew "cmatrix"
+brew "pipes-sh"
+
+# System Monitoring
+brew "fastfetch"
+brew "macmon"
 
 # CLI — Core Replacements
 brew "bat"
@@ -44,6 +47,7 @@ brew "antidote"
 
 # Editors
 brew "neovim"
+cask "visual-studio-code"
 cask "zed"
 
 # Languages
@@ -52,6 +56,7 @@ brew "luarocks"
 brew "uv"
 
 # Themes
+brew "cormacrelf/tap/dark-notify"
 brew "tinted-theming/tinted/tinted-builder-rust"
 
 # General
@@ -61,6 +66,7 @@ brew "mise"
 # Media
 brew "imagemagick"
 brew "media-control"
+brew "spicetify-cli"
 
 # Fonts
 cask "font-new-york"
@@ -71,7 +77,18 @@ brew "fontforge"
 # AI
 cask "claude"
 cask "claude-code@latest"
+cask "codex"
 
 # Secrets
 cask "bitwarden"
 brew "bitwarden-cli"
+
+# Applications
+cask "appcleaner"
+cask "discord"
+cask "ghostty"
+cask "google-chrome"
+cask "orbstack"
+cask "protonvpn"
+cask "zen"
+cask "zoom"
