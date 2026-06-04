@@ -26,15 +26,20 @@ local function roles(p)
 	}
 end
 
+--- The active palette, re-derived from the system theme by `M.refresh()`.
 --- @type ColorschemePalette
 local colors = roles(catppuccin.latte())
 
+--- Bar background color options.
+--- @return table options sketchybar bar `color` override
 function M.get_bar_color_options()
 	return {
 		color = colors.BACKGROUND,
 	}
 end
 
+--- Default item color options shared by every item's icon and label.
+--- @return table options sketchybar `icon` and `label` color overrides
 function M.get_default_color_options()
 	return {
 		label = {
@@ -46,42 +51,36 @@ function M.get_default_color_options()
 	}
 end
 
+--- Now Playing artwork placeholder options. Picks the transparent logo image
+--- matching the active theme, shown when no real track artwork is available.
+--- @return table options sketchybar `background.image` override
 function M.get_now_playing_artwork_logo_color_options()
-	if themes.THEME == themes.THEME_MODES.DARK then
-		return {
-			background = {
-				image = {
-					string = asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_DARK_TRANSPARENT,
-				},
+	return {
+		background = {
+			image = {
+				string = themes.select(
+					asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_DARK_TRANSPARENT,
+					asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_LIGHT_TRANSPARENT
+				),
 			},
-		}
-	else
-		return {
-			background = {
-				image = {
-					string = asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_LIGHT_TRANSPARENT,
-				},
-			},
-		}
-	end
+		},
+	}
 end
 
+--- Now Playing track label color options. Uses the active label color while a
+--- track is playing and the dimmed inactive color when paused or stopped.
+--- @param playing boolean whether a track is currently playing
+--- @return table options sketchybar `label` color override
 function M.get_now_playing_track_color_options(playing)
-	if playing then
-		return {
-			label = {
-				color = colors.LABEL,
-			},
-		}
-	else
-		return {
-			label = {
-				color = colors.INACTIVE_LABEL,
-			},
-		}
-	end
+	return {
+		label = {
+			color = playing and colors.LABEL or colors.INACTIVE_LABEL,
+		},
+	}
 end
 
+--- Resources CPU graph color options (line and fill).
+--- @return table options sketchybar `graph` color overrides
 function M.get_resources_graph_color_options()
 	return {
 		graph = {
@@ -91,12 +90,12 @@ function M.get_resources_graph_color_options()
 	}
 end
 
+--- Re-derive the active palette from the current system theme: Catppuccin Mocha
+--- in dark mode, Latte in light mode. Call after `themes.refresh()` so the new
+--- theme is reflected before colors are read.
+--- @return nil
 function M.refresh()
-	if themes.THEME == themes.THEME_MODES.DARK then
-		colors = roles(catppuccin.mocha())
-	else
-		colors = roles(catppuccin.latte())
-	end
+	colors = roles(themes.select(catppuccin.mocha(), catppuccin.latte()))
 end
 
 return M
