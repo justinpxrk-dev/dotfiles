@@ -22,4 +22,12 @@ function M.refresh()
 	end
 end
 
+--- Pack a "#RRGGBB" hex string into a sketchybar 0xAARRGGBB color integer.
+--- @param hex string e.g. "#1e1e2e"
+--- @param alpha integer? opacity byte 0x00-0xff (default 0xff, fully opaque)
+--- @return integer color
+function M.hex_to_color(hex, alpha)
+	return ((alpha or 0xff) << 24) | tonumber(hex:sub(2), 16)
+end
+
 return M

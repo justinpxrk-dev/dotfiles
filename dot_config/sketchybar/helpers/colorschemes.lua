@@ -1,40 +1,33 @@
 local asset = require("constants.asset")
+local catppuccin = require("catppuccin")
 local themes = require("helpers.themes")
 
 --- @class Colorschemes
---- @field COLORS ColorschemePalette
---- @field COLORSCHEMES table<ColorschemeOption, ColorschemePalette>
---- @alias ColorschemeOption "MACOS_TAHOE_DARK" | "MACOS_TAHOE_LIGHT"
 --- @alias ColorschemePalette table<ColorschemePaletteOption, integer>
 --- @alias ColorschemePaletteOption "ACTIVE_SPACE_ICON" | "BACKGROUND" | "GRAPH" | "GRAPH_FILL" | "ICON" | "INACTIVE_LABEL" | "INACTIVE_SPACE_ICON" | "LABEL"
 local M = {}
 
---- @type table<ColorschemeOption, ColorschemePalette>
-local colorschemes = {
-	MACOS_TAHOE_DARK = {
-		ACTIVE_SPACE_ICON = 0xffcdd6f4,
-		BACKGROUND = 0xf21e1e2e,
-		GRAPH = 0xffcdd6f4,
-		GRAPH_FILL = 0xf2181825,
-		ICON = 0xffcdd6f4,
-		INACTIVE_LABEL = 0xf245475a,
-		INACTIVE_SPACE_ICON = 0xf2585b70,
-		LABEL = 0xffcdd6f4,
-	},
-	MACOS_TAHOE_LIGHT = {
-		ACTIVE_SPACE_ICON = 0xff4c4f69,
-		BACKGROUND = 0xf2eff1f5,
-		GRAPH = 0xff4c4f69,
-		GRAPH_FILL = 0xf2e6e9ef,
-		ICON = 0xff4c4f69,
-		INACTIVE_LABEL = 0xf2bcc0cc,
-		INACTIVE_SPACE_ICON = 0xf2acb0be,
-		LABEL = 0xff4c4f69,
-	},
-}
+--- Map a Catppuccin flavor palette (from the `catppuccin` LuaRocks module) to the
+--- bar's semantic color roles. Translucent surfaces (background, graph fill,
+--- inactive text) keep the 0xf2 alpha the bar used previously; foreground roles
+--- are fully opaque. Palette colors are objects, so the hex is read via `.hex`.
+--- @param p table a Catppuccin flavor palette, e.g. `catppuccin.mocha()`
+--- @return ColorschemePalette
+local function roles(p)
+	return {
+		ACTIVE_SPACE_ICON = themes.hex_to_color(p.text.hex),
+		BACKGROUND = themes.hex_to_color(p.base.hex, 0xf2),
+		GRAPH = themes.hex_to_color(p.text.hex),
+		GRAPH_FILL = themes.hex_to_color(p.mantle.hex, 0xf2),
+		ICON = themes.hex_to_color(p.text.hex),
+		INACTIVE_LABEL = themes.hex_to_color(p.surface1.hex, 0xf2),
+		INACTIVE_SPACE_ICON = themes.hex_to_color(p.surface2.hex, 0xf2),
+		LABEL = themes.hex_to_color(p.text.hex),
+	}
+end
 
 --- @type ColorschemePalette
-local colors = colorschemes.MACOS_TAHOE_LIGHT
+local colors = roles(catppuccin.latte())
 
 function M.get_bar_color_options()
 	return {
@@ -100,9 +93,9 @@ end
 
 function M.refresh()
 	if themes.THEME == themes.THEME_MODES.DARK then
-		colors = colorschemes.MACOS_TAHOE_DARK
+		colors = roles(catppuccin.mocha())
 	else
-		colors = colorschemes.MACOS_TAHOE_LIGHT
+		colors = roles(catppuccin.latte())
 	end
 end
 

@@ -17,6 +17,10 @@ run = "./Scripts/brew/install_packages.sh"
 description = "Initialise all git submodules and build/install their outputs"
 run = "./Scripts/git/install_submodules.sh"
 
+[tasks."luarocks:install"]
+description = "Install LuaRocks dependencies into the user tree"
+run = "./Scripts/luarocks/install_rocks.sh"
+
 [tasks."macos:launch-agents"]
 description = "Register me.justinpxrk.* LaunchAgents into the current login session"
 run = "./Scripts/macos/register_launch_agents.sh"

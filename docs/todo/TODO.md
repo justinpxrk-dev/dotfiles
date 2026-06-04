@@ -14,6 +14,7 @@ There's nothing here yet!
 
 - Configure macos system settings script.
 - Decide whether to enable the commented-out `yabai --start-service` / `skhd --start-service` lines in `.chezmoiscripts/run_onchange_install-brew-packages.sh.tmpl` (consider `--restart-service` so upgrades pick up the new binary).
+- Harden bootstrap PATH: `Scripts/brew/install_packages.sh` and `Scripts/git/install_submodules.sh` call bare `brew`/`mise`, assuming Homebrew is already on `PATH`; a cold-start `chezmoi init --apply` (before the shell profile exists) can fail. Add absolute-path `eval "$(/opt/homebrew/bin/brew shellenv)"` (as in `Scripts/luarocks/install_rocks.sh`) so they work before `PATH` is set up.
 - Rename scripts to be more concise, imperative, and kebab-case
 - Write comment headers for all zsh, lua, python.
 - Write type annotations for all lua.
