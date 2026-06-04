@@ -11,8 +11,8 @@ function M.merge(...)
 	local result = {}
 	local tables = { ... }
 	for i = 1, #tables do
-		local table = tables[i]
-		for k, v in pairs(table) do
+		local source = tables[i]
+		for k, v in pairs(source) do
 			if type(v) == "table" and type(result[k]) == "table" then
 				result[k] = M.merge(result[k], v)
 			elseif result[k] == nil then
