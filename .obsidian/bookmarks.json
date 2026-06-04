@@ -121,6 +121,23 @@
         }
       ],
       "title": "keyboard-shortcuts"
+    },
+    {
+      "type": "group",
+      "ctime": 1780569872648,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1780569887540,
+          "path": "docs/ops/README.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1780569903454,
+          "path": "docs/ops/upgrade-hazards.md"
+        }
+      ],
+      "title": "ops"
     }
   ]
 }
