@@ -12,5 +12,5 @@
     ".claude/worktrees/",
     "dot_claude/"
   ],
-  "readableLineLength": true
+  "readableLineLength": false
 }
