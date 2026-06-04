@@ -39,6 +39,7 @@ chezmoi/
 ├── Unmanaged/  — reference configs not managed by chezmoi
 ├── Wallpapers/ — desktop wallpapers
 ├── docs/       — documentation
+│   └── ops/    — operational runbooks (upgrade hazards, couplings)
 ├── dot_Brewfile          → ~/.Brewfile
 ├── dot_claude/           → ~/.claude
 ├── dot_config/ → ~/.config/
@@ -111,6 +112,10 @@ After any change, update all relevant files to reflect the new state:
 - **Editor config:** `.editorconfig`
 - **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
 - **Tool scripts:** `package.json` (pnpm lint/format scripts), `mise.toml` (tool versions)
+
+### Operational Notes
+
+Version couplings, upgrade hazards, and manual maintenance steps that no test or lint enforces live in `docs/ops/` (e.g. `docs/ops/upgrade-hazards.md`). Record new ones there when you introduce them.
 
 ## Rules
 

@@ -1,6 +1,6 @@
 # Scripts
 
-Scripts live under `Scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts live under `Scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install_packages.sh`, `install_submodules.sh`, `install_rocks.sh`, `register_launch_agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ## `set_system_settings.sh`
 
@@ -42,6 +42,16 @@ Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run 
 ./Scripts/brew/install_packages.sh
 # or
 mise run brew:install
+```
+
+## `install_rocks.sh`
+
+Installs LuaRocks dependencies into the user tree (`~/.luarocks`). Homebrew Bundle has no luarocks entry type, so rocks live here rather than the Brewfile. Run automatically by chezmoi (`run_onchange_`) whenever the script changes; see [ops/upgrade-hazards.md](ops/upgrade-hazards.md) for the Lua-version coupling.
+
+```sh
+./Scripts/luarocks/install_rocks.sh
+# or
+mise run luarocks:install
 ```
 
 ## `build_themes.sh`

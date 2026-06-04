@@ -36,7 +36,7 @@ brew "git-lfs"
 brew "hyperfine"
 brew "tig"
 
-# CLI - Shell
+# CLI — Shell
 brew "bash"
 brew "dash-shell"
 # Zsh
@@ -46,10 +46,9 @@ brew "antidote"
 brew "neovim"
 cask "zed"
 
-# Lua
+# Languages
 brew "lua"
-
-# Python
+brew "luarocks"
 brew "uv"
 
 # Themes
