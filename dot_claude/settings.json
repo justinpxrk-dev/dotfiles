@@ -6,10 +6,23 @@
   },
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true
+    "pyright-lsp@claude-plugins-official": true,
+    "woz@wozcode-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "wozcode-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "WithWoz/wozcode-plugin"
+      }
+    }
   },
   "syntaxHighlightingDisabled": false,
   "tui": "default",
   "autoMemoryEnabled": false,
-  "theme": "auto"
+  "theme": "auto",
+  "wozcode": {
+    "desktopInstallNoticeShown": true
+  },
+  "agent": "woz:code"
 }
