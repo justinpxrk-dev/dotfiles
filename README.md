@@ -63,7 +63,7 @@ To install theme for spotify:
 
 ```sh
 spicetify backup apply
-spicetify config current_theme petrichor-dark
+spicetify config current_theme catppuccin color_scheme mocha
 spicetify apply
 ```
 

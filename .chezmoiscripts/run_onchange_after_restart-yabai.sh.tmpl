@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Restart yabai only when its Homebrew version (embedded below) changes.
+# `after_` runs this past the brew-bundle step; `|| true` keeps rendering safe
+# when brew/yabai is absent.
+#
+# {{ output "bash" "-c" "brew list --versions yabai 2>/dev/null || true" | trim }}
+set -euo pipefail
+
+# Skip cleanly if yabai is absent (uninstalled out of band) instead of aborting;
+# re-triggers once its version returns.
+command -v yabai >/dev/null || { echo "yabai not installed; skipping restart" >&2; exit 0; }
+
+# Restart if loaded (upgrade), else start fresh (first install).
+yabai --restart-service 2>/dev/null || yabai --start-service
