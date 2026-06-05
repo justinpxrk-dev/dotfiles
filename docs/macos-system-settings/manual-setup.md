@@ -1,4 +1,4 @@
-# macos-manual-settings.md
+# macOS Manual Settings
 
 Some settings cannot be scripted. Document manually configured system settings here.
 

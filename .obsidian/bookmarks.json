@@ -1,66 +1,6 @@
 {
   "items": [
     {
-      "type": "group",
-      "ctime": 1779081764876,
-      "items": [
-        {
-          "type": "file",
-          "ctime": 1779019177485,
-          "path": "docs/agents/AGENTS.md"
-        },
-        {
-          "type": "group",
-          "ctime": 1779081693647,
-          "items": [
-            {
-              "type": "file",
-              "ctime": 1779081717446,
-              "path": "docs/agents/skills/commit/SKILL.md",
-              "title": "commit"
-            },
-            {
-              "type": "file",
-              "ctime": 1779081730275,
-              "path": "docs/agents/skills/merge/SKILL.md",
-              "title": "merge"
-            }
-          ],
-          "title": "skills"
-        },
-        {
-          "type": "group",
-          "ctime": 1779081499583,
-          "items": [
-            {
-              "type": "folder",
-              "ctime": 1779081512949,
-              "path": "docs/agents/tasks/todo"
-            },
-            {
-              "type": "folder",
-              "ctime": 1779081677534,
-              "path": "docs/agents/tasks/completed"
-            },
-            {
-              "type": "group",
-              "ctime": 1779082539940,
-              "items": [],
-              "title": "todo"
-            },
-            {
-              "type": "group",
-              "ctime": 1779082544508,
-              "items": [],
-              "title": "completed"
-            }
-          ],
-          "title": "tasks"
-        }
-      ],
-      "title": "agents"
-    },
-    {
       "type": "file",
       "ctime": 1777263199954,
       "path": "docs/Dependencies.md"
@@ -86,58 +26,6 @@
       "ctime": 1778900108254,
       "path": "docs/agent/AGENTS.md",
       "title": "AGENTS"
-    },
-    {
-      "type": "file",
-      "ctime": 1779072020137,
-      "path": "docs/notes.md",
-      "title": "notes"
-    },
-    {
-      "type": "file",
-      "ctime": 1777263180777,
-      "path": "README.md"
-    },
-    {
-      "type": "file",
-      "ctime": 1779093271940,
-      "path": "docs/developer.md"
-    },
-    {
-      "type": "group",
-      "ctime": 1779106647933,
-      "items": [
-        {
-          "type": "file",
-          "ctime": 1779106665922,
-          "path": "docs/keyboard-shortcuts/macos/keyboard-shortcuts.md",
-          "title": "macos"
-        },
-        {
-          "type": "file",
-          "ctime": 1779106688607,
-          "path": "docs/keyboard-shortcuts/skhd/keyboard-shortcuts.md",
-          "title": "skhd"
-        }
-      ],
-      "title": "keyboard-shortcuts"
-    },
-    {
-      "type": "group",
-      "ctime": 1780569872648,
-      "items": [
-        {
-          "type": "file",
-          "ctime": 1780569887540,
-          "path": "docs/ops/README.md"
-        },
-        {
-          "type": "file",
-          "ctime": 1780569903454,
-          "path": "docs/ops/upgrade-hazards.md"
-        }
-      ],
-      "title": "ops"
     }
   ]
 }

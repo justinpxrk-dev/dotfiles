@@ -12,7 +12,7 @@ Applies macOS defaults and system preferences. Reboot immediately after — open
 mise run macos:settings
 ```
 
-> Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [macos-manual-settings.md](macos/macos-manual-settings.md).
+> Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [manual-setup.md](macos-system-settings/manual-setup.md).
 
 ## `register_launch_agents.sh`
 
