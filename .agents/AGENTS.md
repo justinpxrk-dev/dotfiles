@@ -15,6 +15,7 @@ Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by chezmoi
 
 ```text
 chezmoi/
+├── .agents/    — AGENTS.md and shared agent skills (commit, merge)
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config and skills
 │   └── skills/ — custom slash commands
@@ -107,7 +108,7 @@ Write inline comments for non-obvious _why_ — hidden constraints, invariants, 
 
 After any change, update all relevant files to reflect the new state:
 
-- **Docs:** `docs/agents/AGENTS.md`, other files in `docs/`, READMEs
+- **Docs:** `.agents/AGENTS.md`, other files in `docs/`, READMEs
 - **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
 - **Editor config:** `.editorconfig`
 - **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`

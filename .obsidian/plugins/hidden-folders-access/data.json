@@ -1,5 +1,6 @@
 {
   "enabledFolders": [
+    ".agents",
     ".claude"
   ],
   "allowedExtensions": [
