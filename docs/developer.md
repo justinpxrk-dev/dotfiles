@@ -20,9 +20,11 @@ uv sync --dev
 ## Formatting and Linting
 
 ```sh
+pnpm run check           # Run all checks: format:check + lint (mirrors CI and the pre-commit hook)
+pnpm run fix             # Auto-fix everything fixable: lint fixes (ruff --fix, markdownlint --fix) then format
 pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
 pnpm run format:check    # Check formatting without writing
-pnpm run lint            # Lint shell (shellcheck), Lua (lua-language-server), and Python (ruff, pyright)
+pnpm run lint            # Lint Markdown (markdownlint), shell (shellcheck), Lua (lua-language-server), and Python (ruff, pyright)
 ```
 
 Individual formatters:

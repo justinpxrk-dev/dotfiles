@@ -33,10 +33,14 @@ brew "ripgrep"
 
 # CLI — Tools
 brew "delta"
+brew "duckdb"
 brew "fzf"
+brew "gh"
 brew "git"
 brew "git-lfs"
+brew "gnu-getopt"
 brew "hyperfine"
+brew "p7zip"
 brew "tig"
 
 # CLI — Shell
@@ -47,13 +51,16 @@ brew "antidote"
 
 # Editors
 brew "neovim"
-cask "visual-studio-code"
 cask "zed"
 
 # Languages
 brew "lua"
 brew "luarocks"
 brew "uv"
+
+# Build Dependencies
+brew "make"
+brew "zlib"
 
 # Themes
 brew "cormacrelf/tap/dark-notify"
@@ -75,6 +82,7 @@ cask "font-symbols-only-nerd-font"
 brew "fontforge"
 
 # AI
+cask "chatgpt"
 cask "claude"
 cask "claude-code@latest"
 cask "codex"
@@ -88,6 +96,7 @@ cask "appcleaner"
 cask "discord"
 cask "ghostty"
 cask "google-chrome"
+cask "logitune"
 cask "orbstack"
 cask "protonvpn"
 cask "zen"

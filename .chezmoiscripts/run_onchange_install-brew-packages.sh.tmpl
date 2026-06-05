@@ -4,8 +4,3 @@
 set -euo pipefail
 
 "$HOME/.local/share/chezmoi/Scripts/brew/install_packages.sh"
-
-# yabai and skhd are managed via their own --start-service, not as Homebrew
-# services, so brew bundle won't start/restart them.
-# yabai --start-service
-# skhd --start-service
