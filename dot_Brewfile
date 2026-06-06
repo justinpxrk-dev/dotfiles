@@ -41,6 +41,9 @@ brew "git"
 brew "git-lfs"
 brew "gnu-getopt"
 brew "hyperfine"
+brew "jq"
+brew "leetgo"
+brew "overmind"
 brew "p7zip"
 brew "tig"
 
@@ -52,7 +55,6 @@ brew "antidote"
 
 # Editors
 brew "neovim"
-cask "zed"
 
 # Languages
 brew "lua"
@@ -83,22 +85,37 @@ cask "font-symbols-only-nerd-font"
 brew "fontforge"
 
 # AI
-cask "chatgpt"
-cask "claude"
 cask "claude-code@latest"
 cask "codex"
 
 # Secrets
-cask "bitwarden"
 brew "bitwarden-cli"
 
 # Applications
 cask "appcleaner"
+cask "betterdisplay"
+cask "bitwarden"
+cask "chatgpt"
+cask "claude"
 cask "discord"
 cask "ghostty"
 cask "google-chrome"
+cask "keepingyouawake"
 cask "logitune"
+cask "obsidian"
 cask "orbstack"
 cask "protonvpn"
+cask "raycast"
+cask "sf-symbols"
+cask "spotify"
+cask "stats"
+cask "thaw"
+cask "zed"
 cask "zen"
 cask "zoom"
+
+# Mac App Store
+brew "mas"
+# mas "Copilot", id: 1447330651
+# mas "Dynamic wallpaper", id: 1582358382
+# mas "Steam Link", id: 1246969117

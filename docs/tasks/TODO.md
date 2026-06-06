@@ -8,6 +8,7 @@ There's nothing here yet!
 
 - Integrate `chezmoi` with `bitwarden-cli` for SSH key access.
 - Configure workflows/deploy-authenticated-macos to test successful clone of private repositories.
+- Re-enable the `mas` App Store apps in `dot_Brewfile` (Copilot, Dynamic Wallpaper, Steam Link) — commented out because `mas` hangs in CI without App Store auth.
 - Replace user-specific paths (.zshenv, .zshrc_env, Library/LaunchAgents/) with `chezmoi` templates.
 
 ## Low Priority
