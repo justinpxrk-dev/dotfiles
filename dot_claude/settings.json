@@ -18,8 +18,15 @@
     }
   },
   "syntaxHighlightingDisabled": false,
+  "effortLevel": "xhigh",
+  "agent": "woz:code",
   "tui": "default",
   "autoMemoryEnabled": false,
   "theme": "auto",
-  "agent": "woz:code"
+  "wozcode": {
+    "spinnerVerbs": false,
+    "statusLineLifetime": false,
+    "statusLineShare": false,
+    "attribution": false
+  }
 }
