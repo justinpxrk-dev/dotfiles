@@ -30,6 +30,7 @@ brew "dust"
 brew "eza"
 brew "fd"
 brew "ripgrep"
+brew "zoxide"
 
 # CLI — Tools
 brew "delta"

@@ -89,7 +89,7 @@ Scripts live under `Scripts/` and are all available as mise tasks. Run `mise tas
 - `dot_zshrc_env` — interactive-only environment variables (zsh dirs)
 - `dot_zshrc_aliases` — CLI tool replacements, editor shortcuts, and shell conveniences
 - `dot_zshrc_bindings` — keybindings
-- `dot_zshrc_evals` — cached eval statements via evalcache (Homebrew, mise)
+- `dot_zshrc_evals` — cached eval statements via evalcache (Homebrew, mise, zoxide)
 - `dot_zshrc_hooks` — zsh hooks (precmd, preexec)
 - `dot_zshrc_opts` — zsh options and plugin config (history, directory, misc, plugins)
 - `dot_zsh_plugins.txt` — antidote plugin list
