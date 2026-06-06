@@ -9,3 +9,6 @@ zsh-defer _evalcache brew shellenv
 
 # mise
 zsh-defer _evalcache mise activate zsh
+
+# zoxide
+zsh-defer _evalcache zoxide init zsh
