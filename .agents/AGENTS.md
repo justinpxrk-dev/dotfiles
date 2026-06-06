@@ -11,7 +11,7 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Project Structure
 
-Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by chezmoi; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/` (except `Library/Fonts/`, which chezmoi ignores), are applied by chezmoi; all other directories are tracked in git only.
 
 ```text
 chezmoi/
@@ -24,11 +24,11 @@ chezmoi/
 ├── .github/    — GitHub Actions workflows
 │   └── workflows/
 ├── Assets/     — icons and images
-├── Fonts/      — font sources
-│   ├── font-monolisa @ †
-│   └── lib/
-│       └── monolisa-nerdfont-patch @ †
 ├── Library/    → ~/Library/
+│   ├── Fonts/  — font sources (git-only)
+│   │   ├── font-monolisa @ †
+│   │   └── lib/
+│   │       └── monolisa-nerdfont-patch @ †
 │   └── LaunchAgents/
 ├── Scripts/    — shell scripts
 ├── Themes/     — Petrichor theme definitions (see Themes System)

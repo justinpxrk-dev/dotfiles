@@ -87,11 +87,11 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── .github/                            — GitHub metadata
 │   └── workflows/                      — GitHub Actions workflows
 ├── Assets/                             — icons and images
-├── Fonts/                              — font sources
-│   ├── font-monolisa @ †               — MonoLisa font source (private)
-│   └── lib/                            — font tooling
-│       └── monolisa-nerdfont-patch @ † — Nerd Font patcher (private)
 ├── Library/                            → ~/Library/ - macOS Library files
+│   ├── Fonts/                          — font sources (git-only)
+│   │   ├── font-monolisa @ †           — MonoLisa font source (private)
+│   │   └── lib/                        — font tooling
+│   │       └── monolisa-nerdfont-patch @ † — Nerd Font patcher (private)
 │   └── LaunchAgents/                   — launchd service definitions
 ├── Scripts/                            — shell scripts (run via mise tasks)
 ├── Themes/                             — Theme definitions

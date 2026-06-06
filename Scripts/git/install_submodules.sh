@@ -22,8 +22,9 @@ GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
 # --recursive is omitted: these submodules are owner-maintained and have no
 # nested submodules.
 git submodule update --init --checkout --quiet -- \
-	Fonts/font-monolisa \
-	Fonts/lib/monolisa-nerdfont-patch || true
+	Library/Fonts/font-monolisa \
+	Library/Fonts/lib/monolisa-nerdfont-patch ||
+	true
 
 failed=()
 
@@ -40,21 +41,41 @@ in_submodule() {
 }
 
 install_font_monolisa() {
-	local name="font-monolisa" path="Fonts/font-monolisa"
+	local name="font-monolisa" path="Library/Fonts/font-monolisa"
+	local destination="$HOME/Library/Fonts"
 	[[ -f "$path/fonts/MonoLisa-normal.ttf" ]] || return 0
-	mkdir -p "$HOME/Library/Fonts/MonoLisa"
-	in_submodule "$name" "$path" "Linking fonts" ln -sf "$REPO_ROOT/$path/fonts/MonoLisa-normal.ttf" "$HOME/Library/Fonts/MonoLisa/"
+	[[ -f "$path/fonts/MonoLisa-italic.ttf" ]] || return 0
+	# Copy rather than symlink: macOS does not register fonts symlinked into
+	# ~/Library/Fonts.
+	local variant
+	for variant in normal italic; do
+		in_submodule "$name" "$path" "Installing MonoLisa-$variant.ttf" \
+			cp "$REPO_ROOT/$path/fonts/MonoLisa-$variant.ttf" "$destination"
+	done
 }
 
 install_monolisa_nerdfont_patch() {
-	local name="monolisa-nerdfont-patch" path="Fonts/lib/monolisa-nerdfont-patch"
-	local source="$HOME/Library/Fonts/MonoLisa/MonoLisa-normal.ttf"
-	local destination="$HOME/Library/Fonts/"
-	[[ -f "$path/patch-monolisa" ]] || return 0
-	mkdir -p "$destination"
-	if [[ ! -f "$destination/MonoLisa/MonoLisaNerdFont-Regular.ttf" ]]; then
-		in_submodule "$name" "$path" "Patching fonts" ./patch-monolisa -f "$source" -c -o "$destination"
-	fi
+	local name="monolisa-nerdfont-patch" path="Library/Fonts/lib/monolisa-nerdfont-patch"
+	local fonts="$HOME/Library/Fonts"
+	[[ -x "$path/patch-monolisa" ]] || return 0
+	# patch-monolisa writes each font to <-o>/<source's parent dir>/. The copied
+	# originals live in ~/Library/Fonts (parent dir "Fonts"), so -o ~/Library lands
+	# the patched Nerd Fonts back in ~/Library/Fonts beside them.
+	#
+	# --name filename is required because both MonoLisa source files share one
+	# internal name (they differ only by italic angle); without it font-patcher
+	# names every variant "-Regular" and the italic clobbers the regular. Deriving
+	# the style from the file name yields a proper Regular/Italic Nerd Font pair.
+	local variant src
+	for variant in normal italic; do
+		src="$fonts/MonoLisa-$variant.ttf"
+		[[ -f "$src" ]] || continue
+		in_submodule "$name" "$path" "Patching ${src##*/}" \
+			./patch-monolisa -f "$src" -c --name filename -o "$HOME/Library"
+	done
+	# Discard worktree changes in the submodule after patching so the superproject
+	# does not report it as modified.
+	in_submodule "$name" "$path" "Resetting" git restore .
 }
 
 install_sbarlua() {

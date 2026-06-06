@@ -5,12 +5,12 @@
 --- @type Padding
 local M = {
 	BAR = {
-		PADDING_LEFT = 10,
-		PADDING_RIGHT = 10,
+		PADDING_LEFT = 15,
+		PADDING_RIGHT = 15,
 	},
 	DEFAULT = {
-		PADDING_LEFT = 10,
-		PADDING_RIGHT = 10,
+		PADDING_LEFT = 5,
+		PADDING_RIGHT = 5,
 	},
 }
 
