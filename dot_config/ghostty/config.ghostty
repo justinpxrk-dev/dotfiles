@@ -41,20 +41,20 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+alpha-blending = linear
 background-blur = 60
 background-opacity = 0.95
 background-opacity-cells = true
-font-family = MonoLisa Nerd Font
+font-family = MonoLisa
 font-size = 14.0
-font-thicken = true
-font-thicken-strength = 0
+font-variation = wght=400
 macos-titlebar-proxy-icon = hidden
 shell-integration-features = cursor, no-path, ssh-env, no-ssh-terminfo, sudo, no-title
 theme = dark:Catppuccin Mocha, light:Catppuccin Latte
 unfocused-split-opacity = 0.4
 window-padding-balance = true
 window-padding-color = extend
-window-padding-x = 16, 16
-window-padding-y = 16, 16
+window-padding-x = 20, 20
+window-padding-y = 20, 20
 window-title-font-family = SF Pro
 window-vsync = true

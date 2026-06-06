@@ -1,6 +1,6 @@
 --- @class Font
 --- @field DEFAULT table<DefaultFontOption, FontSettings>
---- @alias DefaultFontOption "BOLD_LABEL" | "ICON" | "LABEL" | "SPACES_ICON"
+--- @alias DefaultFontOption "BOLD_LABEL" | "ICON" | "LABEL" | "APP_ICON"
 --- @alias FontSettings table<FontSetting, string | number>
 --- @alias FontSetting "family" | "style" | "size"
 
@@ -22,7 +22,7 @@ local M = {
 			style = "Regular",
 			size = 13.0,
 		},
-		SPACES_ICON = {
+		APP_ICON = {
 			family = "sketchybar-app-font",
 			style = "Regular",
 			size = 20.0,

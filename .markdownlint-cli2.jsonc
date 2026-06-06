@@ -8,7 +8,7 @@
     ".venv",
     ".claude",
     ".codex",
-    "Fonts",
+    "Library/Fonts",
     "Wallpapers",
     "Themes/lib",
     "dot_config/sketchybar/lib",

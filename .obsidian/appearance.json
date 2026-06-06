@@ -6,9 +6,9 @@
   "enabledCssSnippets": [
     "nav-folder-hidden-files"
   ],
-  "interfaceFontFamily": "SF Pro Display",
+  "interfaceFontFamily": "SF Pro",
   "textFontFamily": "SF Pro Text",
-  "monospaceFontFamily": "MonoLisa Nerd Font",
+  "monospaceFontFamily": "MonoLisa",
   "cssTheme": "Catppuccin",
   "translucency": true
 }

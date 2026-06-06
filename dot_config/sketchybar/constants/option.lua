@@ -58,7 +58,6 @@ local M = {
 				},
 				drawing = true,
 			},
-			padding_right = 0,
 			position = "left",
 		}),
 
@@ -76,7 +75,6 @@ local M = {
 			icon = {
 				string = icon.RESOURCES.CPU,
 			},
-			padding_right = 0,
 			position = "right",
 		}),
 		CPU_GRAPH = utils.merge(

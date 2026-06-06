@@ -2,7 +2,6 @@
   "showInlineTitle": false,
   "userIgnoreFilters": [
     "Assets/",
-    "Fonts/",
     "Library/",
     "Scripts/",
     "Themes/",
