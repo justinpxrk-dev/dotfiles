@@ -33,6 +33,7 @@ brew "ripgrep"
 brew "zoxide"
 
 # CLI — Tools
+brew "curl"
 brew "delta"
 brew "duckdb"
 brew "fzf"

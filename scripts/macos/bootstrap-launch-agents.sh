@@ -27,7 +27,7 @@ main() {
 		label="$(defaults read "$plist" Label 2>/dev/null)"
 		echo "==> $label"
 		if launchctl list "$label" &>/dev/null; then
-			echo "  > Already registered, skipping"
+			echo "  > Already bootstrapped, skipping"
 			continue
 		fi
 		if ! launchctl bootstrap "gui/$uid_num" "$plist" 2>&1; then
@@ -36,7 +36,7 @@ main() {
 	done
 
 	if ((${#failed[@]} > 0)); then
-		echo "==> The following agents failed to register:" >&2
+		echo "==> The following agents failed to bootstrap:" >&2
 		printf '  > %s\n' "${failed[@]}" >&2
 		return 1
 	fi
