@@ -31,7 +31,6 @@ alias .ghostty="\$EDITOR \$DOTFILES/dot_config/ghostty/config.ghostty"
 alias .git="\$EDITOR \$DOTFILES/dot_config/git/config"
 alias .nvim="\$EDITOR \$DOTFILES/dot_config/nvim/init.lua"
 alias .skhd="\$EDITOR \$DOTFILES/dot_config/skhd/skhdrc"
-alias .tmux="\$EDITOR \$DOTFILES/dot_config/tmux/tmux.conf"
 alias .yabai="\$EDITOR \$DOTFILES/dot_config/yabai/executable_yabairc"
 (($+commands[zed])) && alias .zed="zed \$DOTFILES"
 # homebrew

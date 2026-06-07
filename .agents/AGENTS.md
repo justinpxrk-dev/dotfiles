@@ -57,7 +57,6 @@ chezmoi/
 │   │       └── SbarLua @
 │   ├── skhd/
 │   ├── spicetify/ — Themes/catppuccin symlinks to Library/Themes/Catppuccin/spicetify @ ⑂
-│   ├── tmux/
 │   ├── yabai/
 │   └── zsh/
 ├── dot_zshenv.tmpl       → ~/.zshenv

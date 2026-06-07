@@ -117,7 +117,6 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   │       └── SbarLua @               — SketchyBar Lua bindings
 │   ├── skhd/                           — skhd hotkey daemon config
 │   ├── spicetify/                      — Spicetify (Spotify) config
-│   ├── tmux/                           — tmux multiplexer config
 │   ├── yabai/                          — yabai window manager config
 │   └── zsh/                            — Zsh interactive shell config
 ├── dot_zshenv.tmpl                     → ~/.zshenv - Zsh environment (all shells)
