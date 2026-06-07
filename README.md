@@ -53,7 +53,7 @@ chezmoi init --apply justinpxrk-dev/dotfiles
 `chezmoi` automatically runs bootstrap scripts on first apply (submodules, LaunchAgent registration). Install developer environment and run setup scripts from the repo:
 
 ```sh
-mise trust          # trust config file (mise.toml)
+mise trust                     # trust config file (mise.toml)
 mise install                   # install configured tools
 mise tinted:apply-templates    # build themes (rerun `chezmoi apply` to apply)
 mise macos:set-system-settings # apply macOS defaults (reboot after)
