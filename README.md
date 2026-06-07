@@ -75,13 +75,17 @@ chezmoi update
 
 ## Structure
 
-Entries prefixed with `dot_` or `empty_`, and `Library/`, are applied by `chezmoi`; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/LaunchAgents/`, are applied by `chezmoi`; all other directories are tracked in git only.
 
 ```text
 chezmoi/                                — repo root (~/.local/share/chezmoi)
+├── .agents/                            — shared agent instructions and skills
+│   └── skills/                         — commit and merge skills
 ├── .chezmoiscripts/                    — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/                            — Claude Code config and skills
 │   └── skills/                         — custom slash commands
+├── .codex/                             — Codex config and skills
+│   └── skills/                         — wrappers around shared skills
 ├── .github/                            — GitHub metadata
 │   └── workflows/                      — GitHub Actions workflows
 ├── assets/                             — icons and images
@@ -99,7 +103,7 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   │       ├── tinted-shell @ ⑂        — shell theme templates
 │   │       ├── tinted-terminal @ ⑂     — terminal theme templates
 │   │       └── tinted-vscode @ ⑂       — VSCode theme templates
-│   ├── Unmanaged/                      — reference configs not managed by chezmoi (Raycast, VSCode)
+│   ├── Unmanaged/                      — reference configs not managed by chezmoi (git-only)
 │   └── Wallpapers/                     — desktop wallpapers (git-only)
 ├── scripts/                            — shell scripts (run via mise tasks)
 ├── docs/                               — documentation
@@ -118,6 +122,7 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   ├── skhd/                           — skhd hotkey daemon config
 │   ├── spicetify/                      — Spicetify (Spotify) config
 │   ├── yabai/                          — yabai window manager config
+│   ├── zed/                            — Zed editor config
 │   └── zsh/                            — Zsh interactive shell config
 ├── dot_zshenv.tmpl                     → ~/.zshenv - Zsh environment (all shells)
 └── empty_dot_hushlogin                 → ~/.hushlogin - suppress login banner
