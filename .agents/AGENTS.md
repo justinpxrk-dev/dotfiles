@@ -11,7 +11,7 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Project Structure
 
-Entries prefixed with `dot_` or `empty_`, and `Library/` (except `Library/Fonts/`, `Library/Themes/`, `Library/Unmanaged/`, and `Library/Wallpapers/`, which chezmoi ignores), are applied by chezmoi; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/LaunchAgents/`, are applied by chezmoi; all other directories are tracked in git only.
 
 ```text
 chezmoi/
