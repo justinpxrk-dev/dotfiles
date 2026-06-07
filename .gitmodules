@@ -12,18 +12,18 @@
 [submodule "dot_config/sketchybar/lib/sketchybar-app-font"]
 	path = dot_config/sketchybar/lib/sketchybar-app-font
 	url = https://github.com/kvndrsslr/sketchybar-app-font.git
-[submodule "Themes/lib/spicetify"]
-	path = Themes/lib/spicetify
+[submodule "Library/Themes/Catppuccin/spicetify"]
+	path = Library/Themes/Catppuccin/spicetify
 	url = https://github.com/justinpxrk-dev/spicetify.git
-[submodule "Themes/lib/tinted-terminal"]
-	path = Themes/lib/tinted-terminal
+[submodule "Library/Themes/tinted/tinted-terminal"]
+	path = Library/Themes/tinted/tinted-terminal
 	url = https://github.com/justinpxrk-dev/tinted-terminal.git
 	branch = justinpxrk-dev
-[submodule "Themes/lib/tinted-vscode"]
-	path = Themes/lib/tinted-vscode
+[submodule "Library/Themes/tinted/tinted-vscode"]
+	path = Library/Themes/tinted/tinted-vscode
 	url = https://github.com/justinpxrk-dev/tinted-vscode.git
 	branch = justinpxrk-dev
-[submodule "Themes/lib/tinted-shell"]
-	path = Themes/lib/tinted-shell
+[submodule "Library/Themes/tinted/tinted-shell"]
+	path = Library/Themes/tinted/tinted-shell
 	url = https://github.com/justinpxrk-dev/tinted-shell.git
 	branch = justinpxrk-dev

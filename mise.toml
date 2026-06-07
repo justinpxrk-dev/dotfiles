@@ -1,7 +1,6 @@
 [tools]
 node = "latest"
 "npm:pnpm" = "latest"
-python = "latest"
 ruff = "latest"
 stylua = "latest"
 lua-language-server = "latest"
@@ -9,38 +8,38 @@ lefthook = "latest"
 shellcheck = "latest"
 shfmt = "latest"
 
-[tasks."brew:install"]
+[tasks."brew:install-packages"]
 description = "Install Homebrew packages declared in ~/.Brewfile"
-run = "./Scripts/brew/install_packages.sh"
+run = "./scripts/brew/install-packages.sh"
 
-[tasks."git:submodules"]
+[tasks."git:install-submodules"]
 description = "Initialise all git submodules and build/install their outputs"
-run = "./Scripts/git/install_submodules.sh"
+run = "./scripts/git/install-submodules.sh"
 
-[tasks."luarocks:install"]
+[tasks."luarocks:install-rocks"]
 description = "Install LuaRocks dependencies into the user tree"
-run = "./Scripts/luarocks/install_rocks.sh"
+run = "./scripts/luarocks/install-rocks.sh"
 
-[tasks."macos:launch-agents"]
-description = "Register me.justinpxrk.* LaunchAgents into the current login session"
-run = "./Scripts/macos/register_launch_agents.sh"
+[tasks."macos:bootstrap-launch-agents"]
+description = "Bootstrap me.justinpxrk.* LaunchAgents into the current login session"
+run = "./scripts/macos/bootstrap-launch-agents.sh"
 
-[tasks."macos:settings"]
+[tasks."macos:set-system-settings"]
 description = "Apply macOS defaults and system preferences"
-run = "./Scripts/macos/set_system_settings.sh"
+run = "./scripts/macos/set-system-settings.sh"
 
-[tasks."themes:build"]
-description = "Build theme outputs (zsh, Ghostty, VS Code) from a Base24 scheme directory"
-run = "./Scripts/Themes/build_themes.sh"
-
-[tasks."themes:change-mode"]
+[tasks."themes:handle-theme-change"]
 description = "Apply per-appearance theme state (borders colors, delta zebra feature) for the current light/dark mode; pass dark|light to force, omit to detect from system"
-run = "./Scripts/Themes/handle_theme_change.sh"
+run = "./scripts/themes/handle-theme-change.sh"
 
-[tasks."themes:generate-palette"]
+[tasks."themes:generate-base24-palette"]
 description = "Generate Base24 dark and light palette YAML files"
-run = "uv run ./Scripts/Themes/generate_base24_palette.py"
+run = "uv run ./scripts/themes/generate_base24_palette.py"
 
-[tasks."zsh:benchmark"]
+[tasks."tinted:apply-templates"]
+description = "Build and install theme outputs (zsh, Ghostty, VS Code) from a Base24 scheme directory via tinted-builder"
+run = "./scripts/tinted/apply-templates.sh"
+
+[tasks."zsh:benchmark-startup"]
 description = "Benchmark Zsh startup time with hyperfine (200 runs, 50 warmups)"
-run = "./Scripts/zsh/benchmark_startup.sh"
+run = "./scripts/zsh/benchmark-startup.sh"

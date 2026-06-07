@@ -2,12 +2,8 @@
 .nav-folder:has(> .nav-folder-title[data-path="dot_claude"]),
 .nav-folder:has(> .nav-folder-title[data-path="dot_config"]),
 .nav-folder:has(> .nav-folder-title[data-path="node_modules"]),
-.nav-folder:has(> .nav-folder-title[data-path="Assets"]),
-.nav-folder:has(> .nav-folder-title[data-path="Fonts"]),
-.nav-folder:has(> .nav-folder-title[data-path="Library"]),
-.nav-folder:has(> .nav-folder-title[data-path="Scripts"]),
-.nav-folder:has(> .nav-folder-title[data-path="Themes"]),
-.nav-folder:has(> .nav-folder-title[data-path="Unmanaged"]),
-.nav-folder:has(> .nav-folder-title[data-path="Wallpapers"]) {
+.nav-folder:has(> .nav-folder-title[data-path="assets"]),
+.nav-folder:has(> .nav-folder-title[data-path="scripts"]),
+.nav-folder:has(> .nav-folder-title[data-path="Library"]) {
     display: none;
 }

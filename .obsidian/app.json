@@ -1,12 +1,9 @@
 {
   "showInlineTitle": false,
   "userIgnoreFilters": [
-    "Assets/",
+    "assets/",
+    "scripts/",
     "Library/",
-    "Scripts/",
-    "Themes/",
-    "Unmanaged/",
-    "Wallpapers/",
     "dot_config/",
     ".claude/worktrees/",
     "dot_claude/"

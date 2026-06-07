@@ -20,6 +20,11 @@ exclude = [
 [tool.ruff]
 exclude = ["**/lib"]
 
+# `uv check` runs ty, which has its own config and ignores [tool.pyright];
+# mirror the **/lib exclusion so vendored submodule code is not type-checked.
+[tool.ty.src]
+exclude = ["**/lib"]
+
 [dependency-groups]
 dev = [
     "pyright>=1.1.409",

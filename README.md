@@ -18,8 +18,8 @@ _Intended for personal use. macOS dotfiles managed by [`chezmoi`](https://www.ch
 		<th align="left" width="50%">Light (<a href="https://catppuccin.com">Catppuccin Latte</a>)</th>
 	</tr>
 	<tr>
-		<td align="center" width="50%"><img src="Assets/screenshots/Desktop-Catppuccin-Mocha.png" width="100%" alt="Desktop with the Catppuccin Mocha theme" /></td>
-		<td align="center" width="50%"><img src="Assets/screenshots/Desktop-Catppuccin-Latte.png" width="100%" alt="Desktop with the Catppuccin Latte theme" /></td>
+		<td align="center" width="50%"><img src="assets/screenshots/Desktop-Catppuccin-Mocha.png" width="100%" alt="Desktop with the Catppuccin Mocha theme" /></td>
+		<td align="center" width="50%"><img src="assets/screenshots/Desktop-Catppuccin-Latte.png" width="100%" alt="Desktop with the Catppuccin Latte theme" /></td>
 	</tr>
 </table>
 
@@ -31,8 +31,8 @@ _Intended for personal use. macOS dotfiles managed by [`chezmoi`](https://www.ch
 		<th align="left" width="50%">Light (<a href="https://catppuccin.com">Catppuccin Latte</a>)</th>
 	</tr>
 	<tr>
-		<td align="center" width="50%"><img src="Assets/screenshots/Development-Catppuccin-Mocha.png" width="100%" alt="Development environment with the Catppuccin Mocha theme" /></td>
-		<td align="center" width="50%"><img src="Assets/screenshots/Development-Catppuccin-Latte.png" width="100%" alt="Development environment with the Catppuccin Latte theme" /></td>
+		<td align="center" width="50%"><img src="assets/screenshots/Development-Catppuccin-Mocha.png" width="100%" alt="Development environment with the Catppuccin Mocha theme" /></td>
+		<td align="center" width="50%"><img src="assets/screenshots/Development-Catppuccin-Latte.png" width="100%" alt="Development environment with the Catppuccin Latte theme" /></td>
 	</tr>
 </table>
 
@@ -54,9 +54,9 @@ chezmoi init --apply justinpxrk-dev/dotfiles
 
 ```sh
 mise trust          # trust config file (mise.toml)
-mise install        # install configured tools
-mise themes:build   # build themes (rerun `chezmoi apply` to apply)
-mise macos:settings # apply macOS defaults (reboot after)
+mise install                   # install configured tools
+mise tinted:apply-templates    # build themes (rerun `chezmoi apply` to apply)
+mise macos:set-system-settings # apply macOS defaults (reboot after)
 ```
 
 To install theme for spotify:
@@ -86,21 +86,24 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   └── skills/                         — custom slash commands
 ├── .github/                            — GitHub metadata
 │   └── workflows/                      — GitHub Actions workflows
-├── Assets/                             — icons and images
+├── assets/                             — icons and images
 ├── Library/                            → ~/Library/ - macOS Library files
 │   ├── Fonts/                          — font sources (git-only)
 │   │   ├── font-monolisa @ †           — MonoLisa font source (private)
 │   │   └── lib/                        — font tooling
 │   │       └── monolisa-nerdfont-patch @ † — Nerd Font patcher (private)
-│   └── LaunchAgents/                   — launchd service definitions
-├── Scripts/                            — shell scripts (run via mise tasks)
-├── Themes/                             — Theme definitions
-│   └── lib/                            — theme template upstreams
-│       ├── tinted-shell @ ⑂            — shell theme templates
-│       ├── tinted-terminal @ ⑂         — terminal theme templates
-│       └── tinted-vscode @ ⑂           — VSCode theme templates
-├── Unmanaged/                          — reference configs not managed by chezmoi (Raycast, VSCode)
-├── Wallpapers/                         — desktop wallpapers
+│   ├── LaunchAgents/                   — launchd service definitions
+│   ├── Themes/                         — theme definitions (git-only)
+│   │   ├── Catppuccin/                 — Spicetify Catppuccin upstream
+│   │   │   └── spicetify @ ⑂           — Spotify theme templates
+│   │   ├── Petrichor/                  — Base24 palette definitions
+│   │   └── tinted/                     — tinted-builder template upstreams
+│   │       ├── tinted-shell @ ⑂        — shell theme templates
+│   │       ├── tinted-terminal @ ⑂     — terminal theme templates
+│   │       └── tinted-vscode @ ⑂       — VSCode theme templates
+│   ├── Unmanaged/                      — reference configs not managed by chezmoi (Raycast, VSCode)
+│   └── Wallpapers/                     — desktop wallpapers (git-only)
+├── scripts/                            — shell scripts (run via mise tasks)
 ├── docs/                               — documentation
 ├── dot_Brewfile                        → ~/.Brewfile - Homebrew bundle
 ├── dot_claude/                         → ~/.claude - Claude Code user config

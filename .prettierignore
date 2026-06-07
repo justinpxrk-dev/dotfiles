@@ -1,12 +1,13 @@
 dot_config/sketchybar/lib
 Library/Fonts
-Themes/lib
-Unmanaged/*
-Wallpapers
+Library/Themes/tinted
+Library/Themes/Catppuccin
+Library/Unmanaged/*
+Library/Wallpapers
 
 # Gemini
-!Unmanaged/gemini
-!Unmanaged/gemini/gems
+!Library/Unmanaged/gemini
+!Library/Unmanaged/gemini/gems
 
 # Node
 pnpm-lock.yaml
@@ -16,8 +17,8 @@ pnpm-lock.yaml
 !.obsidian/snippets
 
 # Visual Studio Code
-!Unmanaged/Visual Studio Code
+!Library/Unmanaged/Visual Studio Code
 
 # Zen Browser
-!Unmanaged/Zen Browser
-!Unmanaged/Zen Browser/chrome
+!Library/Unmanaged/Zen Browser
+!Library/Unmanaged/Zen Browser/chrome

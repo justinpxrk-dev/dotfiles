@@ -465,7 +465,7 @@ def write_palette_yml(
     palette: list[str],
     variant: str,
 ) -> None:
-    theme_dir = Path("Themes/Petrichor")
+    theme_dir = Path("Library/Themes/Petrichor")
     theme_dir.mkdir(parents=True, exist_ok=True)
     path = theme_dir / f"petrichor-{variant}.yml"
     lines = [

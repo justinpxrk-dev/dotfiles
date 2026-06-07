@@ -19,7 +19,7 @@
     "format:check:py": "ruff format --check .",
     "lint:py": "uv run ruff check . && uv run pyright",
     "lint:fix:py": "uv run ruff check --fix .",
-    "lint:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Themes/lib/*' -not -path './.obsidian/*' | xargs shellcheck",
+    "lint:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Library/Themes/tinted/*' -not -path './Library/Themes/Catppuccin/*' -not -path './.obsidian/*' | xargs shellcheck",
     "format:sh": "shfmt --apply-ignore -w .",
     "format:check:sh": "shfmt --apply-ignore -d .",
     "lint:lua": "lua-language-server --check=dot_config/nvim --checklevel=Warning && lua-language-server --check=dot_config/sketchybar --checklevel=Warning",

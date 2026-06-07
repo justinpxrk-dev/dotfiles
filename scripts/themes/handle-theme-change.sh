@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # dark-notify passes "dark" or "light" as $1; fall back to defaults read when
-# invoked manually (e.g. via `mise run themes:change-mode`).
+# invoked manually (e.g. via `mise run themes:handle-theme-change`).
 if [[ -n "${1:-}" ]]; then
 	MODE="$1"
 else
@@ -14,7 +14,8 @@ else
 	MODE=$([[ "$RESULT" == "Dark" ]] && echo "dark" || echo "light")
 fi
 
-"$(dirname "$0")/borders_apply_mode.sh" "$MODE"
+# Recolor borders for the new mode (sibling script under scripts/borders/).
+"$(dirname "$0")/../borders/handle-theme-change.sh" "$MODE"
 
 # Swap delta's color-moved feature to match appearance. The main git config
 # includes this file; git silently skips missing include paths, so the first run
