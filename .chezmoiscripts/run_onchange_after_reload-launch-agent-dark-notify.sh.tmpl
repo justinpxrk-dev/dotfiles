@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Reload dark-notify when its plist changes (and bootstrap it on first install).
+# {{ include "Library/LaunchAgents/me.justinpxrk.dark-notify.plist.tmpl" | sha256sum }}
+
+set -euo pipefail
+
+"$HOME/.local/share/chezmoi/scripts/macos/reload-launch-agent.sh" me.justinpxrk.dark-notify
