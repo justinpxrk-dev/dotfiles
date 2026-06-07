@@ -1,6 +1,6 @@
 # Scripts
 
-Scripts live under `scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `bootstrap-launch-agents.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts live under `scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `reload-launch-agent.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ## `macos/set-system-settings.sh`
 
@@ -14,14 +14,14 @@ mise run macos:set-system-settings
 
 > Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [manual-setup.md](macos-system-settings/manual-setup.md).
 
-## `macos/bootstrap-launch-agents.sh`
+## `macos/reload-launch-agent.sh`
 
-Bootstraps all `me.justinpxrk.*` plists in `~/Library/LaunchAgents` into the current login session. Run automatically by chezmoi (`run_onchange_`) whenever the script changes.
+Reloads a single `me.justinpxrk` LaunchAgent by label — `bootout` then `bootstrap`, so an edited plist replaces the running agent instead of leaving the stale one in place. Each agent has its own `run_onchange_after_reload-launch-agent-<name>.sh` chezmoiscript keyed on its plist, so chezmoi reloads only the agent whose plist changed (and bootstraps it on first install).
 
 ```sh
-./scripts/macos/bootstrap-launch-agents.sh
+./scripts/macos/reload-launch-agent.sh me.justinpxrk.dark-notify
 # or
-mise run macos:bootstrap-launch-agents
+mise run macos:reload-launch-agent -- me.justinpxrk.dark-notify
 ```
 
 ## `git/install-submodules.sh`
@@ -76,13 +76,15 @@ mise run themes:generate-base24-palette
 
 ## `themes/handle-theme-change.sh`
 
-Orchestrator for per-appearance theme state. Detects (or accepts) the current light/dark mode, then:
+Orchestrator for per-appearance theme state. Resolves the mode — `$1` from dark-notify, else via `read-theme-mode.sh` — then fans out to each tool's sibling handler with it:
 
-- Calls `borders/handle-theme-change.sh` to recolor [JankyBorders](https://github.com/FelixKratz/JankyBorders).
-- Writes `~/.config/delta/mode.gitconfig` with `features = zebra-dark` (or `zebra-light`), which the main git config includes — driving [delta](https://github.com/dandavison/delta)'s `colorMoved` feature for shell `git diff` output.
-- Re-applies Spotify's [Spicetify](https://spicetify.app) Catppuccin scheme (`mocha` in dark, `latte` in light), quitting and restoring Spotify around the patch — reopened only if it was running, playback resumed only if it was playing.
+- `borders/handle-theme-change.sh` — recolors [JankyBorders](https://github.com/FelixKratz/JankyBorders).
+- `delta/handle-theme-change.sh` — writes the delta zebra feature for `git diff` output.
+- `spicetify/handle-theme-change.sh` — re-applies Spotify's Catppuccin scheme.
 
-Normally invoked automatically by `dark-notify`, but can be run manually to force a refresh.
+Invoked automatically by `dark-notify` on every appearance change, once at install by `.chezmoiscripts/run_once_after_themes-handle-theme-change.sh`, or manually to force a refresh.
+
+borders is normally always running — the Brewfile starts its service (`restart_service: :changed`) and launchd keeps it alive — so the orchestrator pushes the recolor straight to it. The `pgrep` guard only matters if that service has been stopped: `borders <props>` with no running instance starts borders in the foreground and never returns, which would wedge the caller (e.g. the dark-notify agent). When borders is down the orchestrator skips it, and borders re-applies the correct colors from `bordersrc` when its service restarts.
 
 ```sh
 ./scripts/themes/handle-theme-change.sh            # detect from system
@@ -92,13 +94,41 @@ mise run themes:handle-theme-change            # detect from system
 mise run themes:handle-theme-change -- dark|light
 ```
 
+## `macos/read-theme-mode.sh`
+
+Echoes the current macOS appearance mode (`dark`/`light`) — the single place that queries the system. Callers resolve the mode as `${1:-$(read-theme-mode.sh)}`, so it runs only when no mode was passed in: a manual `mise run`, the one-time bootstrap, `bordersrc` at borders startup, or a standalone `spicetify` re-sync. On a dark-notify flip the mode flows down from the orchestrator and nothing re-queries.
+
+```sh
+./scripts/macos/read-theme-mode.sh
+```
+
 ## `borders/handle-theme-change.sh`
 
-Applies the correct accent colors to `borders` for the current light/dark mode. Invoked by `bordersrc` at borders startup (with no args; self-detects) and by `themes/handle-theme-change.sh` on every appearance change (with the resolved mode passed in).
+Applies the accent colors for the light/dark mode. Takes the mode as `$1` when the orchestrator passes it on a flip, or resolves it via `read-theme-mode.sh` when invoked without one — `bordersrc` runs it at borders startup.
 
 ```sh
 ./scripts/borders/handle-theme-change.sh            # detect from system
 ./scripts/borders/handle-theme-change.sh dark|light
+```
+
+## `delta/handle-theme-change.sh`
+
+Writes `~/.config/delta/mode.gitconfig` with `features = zebra-dark` (or `zebra-light`) for the passed-in mode, which the main git config includes — driving [delta](https://github.com/dandavison/delta)'s `colorMoved` feature for shell `git diff` output. Driven by `themes/handle-theme-change.sh`, which resolves the mode and passes it in.
+
+```sh
+./scripts/delta/handle-theme-change.sh dark|light
+```
+
+## `spicetify/handle-theme-change.sh`
+
+Re-applies Spotify's [Spicetify](https://spicetify.app) Catppuccin scheme (`mocha` in dark, `latte` in light) for the current light/dark mode, quitting and restoring Spotify around the patch — reopened only if it was running, playback resumed only if it was playing. Invoked by `themes/handle-theme-change.sh` on every appearance change (with the resolved mode passed in), or standalone to re-sync (resolving the mode via `read-theme-mode.sh` when no arg is given).
+
+```sh
+./scripts/spicetify/handle-theme-change.sh            # detect from system
+./scripts/spicetify/handle-theme-change.sh dark|light
+# or
+mise run spicetify:handle-theme-change            # detect from system
+mise run spicetify:handle-theme-change -- dark|light
 ```
 
 ## `zsh/benchmark-startup.sh`

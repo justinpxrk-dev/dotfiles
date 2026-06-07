@@ -20,13 +20,17 @@ run = "./scripts/git/install-submodules.sh"
 description = "Install LuaRocks dependencies into the user tree"
 run = "./scripts/luarocks/install-rocks.sh"
 
-[tasks."macos:bootstrap-launch-agents"]
-description = "Bootstrap me.justinpxrk.* LaunchAgents into the current login session"
-run = "./scripts/macos/bootstrap-launch-agents.sh"
+[tasks."macos:reload-launch-agent"]
+description = "Reload a me.justinpxrk LaunchAgent by label (bootout then bootstrap), e.g. me.justinpxrk.dark-notify"
+run = "./scripts/macos/reload-launch-agent.sh"
 
 [tasks."macos:set-system-settings"]
 description = "Apply macOS defaults and system preferences"
 run = "./scripts/macos/set-system-settings.sh"
+
+[tasks."spicetify:handle-theme-change"]
+description = "Re-apply Spotify's Spicetify Catppuccin scheme (Mocha dark, Latte light) for the current light/dark mode; pass dark|light to force, omit to detect from system"
+run = "./scripts/spicetify/handle-theme-change.sh"
 
 [tasks."themes:handle-theme-change"]
 description = "Apply per-appearance theme state (borders colors, delta zebra feature) for the current light/dark mode; pass dark|light to force, omit to detect from system"

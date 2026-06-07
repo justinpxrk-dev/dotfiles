@@ -55,16 +55,14 @@ chezmoi init --apply justinpxrk-dev/dotfiles
 ```sh
 mise trust                     # trust config file (mise.toml)
 mise install                   # install configured tools
-mise tinted:apply-templates    # build themes (rerun `chezmoi apply` to apply)
 mise macos:set-system-settings # apply macOS defaults (reboot after)
 ```
 
-To install theme for spotify:
+To theme Spotify, run Spicetify's one-time backup; the Catppuccin theme is then applied by the `spicetify:handle-theme-change` task (and automatically on every light/dark switch):
 
 ```sh
-spicetify backup apply
-spicetify config current_theme catppuccin color_scheme mocha
-spicetify apply
+spicetify backup apply                 # one-time, lets Spicetify patch Spotify
+mise run spicetify:handle-theme-change # apply Catppuccin for the current mode
 ```
 
 ## Update
