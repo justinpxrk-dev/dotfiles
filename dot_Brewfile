@@ -11,9 +11,6 @@ brew "FelixKratz/formulae/sketchybar", restart_service: :changed
 brew "asmvik/formulae/skhd"
 brew "asmvik/formulae/yabai"
 
-# Terminal
-brew "tmux"
-
 # Terminal Toys
 brew "cbonsai"
 brew "cmatrix"
@@ -44,7 +41,6 @@ brew "gnu-getopt"
 brew "hyperfine"
 brew "jq"
 brew "leetgo"
-brew "overmind"
 brew "p7zip"
 brew "tig"
 
