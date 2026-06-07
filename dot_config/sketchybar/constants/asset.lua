@@ -4,7 +4,7 @@
 --- @alias AssetOptions table<AssetName, string>
 --- @alias AssetName "DEFAULT_IMAGE_DARK_TRANSPARENT" | "DEFAULT_IMAGE_LIGHT_TRANSPARENT"
 
-local asset_dir = os.getenv("HOME") .. "/.local/share/chezmoi/Assets/apple-music"
+local asset_dir = os.getenv("HOME") .. "/.local/share/chezmoi/assets/apple-music"
 
 --- @type Asset
 local M = {

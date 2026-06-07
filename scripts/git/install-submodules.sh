@@ -12,10 +12,10 @@ echo "==> Syncing git submodules"
 GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
 	dot_config/sketchybar/lib/SbarLua \
 	dot_config/sketchybar/lib/sketchybar-app-font \
-	Themes/lib/spicetify \
-	Themes/lib/tinted-terminal \
-	Themes/lib/tinted-vscode \
-	Themes/lib/tinted-shell
+	Library/Themes/Catppuccin/spicetify \
+	Library/Themes/tinted/tinted-terminal \
+	Library/Themes/tinted/tinted-vscode \
+	Library/Themes/tinted/tinted-shell
 
 # Private submodules require SSH auth. Failure is silenced so a missing SSH
 # key on non-authorized machines does not block the rest of the script.

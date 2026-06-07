@@ -11,7 +11,7 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Project Structure
 
-Entries prefixed with `dot_` or `empty_`, and `Library/` (except `Library/Fonts/`, which chezmoi ignores), are applied by chezmoi; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/` (except `Library/Fonts/`, `Library/Themes/`, `Library/Unmanaged/`, and `Library/Wallpapers/`, which chezmoi ignores), are applied by chezmoi; all other directories are tracked in git only.
 
 ```text
 chezmoi/
@@ -23,22 +23,24 @@ chezmoi/
 │   └── skills/ — wrappers around shared agent workflows
 ├── .github/    — GitHub Actions workflows
 │   └── workflows/
-├── Assets/     — icons and images
+├── assets/     — icons and images
 ├── Library/    → ~/Library/
 │   ├── Fonts/  — font sources (git-only)
 │   │   ├── font-monolisa @ †
 │   │   └── lib/
 │   │       └── monolisa-nerdfont-patch @ †
-│   └── LaunchAgents/
-├── Scripts/    — shell scripts
-├── Themes/     — Petrichor theme definitions (see Themes System)
-│   └── lib/
-│       ├── spicetify @ ⑂
-│       ├── tinted-shell @ ⑂
-│       ├── tinted-terminal @ ⑂
-│       └── tinted-vscode @ ⑂
-├── Unmanaged/  — reference configs not managed by chezmoi
-├── Wallpapers/ — desktop wallpapers
+│   ├── LaunchAgents/
+│   ├── Themes/ — theme definitions (git-only, see Themes System)
+│   │   ├── Catppuccin/
+│   │   │   └── spicetify @ ⑂
+│   │   ├── Petrichor/ — Base24 palette definitions
+│   │   └── tinted/ — tinted-builder template upstreams
+│   │       ├── tinted-shell @ ⑂
+│   │       ├── tinted-terminal @ ⑂
+│   │       └── tinted-vscode @ ⑂
+│   ├── Unmanaged/ — reference configs not managed by chezmoi (git-only)
+│   └── Wallpapers/ — desktop wallpapers (git-only)
+├── scripts/    — shell scripts
 ├── docs/       — documentation
 │   └── ops/    — operational runbooks (upgrade hazards, couplings)
 ├── dot_Brewfile          → ~/.Brewfile
@@ -54,7 +56,7 @@ chezmoi/
 │   │       ├── sketchybar-app-font @
 │   │       └── SbarLua @
 │   ├── skhd/
-│   ├── spicetify/ — Themes/catppuccin symlinks to Themes/lib/spicetify @ ⑂
+│   ├── spicetify/ — Themes/catppuccin symlinks to Library/Themes/Catppuccin/spicetify @ ⑂
 │   ├── tmux/
 │   ├── yabai/
 │   └── zsh/
@@ -78,7 +80,7 @@ See [`docs/developer.md`](../developer.md) for setup, formatting, linting, and w
 
 ## Scripts
 
-Scripts live under `Scripts/` and are all available as mise tasks. Run `mise tasks` to list them or `mise run <task>` to invoke one (e.g. `mise run themes:build -- petrichor-dark`). For full per-script documentation, read `docs/scripts.md`.
+Scripts live under `scripts/` and are all available as mise tasks. Run `mise tasks` to list them or `mise run <task>` to invoke one (e.g. `mise run tinted:apply-templates -- petrichor-dark`). For full per-script documentation, read `docs/scripts.md`.
 
 ## Zsh Config
 

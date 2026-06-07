@@ -9,10 +9,11 @@
     ".claude",
     ".codex",
     "Library/Fonts",
-    "Wallpapers",
-    "Themes/lib",
+    "Library/Wallpapers",
+    "Library/Themes/tinted",
+    "Library/Themes/Catppuccin",
     "dot_config/sketchybar/lib",
-    "Unmanaged",
+    "Library/Unmanaged",
     ".obsidian"
   ],
   "config": {

@@ -1,11 +1,11 @@
 # Unmanaged Directories
+assets
 docs
-Assets
+scripts
 Library/Fonts
-Scripts
-Themes
-Unmanaged
-Wallpapers
+Library/Themes
+Library/Unmanaged
+Library/Wallpapers
 
 # Libraries
 .config/sketchybar/lib

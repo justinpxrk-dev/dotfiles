@@ -28,5 +28,7 @@
     "statusLineLifetime": false,
     "statusLineShare": false,
     "attribution": false
-  }
+  },
+  "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": true
 }
