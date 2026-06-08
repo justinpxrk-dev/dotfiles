@@ -11,4 +11,4 @@
 
 set -euo pipefail
 
-"$HOME/.local/share/chezmoi/scripts/themes/handle-theme-change.sh"
+"$HOME/.scripts/themes/handle-theme-change.sh"

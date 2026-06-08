@@ -2,7 +2,7 @@
 # Echo the current macOS appearance mode, "dark" or "light" — the single place
 # that queries the system. Every other script receives the mode as an argument
 # and passes it down, so this runs only for arg-less entry points: a manual
-# `mise run`, the one-time chezmoi bootstrap, and bordersrc at borders startup.
+# run, the one-time chezmoi bootstrap, and bordersrc at borders startup.
 
 set -euo pipefail
 

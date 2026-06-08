@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$HOME/.scripts/macos/reload-launch-agent.sh" "$@"

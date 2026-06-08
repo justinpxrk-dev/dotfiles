@@ -54,7 +54,7 @@ When working in a worktree, some tools require per-path trust or registration be
 **mise** — trust the config before any mise command, then install tools and bootstrap Node packages using the mise-managed PATH:
 
 ```sh
-mise trust                          # required before mise install or mise run
+mise trust                          # required before mise install
 mise install                        # install tools
 mise exec -- pnpm install           # bootstrap lefthook and other PATH-dependent tools
 mise trust --untrust mise.toml      # on exit (handled by /merge)

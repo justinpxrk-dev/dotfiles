@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # Optional $1 is "dark" or "light"; when unset, read-theme-mode.sh detects from
-# the system so this handler works standalone (e.g. manual `mise run` to
+# the system so this handler works standalone (e.g. a manual run to
 # re-sync). The orchestrator passes the resolved mode, so a flip needs no extra
 # query.
 MODE="${1:-$("$(dirname "$0")/../macos/read-theme-mode.sh")}"

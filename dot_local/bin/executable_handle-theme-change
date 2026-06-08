@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$HOME/.scripts/themes/handle-theme-change.sh" "$@"

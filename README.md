@@ -55,14 +55,14 @@ chezmoi init --apply justinpxrk-dev/dotfiles
 ```sh
 mise trust                     # trust config file (mise.toml)
 mise install                   # install configured tools
-mise macos:set-system-settings # apply macOS defaults (reboot after)
+~/.scripts/macos/set-system-settings.sh # apply macOS defaults (reboot after)
 ```
 
-To theme Spotify, run Spicetify's one-time backup; the Catppuccin theme is then applied by the `spicetify:handle-theme-change` task (and automatically on every light/dark switch):
+To theme Spotify, run Spicetify's one-time backup; the Catppuccin theme is then applied by `handle-theme-change-spicetify` (and automatically on every light/dark switch):
 
 ```sh
 spicetify backup apply                 # one-time, lets Spicetify patch Spotify
-mise run spicetify:handle-theme-change # apply Catppuccin for the current mode
+~/.scripts/spicetify/handle-theme-change.sh # apply Catppuccin for the current mode
 ```
 
 ## Update
@@ -89,23 +89,6 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── .github/                            — GitHub metadata
 │   └── workflows/                      — GitHub Actions workflows
 ├── assets/                             — icons and images
-├── Library/                            → ~/Library/ - macOS Library files
-│   ├── Fonts/                          — font sources (git-only)
-│   │   ├── font-monolisa @ †           — MonoLisa font source (private)
-│   │   └── lib/                        — font tooling
-│   │       └── monolisa-nerdfont-patch @ † — Nerd Font patcher (private)
-│   ├── LaunchAgents/                   — launchd service definitions
-│   ├── Themes/                         — theme definitions (git-only)
-│   │   ├── Catppuccin/                 — Catppuccin theme ports
-│   │   │   ├── delta @                 — git-delta diff theme
-│   │   │   ├── ghostty @               — Ghostty terminal theme
-│   │   │   └── spicetify @ ⑂           — Spotify theme templates
-│   │   ├── Petrichor/                  — Base24 palette definitions
-│   │   └── tinted/                     — tinted-builder template upstreams
-│   │       └── tinted-shell @ ⑂        — shell theme templates
-│   ├── Unmanaged/                      — reference configs not managed by chezmoi (git-only)
-│   └── Wallpapers/                     — desktop wallpapers (git-only)
-├── scripts/                            — shell scripts (run via mise tasks)
 ├── docs/                               — documentation
 ├── dot_Brewfile                        → ~/.Brewfile - Homebrew bundle
 ├── dot_claude/                         → ~/.claude - Claude Code user config
@@ -125,8 +108,27 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   ├── yabai/                          — yabai window manager config
 │   ├── zed/                            — Zed editor config
 │   └── zsh/                            — Zsh interactive shell config
+├── dot_local/                          → ~/.local/
+│   └── bin/                            — user-facing script commands (on PATH)
+├── dot_scripts/                        → ~/.scripts/ — shell scripts
 ├── dot_zshenv.tmpl                     → ~/.zshenv - Zsh environment (all shells)
-└── empty_dot_hushlogin                 → ~/.hushlogin - suppress login banner
+├── empty_dot_hushlogin                 → ~/.hushlogin - suppress login banner
+└── Library/                            → ~/Library/ - macOS Library files
+    ├── Fonts/                          — font sources (git-only)
+    │   ├── font-monolisa @ †           — MonoLisa font source (private)
+    │   └── lib/                        — font tooling
+    │       └── monolisa-nerdfont-patch @ † — Nerd Font patcher (private)
+    ├── LaunchAgents/                   — launchd service definitions
+    ├── Themes/                         — theme definitions (git-only)
+    │   ├── Catppuccin/                 — Catppuccin theme ports
+    │   │   ├── delta @                 — git-delta diff theme
+    │   │   ├── ghostty @               — Ghostty terminal theme
+    │   │   └── spicetify @ ⑂           — Spotify theme templates
+    │   ├── Petrichor/                  — Base24 palette definitions
+    │   └── tinted/                     — tinted-builder template upstreams
+    │       └── tinted-shell @ ⑂        — shell theme templates
+    ├── Unmanaged/                      — reference configs not managed by chezmoi (git-only)
+    └── Wallpapers/                     — desktop wallpapers (git-only)
 ```
 
 `@` submodule · `⑂` fork · `†` private

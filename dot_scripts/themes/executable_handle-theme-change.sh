@@ -5,7 +5,7 @@ set -euo pipefail
 script_dir=$(dirname "$0")
 
 # dark-notify hands us the mode as $1; query the system via read-theme-mode.sh
-# only when invoked without one — a manual `mise run`, or the one-time chezmoi
+# only when invoked without one — a manual run, or the one-time chezmoi
 # bootstrap. Fan it out to each tool's sibling handler under scripts/<tool>/.
 MODE="${1:-$("$script_dir/../macos/read-theme-mode.sh")}"
 
