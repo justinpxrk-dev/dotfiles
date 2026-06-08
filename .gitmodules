@@ -15,14 +15,6 @@
 [submodule "Library/Themes/Catppuccin/spicetify"]
 	path = Library/Themes/Catppuccin/spicetify
 	url = https://github.com/justinpxrk-dev/spicetify.git
-[submodule "Library/Themes/tinted/tinted-terminal"]
-	path = Library/Themes/tinted/tinted-terminal
-	url = https://github.com/justinpxrk-dev/tinted-terminal.git
-	branch = justinpxrk-dev
-[submodule "Library/Themes/tinted/tinted-vscode"]
-	path = Library/Themes/tinted/tinted-vscode
-	url = https://github.com/justinpxrk-dev/tinted-vscode.git
-	branch = justinpxrk-dev
 [submodule "Library/Themes/tinted/tinted-shell"]
 	path = Library/Themes/tinted/tinted-shell
 	url = https://github.com/justinpxrk-dev/tinted-shell.git

@@ -15,8 +15,6 @@ GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
 	Library/Themes/Catppuccin/delta \
 	Library/Themes/Catppuccin/ghostty \
 	Library/Themes/Catppuccin/spicetify \
-	Library/Themes/tinted/tinted-terminal \
-	Library/Themes/tinted/tinted-vscode \
 	Library/Themes/tinted/tinted-shell
 
 # Private submodules require SSH auth. Failure is silenced so a missing SSH

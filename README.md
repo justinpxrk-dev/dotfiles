@@ -102,9 +102,7 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   │   │   └── spicetify @ ⑂           — Spotify theme templates
 │   │   ├── Petrichor/                  — Base24 palette definitions
 │   │   └── tinted/                     — tinted-builder template upstreams
-│   │       ├── tinted-shell @ ⑂        — shell theme templates
-│   │       ├── tinted-terminal @ ⑂     — terminal theme templates
-│   │       └── tinted-vscode @ ⑂       — VSCode theme templates
+│   │       └── tinted-shell @ ⑂        — shell theme templates
 │   ├── Unmanaged/                      — reference configs not managed by chezmoi (git-only)
 │   └── Wallpapers/                     — desktop wallpapers (git-only)
 ├── scripts/                            — shell scripts (run via mise tasks)

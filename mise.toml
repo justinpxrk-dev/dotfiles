@@ -41,7 +41,7 @@ description = "Generate Base24 dark and light palette YAML files"
 run = "uv run ./scripts/themes/generate_base24_palette.py"
 
 [tasks."tinted:apply-templates"]
-description = "Build and install theme outputs (zsh, Ghostty, VS Code) from a Base24 scheme directory via tinted-builder"
+description = "Build and install the zsh theme output from a Base24 scheme directory via tinted-builder"
 run = "./scripts/tinted/apply-templates.sh"
 
 [tasks."zsh:benchmark-startup"]

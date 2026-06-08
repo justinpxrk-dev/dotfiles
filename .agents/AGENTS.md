@@ -37,9 +37,7 @@ chezmoi/
 │   │   │   └── spicetify @ ⑂
 │   │   ├── Petrichor/ — Base24 palette definitions
 │   │   └── tinted/ — tinted-builder template upstreams
-│   │       ├── tinted-shell @ ⑂
-│   │       ├── tinted-terminal @ ⑂
-│   │       └── tinted-vscode @ ⑂
+│   │       └── tinted-shell @ ⑂
 │   ├── Unmanaged/ — reference configs not managed by chezmoi (git-only)
 │   └── Wallpapers/ — desktop wallpapers (git-only)
 ├── scripts/    — shell scripts
