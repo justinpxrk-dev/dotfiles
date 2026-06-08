@@ -79,7 +79,7 @@ mise run themes:generate-base24-palette
 Orchestrator for per-appearance theme state. Resolves the mode — `$1` from dark-notify, else via `read-theme-mode.sh` — then fans out to each tool's sibling handler with it:
 
 - `borders/handle-theme-change.sh` — recolors [JankyBorders](https://github.com/FelixKratz/JankyBorders).
-- `delta/handle-theme-change.sh` — writes the delta zebra feature for `git diff` output.
+- `delta/handle-theme-change.sh` — writes the delta Catppuccin theme feature for `git diff` output.
 - `spicetify/handle-theme-change.sh` — re-applies Spotify's Catppuccin scheme.
 
 Invoked automatically by `dark-notify` on every appearance change, once at install by `.chezmoiscripts/run_once_after_themes-handle-theme-change.sh`, or manually to force a refresh.
@@ -113,7 +113,7 @@ Applies the accent colors for the light/dark mode. Takes the mode as `$1` when t
 
 ## `delta/handle-theme-change.sh`
 
-Writes `~/.config/delta/mode.gitconfig` with `features = zebra-dark` (or `zebra-light`) for the passed-in mode, which the main git config includes — driving [delta](https://github.com/dandavison/delta)'s `colorMoved` feature for shell `git diff` output. Driven by `themes/handle-theme-change.sh`, which resolves the mode and passes it in.
+Writes `~/.config/delta/mode.gitconfig` with `features = catppuccin-mocha` (or `catppuccin-latte`) for the passed-in mode, which the main git config includes — selecting the [catppuccin/delta](https://github.com/catppuccin/delta) theme (each flavor carries its own `colorMoved` map-styles) for shell `git diff` output. Driven by `themes/handle-theme-change.sh`, which resolves the mode and passes it in.
 
 ```sh
 ./scripts/delta/handle-theme-change.sh dark|light

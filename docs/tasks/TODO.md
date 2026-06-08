@@ -22,4 +22,3 @@
 Wire the remaining apps into the generated Petrichor base24 theme system (`scripts/themes/generate_base24_palette.py`) instead of hand-maintained or hardcoded colors.
 
 - **borders** — `borders/handle-theme-change.sh` sets hardcoded hex (`0x997ead67` / `0x99ffffff`, etc.) per mode; derive `active_color`/`inactive_color` from the generated palette (`scripts/borders/handle-theme-change.sh`).
-- **delta** — `themes/handle-theme-change.sh` writes `mode.gitconfig` with `features = zebra-dark|zebra-light`, whose default `map-styles` backgrounds are intentionally faint. Override `map-styles` with palette-derived backgrounds (or foreground colors) for visible move-block coloring (`scripts/themes/handle-theme-change.sh`).
