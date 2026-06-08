@@ -4,7 +4,7 @@
     "prettier": "^3.8.3"
   },
   "scripts": {
-    "prepare": "lefthook install",
+    "prepare": "lefthook install || true",
     "fix": "pnpm run lint:fix && pnpm run format",
     "check": "pnpm run format:check && pnpm run lint",
     "format": "pnpm run format:md && pnpm run format:sh && pnpm run format:lua && pnpm run format:py",

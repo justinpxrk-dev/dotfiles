@@ -56,7 +56,7 @@ mise run luarocks:install-rocks
 
 ## `tinted/apply-templates.sh`
 
-Builds theme outputs (zsh script, Ghostty colorscheme, VS Code extension) from a Base24 scheme directory and installs them via tinted-builder. Run after modifying any palette in `Library/Themes/`.
+Builds the zsh theme output (shell profile helper and theme-switch scripts) from a Base24 scheme directory and installs it via tinted-builder. Run after modifying any palette in `Library/Themes/`.
 
 ```sh
 ./scripts/tinted/apply-templates.sh <theme-name>
