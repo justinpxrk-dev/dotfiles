@@ -33,6 +33,7 @@ chezmoi/
 │   ├── Themes/ — theme definitions (git-only, see Themes System)
 │   │   ├── Catppuccin/
 │   │   │   ├── delta @
+│   │   │   ├── ghostty @
 │   │   │   └── spicetify @ ⑂
 │   │   ├── Petrichor/ — Base24 palette definitions
 │   │   └── tinted/ — tinted-builder template upstreams
@@ -50,7 +51,7 @@ chezmoi/
 │   ├── borders/
 │   ├── chezmoi/
 │   ├── delta/ — themes/catppuccin.gitconfig symlinks to Library/Themes/Catppuccin/delta @
-│   ├── ghostty/
+│   ├── ghostty/ — themes/catppuccin-{mocha,latte}.conf symlink to Library/Themes/Catppuccin/ghostty @
 │   ├── git/
 │   ├── nvim/
 │   ├── sketchybar/

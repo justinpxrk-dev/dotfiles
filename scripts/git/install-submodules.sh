@@ -13,6 +13,7 @@ GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
 	dot_config/sketchybar/lib/SbarLua \
 	dot_config/sketchybar/lib/sketchybar-app-font \
 	Library/Themes/Catppuccin/delta \
+	Library/Themes/Catppuccin/ghostty \
 	Library/Themes/Catppuccin/spicetify \
 	Library/Themes/tinted/tinted-terminal \
 	Library/Themes/tinted/tinted-vscode \
