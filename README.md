@@ -98,6 +98,7 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   ├── Themes/                         — theme definitions (git-only)
 │   │   ├── Catppuccin/                 — Catppuccin theme ports
 │   │   │   ├── delta @                 — git-delta diff theme
+│   │   │   ├── ghostty @               — Ghostty terminal theme
 │   │   │   └── spicetify @ ⑂           — Spotify theme templates
 │   │   ├── Petrichor/                  — Base24 palette definitions
 │   │   └── tinted/                     — tinted-builder template upstreams

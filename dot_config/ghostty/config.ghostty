@@ -50,7 +50,7 @@ font-size = 14.0
 font-variation = wght=400
 macos-titlebar-proxy-icon = hidden
 shell-integration-features = cursor, no-path, ssh-env, no-ssh-terminfo, sudo, no-title
-theme = dark:Catppuccin Mocha, light:Catppuccin Latte
+theme = dark:catppuccin-mocha.conf, light:catppuccin-latte.conf
 unfocused-split-opacity = 0.4
 window-padding-balance = true
 window-padding-color = extend
