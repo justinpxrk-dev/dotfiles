@@ -40,7 +40,6 @@ chezmoi/
 │   │       └── tinted-shell @ ⑂
 │   ├── Unmanaged/ — reference configs not managed by chezmoi (git-only)
 │   └── Wallpapers/ — desktop wallpapers (git-only)
-├── scripts/    — shell scripts
 ├── docs/       — documentation
 │   └── ops/    — operational runbooks (upgrade hazards, couplings)
 ├── dot_Brewfile          → ~/.Brewfile
@@ -60,6 +59,8 @@ chezmoi/
 │   ├── spicetify/ — Themes/catppuccin symlinks to Library/Themes/Catppuccin/spicetify @ ⑂
 │   ├── yabai/
 │   └── zsh/
+├── dot_local/bin/        → ~/.local/bin — user-facing PATH commands (wrappers)
+├── dot_scripts/          → ~/.scripts/ — shell scripts (applied)
 ├── dot_zshenv.tmpl       → ~/.zshenv
 └── empty_dot_hushlogin   → ~/.hushlogin
 ```
@@ -80,7 +81,9 @@ See [`docs/developer.md`](../developer.md) for setup, formatting, linting, and w
 
 ## Scripts
 
-Scripts live under `scripts/` and are all available as mise tasks. Run `mise tasks` to list them or `mise run <task>` to invoke one (e.g. `mise run tinted:apply-templates -- petrichor-dark`). For full per-script documentation, read `docs/scripts.md`.
+Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply) ; run them by path (e.g. `~/.scripts/tinted/apply-templates.sh petrichor-dark`). For full per-script documentation, read `docs/scripts.md`.
+
+User-facing scripts also get `~/.local/bin` PATH commands via thin `exec` wrappers: `handle-theme-change`, `handle-theme-change-spicetify`, `reload-launch-agent`, and `benchmark-startup`.
 
 ## Zsh Config
 

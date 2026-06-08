@@ -1,6 +1,6 @@
 # theme-system.md
 
-_An explanation of the generation method and implementation details used in `scripts/themes/generate_base24_palette.py`._
+_An explanation of the generation method and implementation details used in `dot_scripts/themes/executable_generate_base24_palette.py`._
 
 ---
 

@@ -13,7 +13,7 @@
 ## Low Priority
 
 - [ ] Configure macos system settings script.
-- [ ] Harden bootstrap PATH: `scripts/brew/install-packages.sh` and `scripts/git/install-submodules.sh` call bare `brew`/`mise`, assuming Homebrew is already on `PATH`; a cold-start `chezmoi init --apply` (before the shell profile exists) can fail. Add absolute-path `eval "$(/opt/homebrew/bin/brew shellenv)"` (as in `scripts/luarocks/install-rocks.sh`) so they work before `PATH` is set up.
+- [ ] Harden bootstrap PATH: `dot_scripts/brew/executable_install-packages.sh` and `dot_scripts/git/executable_install-submodules.sh` call bare `brew`/`mise`, assuming Homebrew is already on `PATH`; a cold-start `chezmoi init --apply` (before the shell profile exists) can fail. Add absolute-path `eval "$(/opt/homebrew/bin/brew shellenv)"` (as in `dot_scripts/luarocks/executable_install-rocks.sh`) so they work before `PATH` is set up.
 - [ ] Write comment headers for all zsh, lua, python.
 - [ ] Write type annotations for all lua.
 

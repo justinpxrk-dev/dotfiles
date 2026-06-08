@@ -1,15 +1,13 @@
 # Scripts
 
-Scripts live under `scripts/` and are run from the repo root. All scripts are also available as mise tasks — run `mise tasks` for the full list, or `mise run <task>` to invoke one. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `reload-launch-agent.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply); run them directly by path. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `reload-launch-agent.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ## `macos/set-system-settings.sh`
 
 Applies macOS defaults and system preferences. Reboot immediately after — opening System Settings can overwrite changes, and some settings only take effect on reboot.
 
 ```sh
-./scripts/macos/set-system-settings.sh
-# or
-mise run macos:set-system-settings
+~/.scripts/macos/set-system-settings.sh
 ```
 
 > Some settings, such as those in Location Services, cannot be scripted. Manually configured settings are documented in [manual-setup.md](macos-system-settings/manual-setup.md).
@@ -19,9 +17,7 @@ mise run macos:set-system-settings
 Reloads a single `me.justinpxrk` LaunchAgent by label — `bootout` then `bootstrap`, so an edited plist replaces the running agent instead of leaving the stale one in place. Each agent has its own `run_onchange_after_reload-launch-agent-<name>.sh` chezmoiscript keyed on its plist, so chezmoi reloads only the agent whose plist changed (and bootstraps it on first install).
 
 ```sh
-./scripts/macos/reload-launch-agent.sh me.justinpxrk.dark-notify
-# or
-mise run macos:reload-launch-agent -- me.justinpxrk.dark-notify
+~/.scripts/macos/reload-launch-agent.sh me.justinpxrk.dark-notify
 ```
 
 ## `git/install-submodules.sh`
@@ -29,9 +25,7 @@ mise run macos:reload-launch-agent -- me.justinpxrk.dark-notify
 Initialises all git submodules and builds/installs their outputs (MonoLisa fonts, SbarLua, sketchybar-app-font). Public submodules are cloned via HTTPS; private submodules (font-monolisa, monolisa-nerdfont-patch) require SSH and are silently skipped when SSH auth is unavailable. Run automatically by chezmoi (`run_onchange_`) whenever `.gitmodules` changes.
 
 ```sh
-./scripts/git/install-submodules.sh
-# or
-mise run git:install-submodules
+~/.scripts/git/install-submodules.sh
 ```
 
 ## `brew/install-packages.sh`
@@ -39,9 +33,7 @@ mise run git:install-submodules
 Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes.
 
 ```sh
-./scripts/brew/install-packages.sh
-# or
-mise run brew:install-packages
+~/.scripts/brew/install-packages.sh
 ```
 
 ## `luarocks/install-rocks.sh`
@@ -49,9 +41,7 @@ mise run brew:install-packages
 Installs LuaRocks dependencies into the user tree (`~/.luarocks`). Homebrew Bundle has no luarocks entry type, so rocks live here rather than the Brewfile. Run automatically by chezmoi (`run_onchange_`) whenever the script changes; see [ops/upgrade-hazards.md](ops/upgrade-hazards.md) for the Lua-version coupling.
 
 ```sh
-./scripts/luarocks/install-rocks.sh
-# or
-mise run luarocks:install-rocks
+~/.scripts/luarocks/install-rocks.sh
 ```
 
 ## `tinted/apply-templates.sh`
@@ -59,19 +49,15 @@ mise run luarocks:install-rocks
 Builds the zsh theme output (shell profile helper and theme-switch scripts) from a Base24 scheme directory and installs it via tinted-builder. Run after modifying any palette in `Library/Themes/`.
 
 ```sh
-./scripts/tinted/apply-templates.sh <theme-name>
-# or
-mise run tinted:apply-templates -- <theme-name>
+~/.scripts/tinted/apply-templates.sh <theme-name>
 ```
 
 ## `themes/generate_base24_palette.py`
 
-Generates Base24 dark and light palette YAML files using HCT color space algorithms. Run after modifying the palette generation logic in `scripts/themes/`.
+Generates Base24 dark and light palette YAML files using HCT color space algorithms. Run after modifying the palette generation logic in `dot_scripts/themes/`.
 
 ```sh
-uv run ./scripts/themes/generate_base24_palette.py
-# or
-mise run themes:generate-base24-palette
+uv run ~/.scripts/themes/generate_base24_palette.py
 ```
 
 ## `themes/handle-theme-change.sh`
@@ -87,19 +73,16 @@ Invoked automatically by `dark-notify` on every appearance change, once at insta
 borders is normally always running — the Brewfile starts its service (`restart_service: :changed`) and launchd keeps it alive — so the orchestrator pushes the recolor straight to it. The `pgrep` guard only matters if that service has been stopped: `borders <props>` with no running instance starts borders in the foreground and never returns, which would wedge the caller (e.g. the dark-notify agent). When borders is down the orchestrator skips it, and borders re-applies the correct colors from `bordersrc` when its service restarts.
 
 ```sh
-./scripts/themes/handle-theme-change.sh            # detect from system
-./scripts/themes/handle-theme-change.sh dark|light
-# or
-mise run themes:handle-theme-change            # detect from system
-mise run themes:handle-theme-change -- dark|light
+~/.scripts/themes/handle-theme-change.sh            # detect from system
+~/.scripts/themes/handle-theme-change.sh dark|light
 ```
 
 ## `macos/read-theme-mode.sh`
 
-Echoes the current macOS appearance mode (`dark`/`light`) — the single place that queries the system. Callers resolve the mode as `${1:-$(read-theme-mode.sh)}`, so it runs only when no mode was passed in: a manual `mise run`, the one-time bootstrap, `bordersrc` at borders startup, or a standalone `spicetify` re-sync. On a dark-notify flip the mode flows down from the orchestrator and nothing re-queries.
+Echoes the current macOS appearance mode (`dark`/`light`) — the single place that queries the system. Callers resolve the mode as `${1:-$(read-theme-mode.sh)}`, so it runs only when no mode was passed in: a manual run, the one-time bootstrap, `bordersrc` at borders startup, or a standalone `spicetify` re-sync. On a dark-notify flip the mode flows down from the orchestrator and nothing re-queries.
 
 ```sh
-./scripts/macos/read-theme-mode.sh
+~/.scripts/macos/read-theme-mode.sh
 ```
 
 ## `borders/handle-theme-change.sh`
@@ -107,8 +90,8 @@ Echoes the current macOS appearance mode (`dark`/`light`) — the single place t
 Applies the accent colors for the light/dark mode. Takes the mode as `$1` when the orchestrator passes it on a flip, or resolves it via `read-theme-mode.sh` when invoked without one — `bordersrc` runs it at borders startup.
 
 ```sh
-./scripts/borders/handle-theme-change.sh            # detect from system
-./scripts/borders/handle-theme-change.sh dark|light
+~/.scripts/borders/handle-theme-change.sh            # detect from system
+~/.scripts/borders/handle-theme-change.sh dark|light
 ```
 
 ## `delta/handle-theme-change.sh`
@@ -116,7 +99,7 @@ Applies the accent colors for the light/dark mode. Takes the mode as `$1` when t
 Writes `~/.config/delta/mode.gitconfig` with `features = catppuccin-mocha` (or `catppuccin-latte`) for the passed-in mode, which the main git config includes — selecting the [catppuccin/delta](https://github.com/catppuccin/delta) theme (each flavor carries its own `colorMoved` map-styles) for shell `git diff` output. Driven by `themes/handle-theme-change.sh`, which resolves the mode and passes it in.
 
 ```sh
-./scripts/delta/handle-theme-change.sh dark|light
+~/.scripts/delta/handle-theme-change.sh dark|light
 ```
 
 ## `spicetify/handle-theme-change.sh`
@@ -124,11 +107,8 @@ Writes `~/.config/delta/mode.gitconfig` with `features = catppuccin-mocha` (or `
 Re-applies Spotify's [Spicetify](https://spicetify.app) Catppuccin scheme (`mocha` in dark, `latte` in light) for the current light/dark mode, quitting and restoring Spotify around the patch — reopened only if it was running, playback resumed only if it was playing. Invoked by `themes/handle-theme-change.sh` on every appearance change (with the resolved mode passed in), or standalone to re-sync (resolving the mode via `read-theme-mode.sh` when no arg is given).
 
 ```sh
-./scripts/spicetify/handle-theme-change.sh            # detect from system
-./scripts/spicetify/handle-theme-change.sh dark|light
-# or
-mise run spicetify:handle-theme-change            # detect from system
-mise run spicetify:handle-theme-change -- dark|light
+~/.scripts/spicetify/handle-theme-change.sh            # detect from system
+~/.scripts/spicetify/handle-theme-change.sh dark|light
 ```
 
 ## `zsh/benchmark-startup.sh`
@@ -136,7 +116,5 @@ mise run spicetify:handle-theme-change -- dark|light
 Benchmarks Zsh startup time using `hyperfine` (200 runs, 50 warmups). Useful when tuning the Zsh config.
 
 ```sh
-./scripts/zsh/benchmark-startup.sh
-# or
-mise run zsh:benchmark-startup
+~/.scripts/zsh/benchmark-startup.sh
 ```
