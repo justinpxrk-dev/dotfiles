@@ -27,3 +27,6 @@
 	path = Library/Themes/tinted/tinted-shell
 	url = https://github.com/justinpxrk-dev/tinted-shell.git
 	branch = justinpxrk-dev
+[submodule "Library/Themes/Catppuccin/delta"]
+	path = Library/Themes/Catppuccin/delta
+	url = https://github.com/catppuccin/delta.git

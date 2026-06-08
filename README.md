@@ -96,7 +96,8 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   │       └── monolisa-nerdfont-patch @ † — Nerd Font patcher (private)
 │   ├── LaunchAgents/                   — launchd service definitions
 │   ├── Themes/                         — theme definitions (git-only)
-│   │   ├── Catppuccin/                 — Spicetify Catppuccin upstream
+│   │   ├── Catppuccin/                 — Catppuccin theme ports
+│   │   │   ├── delta @                 — git-delta diff theme
 │   │   │   └── spicetify @ ⑂           — Spotify theme templates
 │   │   ├── Petrichor/                  — Base24 palette definitions
 │   │   └── tinted/                     — tinted-builder template upstreams
@@ -112,6 +113,7 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── dot_config/                         → ~/.config/ - XDG config root
 │   ├── borders/                        — JankyBorders config
 │   ├── chezmoi/                        — chezmoi config
+│   ├── delta/                          — git-delta theme symlink (→ Library/Themes/Catppuccin/delta)
 │   ├── ghostty/                        — Ghostty terminal config
 │   ├── git/                            — Git config
 │   ├── nvim/                           — Neovim config

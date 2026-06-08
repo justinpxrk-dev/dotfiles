@@ -33,7 +33,7 @@ description = "Re-apply Spotify's Spicetify Catppuccin scheme (Mocha dark, Latte
 run = "./scripts/spicetify/handle-theme-change.sh"
 
 [tasks."themes:handle-theme-change"]
-description = "Apply per-appearance theme state (borders colors, delta zebra feature) for the current light/dark mode; pass dark|light to force, omit to detect from system"
+description = "Apply per-appearance theme state (borders colors, delta Catppuccin theme, Spicetify scheme) for the current light/dark mode; pass dark|light to force, omit to detect from system"
 run = "./scripts/themes/handle-theme-change.sh"
 
 [tasks."themes:generate-base24-palette"]

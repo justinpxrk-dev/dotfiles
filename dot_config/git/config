@@ -33,6 +33,7 @@
 
 [include]
     path = /opt/homebrew/share/git-delta/themes.gitconfig
+    path = ~/.config/delta/themes/catppuccin.gitconfig
     path = ~/.config/delta/mode.gitconfig
 
 [init]
