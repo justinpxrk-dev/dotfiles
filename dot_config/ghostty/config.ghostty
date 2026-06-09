@@ -47,6 +47,7 @@ background-opacity = 0.95
 background-opacity-cells = true
 font-family = MonoLisa
 font-size = 14.0
+font-thicken = true
 font-variation = wght=400
 macos-titlebar-proxy-icon = hidden
 shell-integration-features = cursor, no-path, ssh-env, no-ssh-terminfo, sudo, no-title
