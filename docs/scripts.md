@@ -139,3 +139,11 @@ Benchmarks Zsh startup time using `hyperfine` (200 runs, 50 warmups). Useful whe
 ```sh
 ~/.scripts/zsh/benchmark-startup.sh
 ```
+
+## `ghostty/open-new-window.sh`
+
+Opens a new Ghostty window — tiled by default, floating centered with `--float`. Synthesizes `cmd - n` only when Ghostty already has a window, since launching it (or reopening it window-less) creates an initial window by itself and the extra keystroke would open a second one. The float variant registers a one-shot yabai rule that applies to the next Ghostty window and removes itself. Bound to `alt - return` / `shift + alt - return` in skhd.
+
+```sh
+~/.scripts/ghostty/open-new-window.sh [--float]
+```
