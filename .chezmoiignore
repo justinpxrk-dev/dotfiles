@@ -18,11 +18,9 @@ dotfiles.code-workspace
 lefthook.yml
 mise.toml
 node_modules
-nvim.yml
 package.json
 pnpm-lock.yaml
 pyproject.toml
-pyrightconfig.json
 uv.lock
 
 # Misc
