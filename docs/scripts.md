@@ -2,6 +2,19 @@
 
 Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply); run them directly by path. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `claude-code/install.sh`, `reload-launch-agent.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
+## PATH commands
+
+Four user-facing scripts are also exposed as commands on `PATH` through thin `exec` wrappers in `~/.local/bin` (source `dot_local/bin/`), so they can be run by name from anywhere instead of by full path:
+
+| Command                         | Wraps                                         |
+| ------------------------------- | --------------------------------------------- |
+| `handle-theme-change`           | `~/.scripts/themes/handle-theme-change.sh`    |
+| `handle-theme-change-spicetify` | `~/.scripts/spicetify/handle-theme-change.sh` |
+| `reload-launch-agent`           | `~/.scripts/macos/reload-launch-agent.sh`     |
+| `benchmark-startup`             | `~/.scripts/zsh/benchmark-startup.sh`         |
+
+Each wrapper `exec`s its target with `"$@"` forwarded. Using a wrapper rather than a symlink keeps the target running under its real path, so the theme orchestrator's `$0`-relative lookups still resolve its sibling scripts; `exec` then replaces the wrapper process so signals and exit status pass straight through.
+
 ## `macos/set-system-settings.sh`
 
 Applies macOS defaults and system preferences. Reboot immediately after — opening System Settings can overwrite changes, and some settings only take effect on reboot.
