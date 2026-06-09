@@ -1,6 +1,6 @@
 # Scripts
 
-Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply); run them directly by path. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `reload-launch-agent.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
+Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply); run them directly by path. Bootstrap scripts (`install-packages.sh`, `install-submodules.sh`, `install-rocks.sh`, `claude-code/install.sh`, `reload-launch-agent.sh`) run automatically via chezmoi — manual invocation is only needed outside of `chezmoi apply`.
 
 ## `macos/set-system-settings.sh`
 
@@ -34,6 +34,14 @@ Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run 
 
 ```sh
 ~/.scripts/brew/install-packages.sh
+```
+
+## `claude-code/install.sh`
+
+Installs [Claude Code](https://code.claude.com/docs/en/setup) via its native installer (`curl -fsSL https://claude.ai/install.sh | bash`), which lands the binary at `~/.local/bin/claude` on the `latest` channel. The native installer pulls releases straight from upstream, so new versions are available as soon as they ship rather than waiting on Homebrew's `claude-code` cask to catch up — the switch was prompted by needing `claude-code` 2.170 for Fable 5 ahead of its Homebrew release. Installs only when `~/.local/bin/claude` is absent, so re-applies are no-ops; thereafter Claude Code self-updates. Run automatically by chezmoi (`run_onchange_`) whenever the script changes.
+
+```sh
+~/.scripts/claude-code/install.sh
 ```
 
 ## `luarocks/install-rocks.sh`
