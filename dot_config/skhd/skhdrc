@@ -56,6 +56,6 @@ shift + alt - 0 : yabai -m space --balance
 shift + alt - q : yabai --restart-service
 shift + alt - e : skhd --restart-service
 
-# Open application
-cmd - return : open -b  com.mitchellh.ghostty && skhd -k "cmd - n"
-cmd + shift - return : yabai -m rule --add label=ghostty-float-next app="^Ghostty$" manage=off grid=4:4:1:1:2:2 && open -b com.mitchellh.ghostty && skhd -k "cmd - n" && (sleep 1; yabai -m rule --remove ghostty-float-next 2>/dev/null) &
+# Open terminal — the script handles the cold-launch and float-rule subtleties
+alt - return : ~/.scripts/ghostty/open-new-window.sh
+shift + alt - return : ~/.scripts/ghostty/open-new-window.sh --float
