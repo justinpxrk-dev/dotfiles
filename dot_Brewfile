@@ -82,7 +82,6 @@ cask "font-symbols-only-nerd-font"
 brew "fontforge"
 
 # AI
-cask "claude-code@latest"
 cask "codex"
 
 # Secrets
