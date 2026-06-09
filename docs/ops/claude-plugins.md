@@ -23,5 +23,5 @@ WOZCODE's cosmetic features default to on, and its session hook re-asserts them 
 
 ## Caveats
 
-- **Fresh-machine ordering:** `chezmoi apply` writes a `settings.json` naming `woz@wozcode-marketplace` and `agent: woz:code` before the plugin code and login exist — expect first-launch warnings and no `woz:code` agent until the manual steps above run.
+- **Fresh-machine ordering:** `chezmoi apply` writes a `settings.json` naming `woz@wozcode-marketplace` and `agent: woz:code-free` before the plugin code and login exist — expect first-launch warnings and no `woz:code-free` agent until the manual steps above run.
 - **Diff churn:** Claude Code writes runtime state into `~/.claude/settings.json` — the volatile `wozcode` UI-state keys (e.g. `desktopInstallNoticeShown`) and native keys like `effortLevel` — that `chezmoi apply` reverts, so `chezmoi diff` can show noise; ignore those. The exception is the `wozcode` feature toggles (`spinnerVerbs`/`statusLineLifetime`/`statusLineShare`/`attribution`), which are tracked precisely because reverting them silently re-enables the feature (see the feature-toggles note above).
