@@ -60,8 +60,11 @@
     enabled = true
     required = true
 
+# Push to GitHub over SSH (key auth) but keep clone/fetch on HTTPS, so keyless
+# fetches still work (brew taps, public CI). Plain `insteadOf` would force
+# fetches over SSH too and break keyless clones.
 [url "ssh://git@github.com"]
-    insteadOf = https://github.com
+    pushInsteadOf = https://github.com
 
 [user]
     email = 192945419+justinpxrk-dev@users.noreply.github.com
