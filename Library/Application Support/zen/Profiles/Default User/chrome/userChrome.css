@@ -1,0 +1,64 @@
+/* Catppuccin for Zen Browser (Mauve accent). The flavors arrive as @imports
+ * of symlinks into the Library/Themes/Catppuccin/zen submodule; on a checkout
+ * without the submodule the symlinks dangle and Firefox skips the imports, so
+ * chezmoi can apply before install-submodules clones it. Latte and Mocha
+ * self-guard with prefers-color-scheme, switching with system appearance. */
+@import url("userChrome-latte.css");
+@import url("userChrome-mocha.css");
+
+/* Personal override — declared after the theme so it wins: keep the main
+ * background translucent so Zen's background blur stays visible. This must
+ * redefine the variable, not paint background directly: Zen can feed
+ * --zen-main-browser-background a gradient (workspace backgrounds), which
+ * color-mix() rejects, and the background shorthand would stomp
+ * background-image — both blank the window. The hexes stay hardcoded
+ * because a custom property cannot reference itself in its own definition. */
+.zen-browser-generic-background {
+  --zen-main-browser-background: light-dark(#eff1f5f2, #1e1e2ef2) !important;
+}
+
+/* Personal override: the theme paints this strip opaque, which covers the
+ * top edge of Zen's split-view outline (outlines draw outside the pane's
+ * box). Transparent restores stock behavior so the full ring shows. */
+#zen-appcontent-navbar-container {
+  background-color: transparent !important;
+}
+
+/* Personal override: color the active split-view ring with the theme accent.
+ * Zen's dark-mode default for this hook is --button-background-color-primary,
+ * which the theme leaves unthemed (white); --zen-primary-color is the
+ * theme's accent and follows the active flavor. */
+[zen-split="true"] {
+  --zen-active-split-outline-color: var(--zen-primary-color) !important;
+}
+
+/* Personal override: the theme paints the titlebar box and the vertical tab
+ * strip (which spans the full sidebar) opaque, covering Zen's translucent
+ * #zen-toolbar-background layer and blocking the window blur behind the
+ * sidebar. Transparent uncovers that layer; its tint is set below. */
+hbox#titlebar,
+#TabsToolbar {
+  background-color: transparent !important;
+}
+
+/* Personal override: Catppuccin tint for the uncovered sidebar layer —
+ * Mantle at the same f2 alpha as the main background, keeping the theme's
+ * two-tone (Mantle sidebar over Base content) without losing the blur.
+ * Same redefine-the-variable rationale as the main override above; the
+ * toolbar variant of the background element consumes the -toolbar variable. */
+.zen-browser-generic-background.zen-toolbar-background {
+  --zen-main-browser-background-toolbar: light-dark(
+    #e6e9eff2,
+    #181825f2
+  ) !important;
+}
+
+/* Personal override: the theme hardens the toolbar wash to opaque Surface0,
+ * which blankets toolbar strips over the sidebar layer. Keep the Surface0
+ * tint but at stock Zen's wash alphas so the strips stay translucent. */
+:root {
+  --toolbar-bgcolor: light-dark(
+    color-mix(in srgb, #ccd0da 60%, transparent),
+    color-mix(in srgb, #313244 15%, transparent)
+  ) !important;
+}
