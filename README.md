@@ -75,7 +75,7 @@ chezmoi update
 
 ## Structure
 
-Entries prefixed with `dot_` or `empty_`, and `Library/LaunchAgents/`, are applied by `chezmoi`; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and `Library/LaunchAgents/`, are applied by `chezmoi`; all other directories are tracked in git only.
 
 ```text
 chezmoi/                                — repo root (~/.local/share/chezmoi)
@@ -114,6 +114,8 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── dot_zshenv.tmpl                     → ~/.zshenv - Zsh environment (all shells)
 ├── empty_dot_hushlogin                 → ~/.hushlogin - suppress login banner
 └── Library/                            → ~/Library/ - macOS Library files
+    ├── Application Support/            — per-app data (applied)
+    │   └── zen/                        — Zen Browser profile config
     ├── Fonts/                          — font sources (git-only)
     │   ├── font-monolisa @ †           — MonoLisa font source (private)
     │   └── lib/                        — font tooling
@@ -123,7 +125,8 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
     │   ├── Catppuccin/                 — Catppuccin theme ports
     │   │   ├── delta @                 — git-delta diff theme
     │   │   ├── ghostty @               — Ghostty terminal theme
-    │   │   └── spicetify @ ⑂           — Spotify theme templates
+    │   │   ├── spicetify @ ⑂           — Spotify theme templates
+    │   │   └── zen @                   — Zen Browser theme
     │   ├── Petrichor/                  — Base24 palette definitions
     │   └── tinted/                     — tinted-builder template upstreams
     │       └── tinted-shell @ ⑂        — shell theme templates

@@ -22,3 +22,16 @@ All three are **5.5** today (Homebrew `lua` is `5.5.0`, matching SbarLua's pin).
 1. Bump the `5.5` in `executable_sketchybarrc`'s `package.path` to the new `major.minor`.
 2. Reinstall the rock into the new tree: `luarocks install --local catppuccin`.
 3. Keep SbarLua's `LUA_DIR` pin aligned with Homebrew's `lua`.
+
+## Zen Browser transparency (userChrome overrides + profile pref)
+
+The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).
+
+**Failure mode:** after a Zen update the window goes opaque, or loses its Catppuccin tint, with no error anywhere — userChrome/userContent still load fine.
+
+Website transparency has a second, profile-local leg: the Zen Internet extension only composites through to the window while `browser.tabs.allow_transparent_browser` is `true`. That pref is hand-set in about:config (Zen ships it `false`), lives in `prefs.js` outside chezmoi, and is not replayed on a fresh machine.
+
+**On breakage or fresh setup:**
+
+1. Web pages opaque: re-set `browser.tabs.allow_transparent_browser` to `true` in about:config and restart Zen.
+2. Chrome surfaces opaque: re-locate the painted element or variable in the Zen bundle (`unzip -o /Applications/Zen.app/Contents/Resources/browser/omni.ja -d /tmp/zen-omni`, then grep `chrome/browser/content/browser/zen-styles/`) and adjust the overrides in the chrome css.

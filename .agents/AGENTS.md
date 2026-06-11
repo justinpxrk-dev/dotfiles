@@ -11,7 +11,7 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Project Structure
 
-Entries prefixed with `dot_` or `empty_`, and `Library/LaunchAgents/`, are applied by chezmoi; all other directories are tracked in git only.
+Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and `Library/LaunchAgents/`, are applied by chezmoi; all other directories are tracked in git only.
 
 ```text
 chezmoi/
@@ -25,6 +25,8 @@ chezmoi/
 │   └── workflows/
 ├── assets/     — icons and images
 ├── Library/    → ~/Library/
+│   ├── Application Support/ — per-app data (applied)
+│   │   └── zen/ — Zen Browser profile config; chrome css symlinks to Library/Themes/Catppuccin/zen @
 │   ├── Fonts/  — font sources (git-only)
 │   │   ├── font-monolisa @ †
 │   │   └── lib/
@@ -34,7 +36,8 @@ chezmoi/
 │   │   ├── Catppuccin/
 │   │   │   ├── delta @
 │   │   │   ├── ghostty @
-│   │   │   └── spicetify @ ⑂
+│   │   │   ├── spicetify @ ⑂
+│   │   │   └── zen @
 │   │   ├── Petrichor/ — Base24 palette definitions
 │   │   └── tinted/ — tinted-builder template upstreams
 │   │       └── tinted-shell @ ⑂

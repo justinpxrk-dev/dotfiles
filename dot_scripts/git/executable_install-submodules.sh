@@ -7,14 +7,15 @@ echo "==> Changing directory to $REPO_ROOT"
 cd "$REPO_ROOT" || exit
 
 echo "==> Syncing git submodules"
-# Public submodules use HTTPS; GIT_CONFIG_GLOBAL=/dev/null bypasses the global
-# SSH rewrite rule so they clone via HTTPS directly without SSH auth.
-GIT_CONFIG_GLOBAL=/dev/null git submodule update --init --recursive --quiet -- \
+# Public submodules clone over HTTPS and need no auth; the global pushInsteadOf
+# rewrite only touches pushes, so fetches work on keyless machines.
+git submodule update --init --recursive --quiet -- \
 	dot_config/sketchybar/lib/SbarLua \
 	dot_config/sketchybar/lib/sketchybar-app-font \
 	Library/Themes/Catppuccin/delta \
 	Library/Themes/Catppuccin/ghostty \
 	Library/Themes/Catppuccin/spicetify \
+	Library/Themes/Catppuccin/zen \
 	Library/Themes/tinted/tinted-shell
 
 # Private submodules require SSH auth. Failure is silenced so a missing SSH

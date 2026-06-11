@@ -1,0 +1,15 @@
+/* Catppuccin for Zen Browser (Mauve accent). Same symlinked-@import scheme
+ * as userChrome.css; the theme's zen-logo-*.svg url()s resolve relative to
+ * the imported sheets, which chezmoi symlinks into this same directory. */
+@import url("userContent-latte.css");
+@import url("userContent-mocha.css");
+
+/* Personal override — declared after the theme so it wins: the theme paints
+ * every about: page root opaque, and url-prefix("about:") includes
+ * about:blank — the page Zen loads for empty tabs — which lays an opaque
+ * sheet over the translucent browser background and blocks the window blur. */
+@-moz-document url("about:blank") {
+  :root {
+    background-color: transparent !important;
+  }
+}
