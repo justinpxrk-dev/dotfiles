@@ -45,7 +45,7 @@ Two deploy workflows run a real `chezmoi apply` against the macOS runner using t
 - `deploy-public-macos.yml` — runs on every push and pull request (any branch), `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 3 3,15 * * *`). No secrets, so fork PRs are safe; private submodules fail silently.
 - `deploy-authenticated-macos.yml` — runs on every push (any branch), `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 7 7,19 * * *`, offset from the public deploy to avoid runner contention). Uses `webfactory/ssh-agent` with deploy keys for private submodules. `pull_request` is intentionally excluded so deploy-key secrets are never exposed to fork PRs.
 
-`zsh-benchmark-startup.yml` measures shell startup time on the macOS runner. It runs on `workflow_dispatch` and on push/pull request when `dot_config/zsh/**` changes: it applies the branch's dotfiles, warms up the shell, benchmarks startup, then evaluates and reports the result.
+`zsh-benchmark-startup.yml` measures shell startup time on the macOS runner. It runs on `workflow_dispatch`, a 12-hour schedule (`cron: 9 9,21 * * *`), and on push/pull request when startup-relevant files change — the zsh config plus everything that shapes the benchmarked HOME (`dot_zshenv.tmpl`, `dot_config/git/**`, `dot_Brewfile`, `.chezmoiscripts/**`, the workflow itself). It applies the branch's dotfiles, warms up the shell and verifies every antidote plugin actually cloned (a failed clone would benchmark a degraded, artificially fast shell), then gates hyperfine's min against `THRESHOLD_MS` — runner noise is strictly additive, so the min tracks config cost where the mean tracks VM contention.
 
 ## Worktrees
 

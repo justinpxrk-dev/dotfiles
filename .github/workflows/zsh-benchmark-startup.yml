@@ -23,16 +23,20 @@ jobs:
     timeout-minutes: 15
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # Hard ceiling for mean interactive startup. Raise/lower this single value
-      # to retune the gate once real CI numbers are observed.
+      # Hard ceiling for the fastest observed startup (hyperfine min). The gate
+      # uses min, not mean: shared-runner noise only ever adds time, so the min
+      # tracks true config cost while the mean tracks VM contention. Observed
+      # real-config floor is ~161 ms; raise/lower this single value to retune.
       THRESHOLD_MS: 200
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      # Detect whether any zsh config files changed. Runs only on push/PR;
-      # schedule and manual dispatch always benchmark unconditionally.
-      - name: Detect zsh config changes
+      # Detect whether files that feed the measured startup changed: the zsh
+      # config itself plus everything that shapes the HOME the benchmarked
+      # shell starts in. Runs only on push/PR; schedule and manual dispatch
+      # always benchmark unconditionally.
+      - name: Detect startup-relevant changes
         id: filter
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: dorny/paths-filter@v3
@@ -40,6 +44,18 @@ jobs:
           filters: |
             zsh:
               - 'dot_config/zsh/**'
+              - 'dot_zshenv.tmpl'
+              # URL-rewrite rules here decide whether antidote's keyless HTTPS
+              # clones succeed in CI (pushInsteadOf keeps fetches on HTTPS; the
+              # former plain insteadOf broke them, so pre-2026-06 baselines
+              # measured a plugin-less shell)
+              - 'dot_config/git/**'
+              # brew-installed tools add completions to fpath
+              - 'dot_Brewfile'
+              # chezmoi apply executes these while building the HOME the
+              # benchmark runs in
+              - '.chezmoiscripts/**'
+              - '.github/workflows/zsh-benchmark-startup.yml'
 
       # Single gate evaluated once so every downstream step shares one
       # condition. The job always reports success when skipped, satisfying
@@ -57,7 +73,7 @@ jobs:
                 echo "run=true" >>"$GITHUB_OUTPUT"
               else
                 echo "run=false" >>"$GITHUB_OUTPUT"
-                echo "Skipping benchmark: no changes under dot_config/zsh/" >>"$GITHUB_STEP_SUMMARY"
+                echo "Skipping benchmark: no startup-relevant changes" >>"$GITHUB_STEP_SUMMARY"
               fi
               ;;
           esac
@@ -80,8 +96,22 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         # The first interactive shells do one-time work (zcompile *.zwc,
         # antidote bundle, compinit dump) that must not pollute the measurement.
+        # Then verify every plugin actually materialized: a failed clone hands
+        # the benchmark a degraded, plugin-less shell that is fast for the
+        # wrong reason and would pass as a phantom improvement.
         run: |
-          for i in {1..3}; do zsh -i -l -c exit; done
+          out=$(for i in {1..3}; do zsh -i -l -c exit; done 2>&1)
+          printf '%s\n' "$out"
+          if grep -q 'antidote: unexpected git error' <<<"$out"; then
+            echo "::error::antidote plugin clone failed; benchmark would measure a degraded shell"
+            exit 1
+          fi
+          expected=$(grep -vc -e '^#' -e '^[[:space:]]*$' "$HOME/.config/zsh/.zsh_plugins.txt")
+          cloned=$(find "$(zsh -i -l -c 'antidote home' 2>/dev/null | tail -1)" -mindepth 3 -maxdepth 3 -type d | wc -l | tr -d ' ')
+          if (( cloned < expected )); then
+            echo "::error::Only $cloned of $expected antidote plugins are cloned"
+            exit 1
+          fi
 
       - name: Benchmark startup
         if: steps.gate.outputs.run == 'true'
@@ -90,9 +120,12 @@ jobs:
 
       - name: Evaluate and report
         if: steps.gate.outputs.run == 'true'
+        # Gate on hyperfine's min (see THRESHOLD_MS); the mean is reported
+        # alongside for context only.
         run: |
+          min_ms=$(jq '.results[0].min * 1000' result.json)
           mean_ms=$(jq '.results[0].mean * 1000' result.json)
-          printf 'Mean startup: %.1f ms (limit %s ms)\n' "$mean_ms" "$THRESHOLD_MS"
-          printf 'Mean startup: %.1f ms (limit %s ms)\n' "$mean_ms" "$THRESHOLD_MS" >>"$GITHUB_STEP_SUMMARY"
-          awk -v m="$mean_ms" -v t="$THRESHOLD_MS" 'BEGIN { exit (m > t) }' \
+          printf 'Min startup: %.1f ms (limit %s ms); mean %.1f ms\n' "$min_ms" "$THRESHOLD_MS" "$mean_ms"
+          printf 'Min startup: %.1f ms (limit %s ms); mean %.1f ms\n' "$min_ms" "$THRESHOLD_MS" "$mean_ms" >>"$GITHUB_STEP_SUMMARY"
+          awk -v m="$min_ms" -v t="$THRESHOLD_MS" 'BEGIN { exit (m > t) }' \
             || { echo "::error::Zsh startup regressed above $THRESHOLD_MS ms"; exit 1; }
