@@ -1,11 +1,3 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
   "diff_view_style": "unified",
   "buffer_font_family": "MonoLisa",
@@ -43,11 +35,6 @@
     "light": "Catppuccin Latte",
     "dark": "Catppuccin Mocha"
   },
-  // Per-theme overrides keyed by theme name. A flat
-  // `experimental.theme_overrides` applies to every theme regardless of
-  // appearance, so its hardcoded Mocha colors bleed into Latte and keep light
-  // mode dark. Mocha base #1e1e2e, Latte base #eff1f5; the f2 alpha is the
-  // translucency the blurred window background shows through.
   "theme_overrides": {
     "Catppuccin Mocha": {
       "background.appearance": "blurred",
