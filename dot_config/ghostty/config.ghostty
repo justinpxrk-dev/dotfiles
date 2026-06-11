@@ -59,3 +59,21 @@ window-padding-x = 20, 20
 window-padding-y = 20, 20
 window-title-font-family = SF Pro
 window-vsync = true
+
+# Splits — the whole vocabulary lives on cmd+opt; skhd deliberately leaves
+# cmd+alt unbound so these chords fall through to Ghostty (see ~/.config/skhd/skhdrc).
+# hjkl navigate · +shift resize · - and \ create (divider mnemonic) ·
+# enter zoom · shift+0 equalize (mirrors yabai's shift+alt+0 balance).
+# Bare cmd keeps Ghostty's font-zoom defaults (cmd+= / cmd+- / cmd+0).
+keybind = cmd+opt+-=new_split:down
+keybind = cmd+opt+\=new_split:right
+keybind = cmd+opt+h=goto_split:left
+keybind = cmd+opt+j=goto_split:down
+keybind = cmd+opt+k=goto_split:up
+keybind = cmd+opt+l=goto_split:right
+keybind = cmd+opt+shift+h=resize_split:left,40
+keybind = cmd+opt+shift+j=resize_split:down,40
+keybind = cmd+opt+shift+k=resize_split:up,40
+keybind = cmd+opt+shift+l=resize_split:right,40
+keybind = cmd+opt+enter=toggle_split_zoom
+keybind = cmd+opt+shift+0=equalize_splits

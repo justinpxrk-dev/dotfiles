@@ -1,3 +1,10 @@
+# Modifier grammar (hjkl = left/down/up/right):
+#   alt          focus window (hjkl) / space (n, m, 1-9)
+#   alt + shift  resize window (hjkl)
+#   ctrl + alt   move window — swap in place (hjkl), send to space (n, m, 1-9)
+#   cmd + alt    intentionally unbound — falls through to Ghostty splits
+#                (see ~/.config/ghostty/config.ghostty). Do not bind it here.
+
 # Focus space
 alt - n : yabai -m space --focus prev
 alt - m : yabai -m space --focus next
@@ -17,30 +24,30 @@ alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
 
-# Move window
-cmd + alt - h : yabai -m window --swap west
-cmd + alt - j : yabai -m window --swap south
-cmd + alt - k : yabai -m window --swap north
-cmd + alt - l : yabai -m window --swap east
+# Move window — swap in place
+ctrl + alt - h : yabai -m window --swap west
+ctrl + alt - j : yabai -m window --swap south
+ctrl + alt - k : yabai -m window --swap north
+ctrl + alt - l : yabai -m window --swap east
 
 # Move window to space
-cmd + alt - n : yabai -m window --space prev
-cmd + alt - m : yabai -m window --space next
-cmd + alt - 1 : yabai -m window --space 1
-cmd + alt - 2 : yabai -m window --space 2
-cmd + alt - 3 : yabai -m window --space 3
-cmd + alt - 4 : yabai -m window --space 4
-cmd + alt - 5 : yabai -m window --space 5
-cmd + alt - 6 : yabai -m window --space 6
-cmd + alt - 7 : yabai -m window --space 7
-cmd + alt - 8 : yabai -m window --space 8
-cmd + alt - 9 : yabai -m window --space 9
+ctrl + alt - n : yabai -m window --space prev
+ctrl + alt - m : yabai -m window --space next
+ctrl + alt - 1 : yabai -m window --space 1
+ctrl + alt - 2 : yabai -m window --space 2
+ctrl + alt - 3 : yabai -m window --space 3
+ctrl + alt - 4 : yabai -m window --space 4
+ctrl + alt - 5 : yabai -m window --space 5
+ctrl + alt - 6 : yabai -m window --space 6
+ctrl + alt - 7 : yabai -m window --space 7
+ctrl + alt - 8 : yabai -m window --space 8
+ctrl + alt - 9 : yabai -m window --space 9
 
-# Resize (push border outward)
-cmd + alt - left  : yabai -m window --resize left:-20:0 2>/dev/null || yabai -m window --resize right:-20:0
-cmd + alt - right : yabai -m window --resize right:20:0 2>/dev/null || yabai -m window --resize left:20:0
-cmd + alt - up    : yabai -m window --resize top:0:-20 2>/dev/null || yabai -m window --resize bottom:0:-20
-cmd + alt - down  : yabai -m window --resize bottom:0:20 2>/dev/null || yabai -m window --resize top:0:20
+# Resize window — push border outward (hjkl)
+alt + shift - h : yabai -m window --resize left:-20:0 2>/dev/null || yabai -m window --resize right:-20:0
+alt + shift - j : yabai -m window --resize bottom:0:20 2>/dev/null || yabai -m window --resize top:0:20
+alt + shift - k : yabai -m window --resize top:0:-20 2>/dev/null || yabai -m window --resize bottom:0:-20
+alt + shift - l : yabai -m window --resize right:20:0 2>/dev/null || yabai -m window --resize left:20:0
 
 # Toggle float / fullscreen
 alt - t : yabai -m window --toggle float
