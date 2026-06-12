@@ -1,16 +1,16 @@
 local sbar = require("sketchybar")
 
-local option = require("constants.option")
+-- Two sketchybar instances share this config tree, selected by environment. The
+-- external bar's LaunchAgent launches the binary as `external` (so it registers
+-- git.felix.external) and sets SKETCHYBAR_PROFILE=external; the default instance
+-- (its own LaunchAgent, argv[0]=sketchybar) gets neither and falls through to the top
+-- bar. See docs/architecture/sketchybar/architecture.md.
+local profile = os.getenv("SKETCHYBAR_PROFILE") or "topbar"
 
--- Initialize bar and default options
-sbar.default(option.DEFAULT.OPTIONS)
-sbar.bar(option.BAR.OPTIONS)
+-- SbarLua addresses git.felix.sketchybar by default; point it at the external
+-- instance's port so this config's messages reach the matching daemon.
+if profile == "external" then
+	sbar.set_bar_name("external")
+end
 
--- Add theme plugin
-require("plugins.theme")
--- Add left bar plugins
-require("plugins.now_playing")
--- Add center bar plugins
-require("plugins.spaces")
--- Add right bar plugins
-require("plugins.resources")
+require("init." .. profile)

@@ -7,7 +7,7 @@ tap "tinted-theming/tinted"
 
 # Window Manager
 brew "FelixKratz/formulae/borders", restart_service: :changed
-brew "FelixKratz/formulae/sketchybar", restart_service: :changed
+brew "FelixKratz/formulae/sketchybar"
 brew "asmvik/formulae/skhd"
 brew "asmvik/formulae/yabai"
 

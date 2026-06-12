@@ -10,7 +10,7 @@ local utils = require("helpers.utils")
 --- @field EVENT_LISTENER table<EventListenerOption, table<string, any>>
 --- @field NOW_PLAYING table<NowPlayingOption, table<string, any>>
 --- @field RESOURCES table<ResourcesOption, table<string, any>>
---- @alias BarOption "OPTIONS"
+--- @alias BarOption "TOP" | "BOTTOM"
 --- @alias DefaultOption "OPTIONS"
 --- @alias EventListenerOption "OPTIONS"
 --- @alias NowPlayingOption "ARTWORK_OPTIONS" | "TRACK_OPTIONS"
@@ -19,9 +19,12 @@ local utils = require("helpers.utils")
 --- @type Option
 local M = {
 	BAR = {
-		OPTIONS = utils.merge(colorschemes.get_bar_color_options(), {
+		-- External (LG) bottom bar: the floating, rounded style. `display` is a
+		-- monitor index (sketchybar has no "secondary" selector) — 2 is the external
+		-- here; flip to 1 if the bar lands on the built-in. Vanishes when undocked.
+		BOTTOM = utils.merge(colorschemes.get_bar_color_options(), {
 			corner_radius = 19,
-			display = "main",
+			display = 2,
 			font_smoothing = true,
 			height = 38,
 			margin = 14,
@@ -31,6 +34,23 @@ local M = {
 			shadow = true,
 			y_offset = 7,
 		}),
+		-- Built-in top bar mirroring the macOS menu bar: flush to the top edge, full
+		-- width, squared off, no float shadow. `main` is always the built-in panel.
+		-- Pinned to pure opaque black rather than the themed background, so it stays
+		-- black across light/dark (the top bar loads no theme handler to repaint it).
+		TOP = {
+			color = 0xff000000,
+			corner_radius = 0,
+			display = "main",
+			font_smoothing = true,
+			height = 38,
+			margin = 0,
+			padding_left = padding.BAR.PADDING_LEFT,
+			padding_right = padding.BAR.PADDING_RIGHT,
+			position = "top",
+			shadow = false,
+			y_offset = 0,
+		},
 	},
 	DEFAULT = {
 		OPTIONS = utils.merge(colorschemes.get_default_color_options(), {
