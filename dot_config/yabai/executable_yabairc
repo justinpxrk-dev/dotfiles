@@ -40,7 +40,17 @@ yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Thaw$" manage=off
 yabai -m rule --add app="^Weather$" manage=off
 
-# Signals
-yabai -m signal --add event=space_created action="sketchybar --trigger spaces_change"
-yabai -m signal --add event=space_destroyed action="sketchybar --trigger spaces_change"
-yabai -m signal --add event=space_changed action="sketchybar --trigger spaces_change"
+# Signals — spaces live on the external sketchybar instance, so route their
+# refresh there. `exec -a external` selects git.felix.external (argv[0] picks the
+# instance); a bare sketchybar would hit the default top bar.
+yabai -m signal --add event=space_created action="exec -a external /opt/homebrew/bin/sketchybar --trigger spaces_change"
+yabai -m signal --add event=space_destroyed action="exec -a external /opt/homebrew/bin/sketchybar --trigger spaces_change"
+yabai -m signal --add event=space_changed action="exec -a external /opt/homebrew/bin/sketchybar --trigger spaces_change"
+
+# Mirror each display's sketchybar with yabai padding: the built-in reclaims its
+# bottom (top bar) while the external reserves space for its bottom bar. Keyed by
+# display UUID so it survives dock/undock; re-run when a display is added or
+# removed, plus once now for the current arrangement.
+yabai -m signal --add event=display_added action="~/.scripts/yabai/apply-display-config.sh"
+yabai -m signal --add event=display_removed action="~/.scripts/yabai/apply-display-config.sh"
+~/.scripts/yabai/apply-display-config.sh

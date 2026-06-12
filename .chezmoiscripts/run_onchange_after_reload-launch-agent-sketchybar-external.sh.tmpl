@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Reload the external sketchybar instance when its plist changes (and bootstrap it on first install).
+# {{ include "Library/LaunchAgents/me.justinpxrk.sketchybar-external.plist.tmpl" | sha256sum }}
+
+set -euo pipefail
+
+"{{ .chezmoi.homeDir }}/.scripts/macos/reload-launch-agent.sh" me.justinpxrk.sketchybar-external

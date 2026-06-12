@@ -2,6 +2,11 @@
 
 now_playing_artwork_format='null'
 
+# Route triggers to this dispatcher's own bar. sketchybar selects the instance by
+# argv[0]; the daemon exports its name as $BAR_NAME, so re-invoke under it — a bare
+# `sketchybar` would hit the default instance, not the external bar this serves.
+trigger() { (exec -a "${BAR_NAME:?must be set by the sketchybar instance running this dispatcher}" /opt/homebrew/bin/sketchybar "$@"); }
+
 exec media-control stream | while IFS= read -r line; do
 	{
 		IFS= read -r -d '' diff
@@ -26,13 +31,13 @@ exec media-control stream | while IFS= read -r line; do
 
 	if [[ "$diff" == 'true' ]]; then
 		if [[ "$playing" == 'true' ]]; then
-			sketchybar --trigger now_playing_unpause
+			trigger --trigger now_playing_unpause
 		elif [[ "$playing" == 'false' ]]; then
-			sketchybar --trigger now_playing_pause
+			trigger --trigger now_playing_pause
 		fi
 	elif [[ "$diff" == 'false' ]]; then
 		if [[ "$playing" != 'null' ]]; then
-			sketchybar --trigger \
+			trigger --trigger \
 				now_playing_track_change \
 				INFO="$(
 					jq -nc \
@@ -53,7 +58,7 @@ exec media-control stream | while IFS= read -r line; do
 			fi
 		elif [[ "$playing" == 'null' ]]; then
 			now_playing_artwork_format='null'
-			sketchybar --trigger now_playing_stop
+			trigger --trigger now_playing_stop
 			continue
 		fi
 	fi
@@ -84,7 +89,7 @@ exec media-control stream | while IFS= read -r line; do
 					"$inactive_artwork_path"
 		fi
 
-		sketchybar --trigger \
+		trigger --trigger \
 			now_playing_artwork_change \
 			INFO="$(
 				jq -nc \
