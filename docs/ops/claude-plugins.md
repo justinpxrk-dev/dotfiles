@@ -2,6 +2,10 @@
 
 Claude Code plugins. In `dot_claude/settings.json` the `enabledPlugins`, `extraKnownMarketplaces`, `agent`, and the `wozcode` feature toggles (`spinnerVerbs`, `statusLineLifetime`, `statusLineShare`, `attribution`) are version-controlled. Left untracked: the volatile UI-state keys WOZCODE writes into the same `wozcode` block (e.g. `desktopInstallNoticeShown`), plus the installed-plugin records and plugin code under `~/.claude/plugins/` (absolute paths + timestamps) — all re-created at runtime on each machine.
 
+## Model & effort level
+
+`model` (`opus[1m]`, the 1M-context variant) and `effortLevel` (`xhigh`, the schema's ceiling) are tracked in `dot_claude/settings.json`. `max` and `ultracode` (`xhigh` + workflow orchestration) are session-only — set them with `/effort <level>` or, for ultracode, the `ultracode` prompt keyword. A `CLAUDE_CODE_EFFORT_LEVEL` env var could persist `max`, but it's intentionally unset: it overrides the session and blocks `/effort ultracode` (`… overrides effort this session — clear it and ultracode takes over`).
+
 ## Built-in plugins (lua-lsp, pyright-lsp)
 
 From `claude-plugins-official`, which Claude Code knows by default. A fresh machine needs only the `enabledPlugins` entry plus a one-time `/plugin install <name>@claude-plugins-official`.
