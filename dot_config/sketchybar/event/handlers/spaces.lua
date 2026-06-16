@@ -20,12 +20,23 @@ local M = {}
 --- @type integer
 M.DISPLAY = 1
 
---- sketchybar position region for this instance's row of space boxes. The external
---- bar uses `"center"`; the top bar uses `"e"` (the notch-aware "right of notch"
---- region), which anchors the row against the built-in display's notch using the
---- bar's `notch_width` — see `init/topbar.lua`.
+--- sketchybar position region for this instance's row of space boxes — the right-hand
+--- region when the row is split across the notch (see `M.POSITION_LEFT`). The external
+--- bar uses `"center"`; the top bar uses `"e"` (the notch-aware "right of notch" region),
+--- which anchors the row against the built-in display's notch using the bar's
+--- `notch_width` — see `init/topbar.lua`.
 --- @type string
 M.POSITION = "left"
+
+--- Optional second region for splitting the row across the notch. When set, the active-app
+--- pill plus the first `floor(n/2)` spaces (by sorted index) render here and the rest at
+--- `M.POSITION`, so the two sides balance around the notch including the pill; when `nil` the
+--- whole row renders at `M.POSITION` (no split). The top bar uses `"q"` (notch-aware
+--- "left of notch") to flank the notch with `M.POSITION = "e"`; the external bar leaves it
+--- `nil` (no notch). Because `"q"` stacks right-to-left, left-side boxes are added in reverse
+--- so they read the same left-to-right as the right side — see `M.render`.
+--- @type string?
+M.POSITION_LEFT = nil
 
 --- sketchybar position region for the active-app pill (Apple glyph + frontmost-app
 --- name). The external bar uses `"center"` — the same region as its space row, with the
@@ -53,11 +64,17 @@ M.GLYPH_COUNT = {}
 --- @type boolean
 M.pending = false
 
---- Whether the singleton active-app pill items have been created yet. The pill is
---- created lazily on the first render and only updated thereafter — it is never torn
---- down with the per-space boxes on a structural change.
+--- Whether the active-app pill items have been created yet. On the external bar the pill is
+--- a singleton created once at init; on the split top bar `M.render` re-adds it after the
+--- left-of-notch spaces on each structural change to keep it left-most (see `build_app_pill`).
 --- @type boolean
 M.app_built = false
+
+--- Last resolved active-app name for this display's pill. Tracked so a structural rebuild
+--- (which re-creates the pill empty) can restore it, and so an unresolvable visible space
+--- keeps the last app rather than blanking the pill.
+--- @type string
+M.app_title = ""
 
 --- Debounce window (seconds) used to coalesce a burst of yabai signals into one render.
 local DEBOUNCE = 0.05
@@ -241,16 +258,16 @@ local function update_app_title(app)
 	sbar.set(item.SPACES.APP_BRACKET, utils.merge({ drawing = shown }, bracket_options(colors)))
 end
 
---- Create the singleton active-app pill (Apple glyph + front-app title in a mauve box).
---- Called once by each init profile at the point in its add sequence where the pill should
---- sit among other items sharing its region — e.g. before `now_playing` on the external
---- bar, so the pill is the left-most `"left"` item. The `"q"` region (top bar, left of
---- notch) stacks right-to-left, so the title is added first (nearest the notch) and the
---- Apple glyph to its left; other regions stack left-to-right, so the Apple glyph leads.
---- Item padding is in visual space (unaffected by add order), so both bars share the same
---- per-item options. Content is filled by the first `render` (the title starts hidden).
+--- (Re)add the active-app pill (Apple glyph + front-app title in a mauve box) to
+--- `M.APP_POSITION`. The `"q"` region (top bar, left of notch) stacks right-to-left, so the
+--- title is added first (nearest the notch) and the Apple glyph to its left; other regions
+--- stack left-to-right, so the Apple glyph leads. Item padding is in visual space (unaffected
+--- by add order), so both bars share the same per-item options. Content starts hidden and is
+--- filled by `update_app_title`. Factored out of `M.setup_app_pill` so `M.render` can re-add
+--- the pill after the left-of-notch spaces — which are themselves re-added on every structural
+--- change — keeping the pill the left-most item on the split top bar.
 --- @return nil
-function M.setup_app_pill()
+local function build_app_pill()
 	local colors = colorschemes.get_space_color_options(true)
 	local icon, title, bracket = item.SPACES.APP_ICON, item.SPACES.APP_TITLE, item.SPACES.APP_BRACKET
 	local icon_opts = utils.merge({ position = M.APP_POSITION }, app_icon_options(colors))
@@ -263,15 +280,101 @@ function M.setup_app_pill()
 		sbar.add("item", title, title_opts)
 	end
 	sbar.add("bracket", bracket, { icon, title }, bracket_options(colors))
-	-- When the pill shares its region with the centered space row (external bar), add a
-	-- trailing spacer so the gap from the pill to the first box matches the 10px inter-box
-	-- gap (each box carries a 5px spacer; the pill needs its own to contribute the other
-	-- half). At `"q"` (top bar) the pill is isolated against the notch, so it gets none — a
-	-- spacer there would only push it off the notch edge.
-	if M.APP_POSITION == M.POSITION then
+	-- When the pill shares its region with a space row — the centered external row, or the
+	-- top bar's left-of-notch `"q"` row when the spaces are split across the notch — add a
+	-- trailing spacer so the gap from the pill to the adjacent box matches the 10px inter-box
+	-- gap (each box carries a 5px spacer; the pill contributes the other half). An unsplit top
+	-- bar leaves the pill isolated against the notch with no neighbour, so it gets none.
+	if M.APP_POSITION == M.POSITION or M.APP_POSITION == M.POSITION_LEFT then
 		sbar.add("item", item.SPACES.APP_SPACER, utils.merge({ position = M.APP_POSITION }, option.SPACES.SPACER))
 	end
+end
+
+--- Remove the active-app pill items, so `M.render` can re-add (reposition) the pill after the
+--- left-of-notch spaces on a structural rebuild.
+--- @return nil
+local function remove_app_pill()
+	sbar.remove(item.SPACES.APP_BRACKET)
+	sbar.remove(item.SPACES.APP_ICON)
+	sbar.remove(item.SPACES.APP_TITLE)
+	if M.APP_POSITION == M.POSITION or M.APP_POSITION == M.POSITION_LEFT then
+		sbar.remove(item.SPACES.APP_SPACER)
+	end
+end
+
+--- Create the active-app pill once at init, at the point in the profile's add sequence where
+--- the pill should sit among items sharing its region — e.g. before `now_playing` on the
+--- external bar, so it leads the centered cluster. On the split top bar the pill must follow
+--- the left spaces, so `M.render` re-adds it after them (see `build_app_pill`).
+--- @return nil
+function M.setup_app_pill()
+	build_app_pill()
 	M.app_built = true
+end
+
+--- Add one space box's items and its bracket in a single region. The items are listed in
+--- visual left-to-right order (spacer, number, divider, glyphs, spacer) and added forward for
+--- a left-to-right region or in reverse for the notch's right-to-left `"q"` region, so the box
+--- reads identically (number left, glyphs right) on both sides — padding is in visual space,
+--- so the per-item options are the same either way. The glyph row is one item per app: the
+--- last glyph takes the edge gap on its right, the rest leave their right padding at 0 so the
+--- next glyph's left padding owns the tighter inter-icon `ICON_GAP` gap; the leading glyph
+--- instead takes the full `GAP` from the divider. On the active space the leading glyph keeps
+--- the normal foreground; the rest dim.
+--- @param b { idx: integer, glyphs: string[], active: boolean }
+--- @param position string sketchybar region for this box
+--- @param reverse boolean add items right-to-left (for the `"q"` region)
+--- @return nil
+local function add_box(b, position, reverse)
+	local idx, glyphs, active = b.idx, b.glyphs, b.active
+	local count = #glyphs
+	local has_apps = count > 0
+	local space_colors = colorschemes.get_space_color_options(active)
+	local n = names(idx)
+	-- Visual left-to-right sequence of the box's standalone items.
+	local seq = {
+		{ n.spacer_l, option.SPACES.SPACER },
+		{ n.num, num_options(idx, active, has_apps, space_colors) },
+		{ n.div, div_options(has_apps, space_colors) },
+	}
+	for i = 1, count do
+		seq[#seq + 1] =
+			{ glyph_name(idx, i), glyph_options(glyphs[i], i == 1, i == count, space_colors, active and i > 1) }
+	end
+	seq[#seq + 1] = { n.spacer_r, option.SPACES.SPACER }
+	local from, to, step = 1, #seq, 1
+	if reverse then
+		from, to, step = #seq, 1, -1
+	end
+	for j = from, to, step do
+		sbar.add("item", seq[j][1], utils.merge({ position = position }, seq[j][2]))
+	end
+	-- Bracket members are order-independent (the box is drawn behind them).
+	local members = { n.num, n.div }
+	for i = 1, count do
+		members[#members + 1] = glyph_name(idx, i)
+	end
+	sbar.add("bracket", n.bracket, members, bracket_options(space_colors))
+	M.GLYPH_COUNT[idx] = count
+end
+
+--- Update one already-materialized space box in place (no add/remove, so its region and order
+--- are untouched). Used on a non-structural refresh — same glyph count, content and colors only.
+--- @param b { idx: integer, glyphs: string[], active: boolean }
+--- @return nil
+local function set_box(b)
+	local idx, glyphs, active = b.idx, b.glyphs, b.active
+	local count = #glyphs
+	local has_apps = count > 0
+	local space_colors = colorschemes.get_space_color_options(active)
+	local n = names(idx)
+	sbar.set(n.num, num_options(idx, active, has_apps, space_colors))
+	sbar.set(n.div, div_options(has_apps, space_colors))
+	for i = 1, count do
+		sbar.set(glyph_name(idx, i), glyph_options(glyphs[i], i == 1, i == count, space_colors, active and i > 1))
+	end
+	sbar.set(n.bracket, bracket_options(space_colors))
+	M.GLYPH_COUNT[idx] = count
 end
 
 --- Query yabai (and the frontmost app) and (re)paint this display's space boxes. Runs
@@ -391,69 +494,46 @@ function M.render()
 					end
 				end
 
-				for _, b in ipairs(boxes) do
-					local idx, glyphs, active = b.idx, b.glyphs, b.active
-					local count = #glyphs
-					local has_apps = count > 0
-					local space_colors = colorschemes.get_space_color_options(active)
-					local n = names(idx)
-					if structural then
-						-- Items added left-to-right; the bracket draws the box behind its members. The
-						-- glyph row is one item per app: the last glyph takes the edge gap on its right,
-						-- the rest leave their right padding at 0 so the next glyph's left padding owns
-						-- the tighter inter-icon `ICON_GAP` gap; the leading glyph instead takes the full
-						-- `GAP` from the divider. On the active space the leading glyph keeps the normal
-						-- foreground; the rest dim.
-						sbar.add("item", n.spacer_l, utils.merge({ position = M.POSITION }, option.SPACES.SPACER))
-						sbar.add(
-							"item",
-							n.num,
-							utils.merge({ position = M.POSITION }, num_options(idx, active, has_apps, space_colors))
-						)
-						sbar.add(
-							"item",
-							n.div,
-							utils.merge({ position = M.POSITION }, div_options(has_apps, space_colors))
-						)
-						local members = { n.num, n.div }
-						for i = 1, count do
-							local gname = glyph_name(idx, i)
-							sbar.add(
-								"item",
-								gname,
-								utils.merge(
-									{ position = M.POSITION },
-									glyph_options(glyphs[i], i == 1, i == count, space_colors, active and i > 1)
-								)
-							)
-							members[#members + 1] = gname
-						end
-						sbar.add("item", n.spacer_r, utils.merge({ position = M.POSITION }, option.SPACES.SPACER))
-						sbar.add("bracket", n.bracket, members, bracket_options(space_colors))
-					else
-						sbar.set(n.num, num_options(idx, active, has_apps, space_colors))
-						sbar.set(n.div, div_options(has_apps, space_colors))
-						for i = 1, count do
-							sbar.set(
-								glyph_name(idx, i),
-								glyph_options(glyphs[i], i == 1, i == count, space_colors, active and i > 1)
-							)
-						end
-						sbar.set(n.bracket, bracket_options(space_colors))
+				-- Paint the boxes. When the row is split across the notch (M.POSITION_LEFT set),
+				-- the left region holds the app pill plus the first `floor(n/2)` spaces and the right
+				-- holds the rest, so the two sides balance around the notch *including* the pill. On a
+				-- structural rebuild the left boxes are added in reverse so they read the same
+				-- left-to-right as the right side despite `"q"` stacking right-to-left. A non-structural
+				-- refresh just updates each box in place (region/order untouched).
+				if structural then
+					-- floor, not ceil: the pill takes one of the left slots, so it counts toward the
+					-- left's share — `[pill] + floor(n/2)` left vs `ceil(n/2)` spaces right.
+					local left_n = M.POSITION_LEFT and math.floor(#boxes / 2) or 0
+					for i = left_n, 1, -1 do
+						add_box(boxes[i], M.POSITION_LEFT, true)
 					end
-					M.GLYPH_COUNT[idx] = count
+					-- Keep the pill left-most: `"q"` appends leftward, and the left spaces were just
+					-- (re)added there, so the previously-added pill is no longer the outermost item.
+					-- Re-add it after them — only when it shares the left region (the split top bar).
+					if M.app_built and M.POSITION_LEFT and M.APP_POSITION == M.POSITION_LEFT then
+						remove_app_pill()
+						build_app_pill()
+					end
+					for i = left_n + 1, #boxes do
+						add_box(boxes[i], M.POSITION, false)
+					end
+				else
+					for _, b in ipairs(boxes) do
+						set_box(b)
+					end
 				end
 
 				-- Active-app pill: this display's visible-space leading app (captured in the
-				-- loop). Updated in this same transaction so it commits without flicker
-				-- alongside the boxes; the items were created at init by `M.setup_app_pill`.
-				-- When the visible space has no resolvable app — e.g. a Finder desktop (no
-				-- window) on a display that just lost focus, where the global front app no
-				-- longer identifies this display's space — keep the pill's last app rather than
-				-- blanking it, so it never vanishes out from under the active space.
+				-- loop). Updated in this same transaction so it commits without flicker alongside
+				-- the boxes. `M.app_title` holds the last resolved app: a structural rebuild on the
+				-- split top bar re-creates the pill empty (see the box loop above), and an
+				-- unresolvable visible space — e.g. a Finder desktop (no window) on a display that
+				-- just lost focus — has no title; both fall back to it, so the pill keeps its last
+				-- app rather than vanishing out from under the active space.
 				if display_title ~= "" then
-					update_app_title(display_title)
+					M.app_title = display_title
 				end
+				update_app_title(M.app_title)
 
 				M.RENDERED = indices
 
