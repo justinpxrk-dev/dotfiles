@@ -155,3 +155,11 @@ Sets each display's yabai `bottom_padding` to clear whatever sketchybar lives on
 ```sh
 ~/.scripts/yabai/apply-display-config.sh
 ```
+
+## `sketchybar/trigger-bars.sh`
+
+Fans a sketchybar `--trigger` out to **both** instances — the default top bar and the `external` bar (`git.felix.external`). yabai's space/window/app signals call it so each display's space indicators refresh together: a bare `sketchybar --trigger` only reaches the default instance, so the external one is selected explicitly via `exec -a external`. The external trigger is best-effort (stderr suppressed, never fails), so it's a harmless no-op when the external display is undocked.
+
+```sh
+~/.scripts/sketchybar/trigger-bars.sh <event>
+```

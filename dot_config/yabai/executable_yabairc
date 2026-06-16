@@ -40,12 +40,19 @@ yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Thaw$" manage=off
 yabai -m rule --add app="^Weather$" manage=off
 
-# Signals — spaces live on the external sketchybar instance, so route their
-# refresh there. `exec -a external` selects git.felix.external (argv[0] picks the
-# instance); a bare sketchybar would hit the default top bar.
-yabai -m signal --add event=space_created action="exec -a external /opt/homebrew/bin/sketchybar --trigger spaces_change"
-yabai -m signal --add event=space_destroyed action="exec -a external /opt/homebrew/bin/sketchybar --trigger spaces_change"
-yabai -m signal --add event=space_changed action="exec -a external /opt/homebrew/bin/sketchybar --trigger spaces_change"
+# Signals — both displays now show their own space indicators, so every space,
+# window, and app-focus change refreshes BOTH sketchybar instances via
+# trigger-bars.sh (it fans the spaces_change event out to the top and external bars).
+# Window/app events keep each space's app glyphs and most-recently-focused order live;
+# the handler debounces the burst. These events are AX/NSWorkspace-observed and need
+# no scripting addition.
+yabai -m signal --add event=space_created action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
+yabai -m signal --add event=space_destroyed action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
+yabai -m signal --add event=space_changed action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
+yabai -m signal --add event=window_created action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
+yabai -m signal --add event=window_destroyed action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
+yabai -m signal --add event=window_moved action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
+yabai -m signal --add event=application_front_switched action="~/.scripts/sketchybar/trigger-bars.sh spaces_change"
 
 # Mirror each display's sketchybar with yabai padding: the built-in reclaims its
 # bottom (top bar) while the external reserves space for its bottom bar. Keyed by
