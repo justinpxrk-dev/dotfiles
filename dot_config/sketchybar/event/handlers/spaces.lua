@@ -350,9 +350,9 @@ local function remove_app_pill()
 end
 
 --- Create the active-app pill once at init, at the point in the profile's add sequence where
---- the pill should sit among items sharing its region — e.g. before `now_playing` on the
---- external bar, so it leads the centered cluster. On the split top bar the pill must follow
---- the left spaces, so `M.render` re-adds it after them (see `build_app_pill`).
+--- the pill should sit among items sharing its region — before the space boxes on the external
+--- bar, so it leads the centered cluster. On the split top bar the pill must follow the left
+--- spaces, so `M.render` re-adds it after them (see `build_app_pill`).
 --- @return nil
 function M.setup_app_pill()
 	build_app_pill()

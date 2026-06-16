@@ -1,6 +1,7 @@
 local sbar = require("sketchybar")
 
 local option = require("constants.option")
+local now_playing = require("event.handlers.now_playing")
 local spaces = require("event.handlers.spaces")
 local theme = require("event.handlers.theme")
 
@@ -23,8 +24,10 @@ spaces.POSITION_LEFT = "q"
 -- The active-app pill shares the left-of-notch `"q"` region, alongside the left-side spaces.
 spaces.APP_POSITION = "q"
 -- This bar's background is pinned black, so keep the dark fill and all text/icons on the
--- dark palette in both modes; only the mauve border/accent tracks light/dark.
+-- dark palette in both modes; only the mauve border/accent tracks light/dark. The now-playing
+-- pill is pinned the same way so its track label and placeholder logo stay legible on black.
 spaces.PIN_DARK_CHROME = true
+now_playing.PIN_DARK_CHROME = true
 theme.refresh_palette()
 -- Create the active-app pill (left of notch) before the space boxes are rendered.
 spaces.setup_app_pill()
@@ -37,8 +40,15 @@ require("plugins.spaces")
 -- the theme handler below leaves them alone — the black bar never repaints them.
 require("plugins.resources")
 
--- Repaint the space boxes on light/dark switch; the black bar never repaints.
+-- Now-playing pill (artwork + scrolling track) on the far-left `"left"` region, plus its
+-- media-control dispatcher — launched here, so its triggers route to this default instance
+-- via `$BAR_NAME` (see event/dispatchers/now_playing.sh).
+require("plugins.now_playing")
+
+-- Repaint the space boxes and now-playing pill on light/dark switch; the black bar never
+-- repaints. now-playing is dark-pinned, so this only restores its initial colors at startup.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
 	spaces.theme_change_handler()
+	now_playing.theme_change_handler()
 end)

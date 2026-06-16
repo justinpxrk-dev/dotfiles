@@ -22,9 +22,9 @@ So the external bar is launched as `external` (LaunchAgent `Program` = the real 
 
 ## Routing triggers to the right instance
 
-A bare `sketchybar --trigger …` always hits `git.felix.sketchybar` (the default/top bar). Items on the external bar therefore need their triggers re-invoked under `external`:
+A bare `sketchybar --trigger …` always hits `git.felix.sketchybar` (the default/top bar), so a dispatcher must route its triggers back to the bar that launched it (which exported its own name as `$BAR_NAME`):
 
-- `event/dispatchers/now_playing.sh` re-invokes via `exec -a "$BAR_NAME"` (the daemon exported `BAR_NAME=external` to it).
+- `event/dispatchers/now_playing.sh` re-invokes via `exec -a "$BAR_NAME"`. It is launched by the **top bar** (default instance), so `BAR_NAME=sketchybar` and the now-playing triggers reach that instance, where the pill lives.
 - `yabairc`'s space/window/app signals call `~/.scripts/sketchybar/trigger-bars.sh`, which fires `spaces_change` at the default bar _and_ re-invokes the `external` bar via `exec -a external` (yabai isn't a sketchybar child, so the name is explicit) — both displays show their own spaces, so the event fans out to both.
 
 ## Coupling with yabai padding

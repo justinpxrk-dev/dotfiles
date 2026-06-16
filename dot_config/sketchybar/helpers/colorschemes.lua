@@ -8,9 +8,10 @@ local themes = require("helpers.themes")
 local M = {}
 
 --- Map a Catppuccin flavor palette (from the `catppuccin` LuaRocks module) to the
---- bar's semantic color roles. Translucent surfaces (background, inactive text/box)
---- keep the 0xf2 alpha the bar used previously; foreground roles
---- are fully opaque. Palette colors are objects, so the hex is read via `.hex`.
+--- bar's semantic color roles. Translucent surfaces (background, the inactive space box's
+--- fill and border) keep the 0xf2 alpha the bar used previously; foreground roles — including
+--- the dim `overlay1` (`INACTIVE_LABEL`/`INACTIVE_SPACE_FG`) — are fully opaque. Palette colors
+--- are objects, so the hex is read via `.hex`.
 ---
 --- The space-box roles drive the per-display space indicators: every box is a dim
 --- translucent `surface0` fill. The visible (active) space has a `mauve` border and bright
@@ -27,7 +28,7 @@ local function roles(p)
 		ACTIVE_SPACE_FG = themes.hex_to_color(p.text.hex),
 		BACKGROUND = themes.hex_to_color(p.base.hex, 0xf2),
 		ICON = themes.hex_to_color(p.text.hex),
-		INACTIVE_LABEL = themes.hex_to_color(p.surface1.hex, 0xf2),
+		INACTIVE_LABEL = themes.hex_to_color(p.overlay1.hex),
 		INACTIVE_SPACE_BG = themes.hex_to_color(p.surface0.hex, 0xf2),
 		INACTIVE_SPACE_BORDER = themes.hex_to_color(p.surface1.hex, 0xf2),
 		INACTIVE_SPACE_FG = themes.hex_to_color(p.overlay1.hex),
@@ -71,14 +72,16 @@ function M.get_default_color_options(pin_dark_chrome)
 	}
 end
 
---- Now Playing artwork placeholder options. Picks the transparent logo image
---- matching the active theme, shown when no real track artwork is available.
+--- Now Playing artwork placeholder options. Picks the transparent logo image, shown when no
+--- real track artwork is available. Tracks the active theme, or pins the dark-mode logo when
+--- `pin_dark_chrome` is set (the black top bar, where the light-mode logo would be invisible).
+--- @param pin_dark_chrome boolean? always use the dark-mode logo (for the pinned-dark top bar)
 --- @return table options sketchybar `background.image` override
-function M.get_now_playing_artwork_logo_color_options()
+function M.get_now_playing_artwork_logo_color_options(pin_dark_chrome)
 	return {
 		background = {
 			image = {
-				string = themes.select(
+				string = pin_dark_chrome and asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_DARK_TRANSPARENT or themes.select(
 					asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_DARK_TRANSPARENT,
 					asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_LIGHT_TRANSPARENT
 				),
@@ -87,14 +90,17 @@ function M.get_now_playing_artwork_logo_color_options()
 	}
 end
 
---- Now Playing track label color options. Uses the active label color while a
---- track is playing and the dimmed inactive color when paused or stopped.
+--- Now Playing track label color options. Uses the active label color while a track is playing
+--- and the dimmed inactive color when paused or stopped — from the always-dark palette when
+--- `pin_dark_chrome` is set (the black top bar, where the light-mode label would be unreadable).
 --- @param playing boolean whether a track is currently playing
+--- @param pin_dark_chrome boolean? color from the always-dark palette (for the pinned-dark top bar)
 --- @return table options sketchybar `label` color override
-function M.get_now_playing_track_color_options(playing)
+function M.get_now_playing_track_color_options(playing, pin_dark_chrome)
+	local palette = pin_dark_chrome and dark or colors
 	return {
 		label = {
-			color = playing and colors.LABEL or colors.INACTIVE_LABEL,
+			color = playing and palette.LABEL or palette.INACTIVE_LABEL,
 		},
 	}
 end
