@@ -5,7 +5,7 @@
 --- @field THEME table<ThemeItem, string>
 --- @alias NowPlayingItem "ARTWORK" | "EVENT_LISTENER" | "TRACK"
 --- @alias ResourcesItem "CPU_ALIAS" | "CPU_ICON" | "GPU_ALIAS" | "GPU_ICON" | "RAM_CHART_ALIAS" | "RAM_ICON" | "RAM_STATE_ALIAS" | "SENSORS_ALIAS" | "SENSORS_ICON"
---- @alias SpacesItem "APP_BRACKET" | "APP_ICON" | "APP_SPACER" | "APP_TITLE" | "EVENT_LISTENER" | "PREFIX"
+--- @alias SpacesItem "APPLE" | "APPLE_BRACKET" | "APPLE_SPACER" | "APP_BRACKET" | "APP_ICON" | "APP_SPACER" | "APP_SPACER_L" | "APP_TITLE" | "EVENT_LISTENER" | "PREFIX"
 --- @alias ThemeItem "EVENT_LISTENER"
 
 --- @type Item
@@ -43,10 +43,16 @@ local M = {
 	SPACES = {
 		EVENT_LISTENER = "spaces_event_listener",
 		PREFIX = "spaces.",
+		-- Apple-logo badge pill (mauve box, surface-colored Apple glyph), left of the title pill.
+		APPLE = "spaces.app_title.apple",
+		APPLE_SPACER = "spaces.app_title.apple_spacer",
+		APPLE_BRACKET = "spaces.app_title.apple_bracket",
+		-- Title pill: the active app's icon glyph + name.
 		APP_ICON = "spaces.app_title.icon",
 		APP_TITLE = "spaces.app_title.label",
-		APP_BRACKET = "spaces.app_title.bracket",
+		APP_SPACER_L = "spaces.app_title.spacer_l",
 		APP_SPACER = "spaces.app_title.spacer",
+		APP_BRACKET = "spaces.app_title.bracket",
 	},
 	THEME = { EVENT_LISTENER = "theme_event_listener" },
 }

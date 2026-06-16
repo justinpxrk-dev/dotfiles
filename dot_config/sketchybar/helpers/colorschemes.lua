@@ -55,6 +55,15 @@ function M.get_bar_color_options()
 	}
 end
 
+--- The bar's own background colour, for a "knockout" foreground — a glyph the same colour as the
+--- bar behind it, so it reads as a cutout. The pinned-black top bar is pure black (matching
+--- `option.BAR.TOP.color`); themed bars use the live `BACKGROUND` role.
+--- @param pin_dark_chrome boolean? the pinned-black top bar (pure black) vs a themed bar
+--- @return integer ARGB colour
+function M.get_bar_background(pin_dark_chrome)
+	return pin_dark_chrome and 0xff000000 or colors.BACKGROUND
+end
+
 --- Default item color options shared by every item's icon and label.
 --- @param pin_dark_chrome boolean? color from the always-dark palette instead of the
 --- live theme — for items on a bar whose background is pinned dark (the top bar's

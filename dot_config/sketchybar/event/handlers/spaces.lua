@@ -268,30 +268,51 @@ local function glyph_options(glyph, is_last, space_colors, dim)
 	})
 end
 
---- Active-app pill, Apple-icon options: static styling plus the foreground color.
---- @param space_colors table from `colorschemes.get_space_color_options`
+--- Title-pill icon options: the active app's app-font glyph in the knockout colour (the bar's
+--- own background), matching the Apple badge — the title pill is a mauve "system" pill too.
+--- @param glyph string the sketchybar-app-font ligature for the active app (e.g. `:ghostty:`)
 --- @return table
-local function app_icon_options(space_colors)
-	return utils.merge(option.SPACES.APP_ICON, { icon = space_colors.icon })
-end
-
---- Active-app pill, title options: static styling plus the front-app name and fg color.
---- @param front_app string macOS frontmost app name
---- @param space_colors table from `colorschemes.get_space_color_options`
---- @return table
-local function app_title_options(front_app, space_colors)
-	return utils.merge(option.SPACES.APP_TITLE, {
-		label = utils.merge({ string = front_app }, space_colors.label),
+local function app_icon_options(glyph)
+	return utils.merge(option.SPACES.APP_ICON, {
+		icon = { string = glyph, color = colorschemes.get_bar_background(M.PIN_DARK_CHROME) },
 	})
 end
 
---- Update the singleton active-app pill's content and colors: the Apple glyph's color,
---- the title's string and color, and the bracket background — all from the active (mauve)
---- palette. `app` is this display's active app (the leading app of its visible space — see
---- `M.render`), so the pill stays in sync with that space's first glyph; "" hides the pill.
---- The pill items are created once at init by `M.setup_app_pill` (so the profile controls
---- their add order, and thus their placement among other same-region items), so this only
---- `set`s and is a no-op until that has run.
+--- Apple-badge icon options: the Apple glyph in the bar's own background colour (a knockout), so
+--- it reads as a cutout in the mauve badge. Per-bar via `get_bar_background(M.PIN_DARK_CHROME)`.
+--- @return table
+local function apple_icon_options()
+	return utils.merge(option.SPACES.APPLE, {
+		icon = { color = colorschemes.get_bar_background(M.PIN_DARK_CHROME) },
+	})
+end
+
+--- System-pill bracket options (the Apple badge and the title pill): a solid box filled and
+--- bordered with the mauve accent, distinguishing the system pills from the surface space pills.
+--- @param space_colors table from `colorschemes.get_space_color_options`
+--- @return table
+local function apple_bracket_options(space_colors)
+	-- `border_color` is the active pill's mauve border (the `ACTIVE_SPACE_BORDER` role) — reused
+	-- here as the badge's fill, so the Apple badge is a solid mauve box. No new color.
+	local mauve = space_colors.background.border_color
+	return utils.merge(option.SPACES.BRACKET, { background = { color = mauve, border_color = mauve } })
+end
+
+--- Title-pill name options: the front-app name in the knockout colour (the bar's own
+--- background), matching the Apple badge.
+--- @param front_app string macOS frontmost app name
+--- @return table
+local function app_title_options(front_app)
+	return utils.merge(option.SPACES.APP_TITLE, {
+		label = { string = front_app, color = colorschemes.get_bar_background(M.PIN_DARK_CHROME) },
+	})
+end
+
+--- Update the active-app pill cluster's content and colors: the Apple badge (static glyph in a
+--- mauve box) and the title pill's app-icon glyph + name — all from the active (mauve) palette.
+--- `app` is this display's active app (the leading app of its visible space — see `M.render`),
+--- so the title icon matches that space's first glyph; "" hides the cluster. The items are
+--- created by `build_app_pill`, so this only `set`s and is a no-op until that has run.
 --- @param app string this display's active app name ("" hides the pill)
 --- @return nil
 local function update_app_title(app)
@@ -300,48 +321,75 @@ local function update_app_title(app)
 	end
 	local colors = colorschemes.get_space_color_options(true, M.PIN_DARK_CHROME)
 	local shown = app ~= ""
-	sbar.set(item.SPACES.APP_ICON, utils.merge({ drawing = shown }, app_icon_options(colors)))
-	sbar.set(item.SPACES.APP_TITLE, utils.merge({ drawing = shown }, app_title_options(app, colors)))
-	sbar.set(item.SPACES.APP_BRACKET, utils.merge({ drawing = shown }, bracket_options(colors)))
+	local glyph = shown and app_icons.lookup(app) or ""
+	-- Apple badge: static Apple glyph in a mauve box.
+	sbar.set(item.SPACES.APPLE, utils.merge({ drawing = shown }, apple_icon_options()))
+	sbar.set(item.SPACES.APPLE_BRACKET, utils.merge({ drawing = shown }, apple_bracket_options(colors)))
+	-- Title pill: a mauve "system" pill too — the active app's glyph + name in the knockout colour.
+	sbar.set(item.SPACES.APP_ICON, utils.merge({ drawing = shown }, app_icon_options(glyph)))
+	sbar.set(item.SPACES.APP_TITLE, utils.merge({ drawing = shown }, app_title_options(app)))
+	sbar.set(item.SPACES.APP_BRACKET, utils.merge({ drawing = shown }, apple_bracket_options(colors)))
 end
 
---- (Re)add the active-app pill (Apple glyph + front-app title in a mauve box) to
---- `M.APP_POSITION`. The `"q"` region (top bar, left of notch) stacks right-to-left, so the
---- title is added first (nearest the notch) and the Apple glyph to its left; other regions
---- stack left-to-right, so the Apple glyph leads. Item padding is in visual space (unaffected
---- by add order), so both bars share the same per-item options. Content starts hidden and is
---- filled by `update_app_title`. Factored out of `M.setup_app_pill` so `M.render` can re-add
---- the pill after the left-of-notch spaces — which are themselves re-added on every structural
---- change — keeping the pill the left-most item on the split top bar.
+--- (Re)add the active-app pill cluster to `M.APP_POSITION`: the mauve Apple badge, then the
+--- title pill (the active app's icon glyph + name), with 5px spacers giving the same 10px gaps
+--- as the space boxes. The items are listed left-to-right and added in reverse on the notch's
+--- right-to-left `"q"` region so they read the same on both sides (padding is in visual space).
+--- Content starts hidden and is filled by `update_app_title`. Factored out of `M.setup_app_pill`
+--- so `M.render` can re-add the cluster after the left-of-notch spaces — which are themselves
+--- re-added on every structural change — keeping it the left-most item on the split top bar.
 --- @return nil
 local function build_app_pill()
 	local colors = colorschemes.get_space_color_options(true, M.PIN_DARK_CHROME)
-	local icon, title, bracket = item.SPACES.APP_ICON, item.SPACES.APP_TITLE, item.SPACES.APP_BRACKET
-	local icon_opts = utils.merge({ position = M.APP_POSITION }, app_icon_options(colors))
-	local title_opts = utils.merge({ position = M.APP_POSITION, drawing = false }, app_title_options("", colors))
-	if M.APP_POSITION == "q" then
-		sbar.add("item", title, title_opts)
-		sbar.add("item", icon, icon_opts)
-	else
-		sbar.add("item", icon, icon_opts)
-		sbar.add("item", title, title_opts)
+	local pos = M.APP_POSITION
+	local hidden = { drawing = false }
+	-- Visual left-to-right sequence: [Apple badge] [gap] [app icon][app name] [gap to spaces].
+	-- The Apple badge leads (no left spacer — it is the cluster's left edge); the two interior
+	-- spacers make the 10px gap between the badge and the title pill.
+	local seq = {
+		{ item.SPACES.APPLE, utils.merge(hidden, apple_icon_options()) },
+		{ item.SPACES.APPLE_SPACER, option.SPACES.SPACER },
+		{ item.SPACES.APP_SPACER_L, option.SPACES.SPACER },
+		{ item.SPACES.APP_ICON, utils.merge(hidden, app_icon_options("")) },
+		{ item.SPACES.APP_TITLE, utils.merge(hidden, app_title_options("")) },
+	}
+	-- Trailing spacer only when the cluster shares a region with a space row (the centered
+	-- external row, or the top bar's `"q"` row under the notch split), so the gap to the first
+	-- box matches the 10px inter-box gap; an isolated cluster needs none.
+	if pos == M.POSITION or pos == M.POSITION_LEFT then
+		seq[#seq + 1] = { item.SPACES.APP_SPACER, option.SPACES.SPACER }
 	end
-	sbar.add("bracket", bracket, { icon, title }, bracket_options(colors))
-	-- When the pill shares its region with a space row — the centered external row, or the
-	-- top bar's left-of-notch `"q"` row when the spaces are split across the notch — add a
-	-- trailing spacer so the gap from the pill to the adjacent box matches the 10px inter-box
-	-- gap (each box carries a 5px spacer; the pill contributes the other half). An unsplit top
-	-- bar leaves the pill isolated against the notch with no neighbour, so it gets none.
-	if M.APP_POSITION == M.POSITION or M.APP_POSITION == M.POSITION_LEFT then
-		sbar.add("item", item.SPACES.APP_SPACER, utils.merge({ position = M.APP_POSITION }, option.SPACES.SPACER))
+	local from, to, step = 1, #seq, 1
+	if pos == "q" then
+		from, to, step = #seq, 1, -1
 	end
+	for j = from, to, step do
+		sbar.add("item", seq[j][1], utils.merge({ position = pos }, seq[j][2]))
+	end
+	-- Brackets (order-independent): the mauve Apple badge box, then the surface title box.
+	sbar.add(
+		"bracket",
+		item.SPACES.APPLE_BRACKET,
+		{ item.SPACES.APPLE },
+		utils.merge(hidden, apple_bracket_options(colors))
+	)
+	sbar.add(
+		"bracket",
+		item.SPACES.APP_BRACKET,
+		{ item.SPACES.APP_ICON, item.SPACES.APP_TITLE },
+		utils.merge(hidden, apple_bracket_options(colors))
+	)
 end
 
 --- Remove the active-app pill items, so `M.render` can re-add (reposition) the pill after the
 --- left-of-notch spaces on a structural rebuild.
 --- @return nil
 local function remove_app_pill()
+	sbar.remove(item.SPACES.APPLE_BRACKET)
 	sbar.remove(item.SPACES.APP_BRACKET)
+	sbar.remove(item.SPACES.APPLE)
+	sbar.remove(item.SPACES.APPLE_SPACER)
+	sbar.remove(item.SPACES.APP_SPACER_L)
 	sbar.remove(item.SPACES.APP_ICON)
 	sbar.remove(item.SPACES.APP_TITLE)
 	if M.APP_POSITION == M.POSITION or M.APP_POSITION == M.POSITION_LEFT then
@@ -540,15 +588,18 @@ function M.render()
 				end
 
 				-- Paint the boxes. When the row is split across the notch (M.POSITION_LEFT set),
-				-- the left region holds the app pill plus the first `floor(n/2)` spaces and the right
-				-- holds the rest, so the two sides balance around the notch *including* the pill. On a
-				-- structural rebuild the left boxes are added in reverse so they read the same
-				-- left-to-right as the right side despite `"q"` stacking right-to-left. A non-structural
-				-- refresh just updates each box in place (region/order untouched).
+				-- the left region holds the two-pill app cluster plus the first `floor((n-1)/2)` spaces
+				-- and the right holds the rest, so the two sides balance around the notch *including*
+				-- both pills. On a structural rebuild the left boxes are added in reverse so they read
+				-- the same left-to-right as the right side despite `"q"` stacking right-to-left. A
+				-- non-structural refresh just updates each box in place (region/order untouched).
 				if structural then
-					-- floor, not ceil: the pill takes one of the left slots, so it counts toward the
-					-- left's share — `[pill] + floor(n/2)` left vs `ceil(n/2)` spaces right.
-					local left_n = M.POSITION_LEFT and math.floor(#boxes / 2) or 0
+					-- The active-app cluster is two "system pills" (Apple badge + title), so the left
+					-- already carries two items before any spaces. Give it floor((n-1)/2) spaces (one
+					-- fewer than half for even n) so the two sides balance *including* both pills —
+					-- left items (incl. pills) vs right go (2,1), (2,2), (3,2), (3,3), (4,3), (4,4)…
+					-- max() guards the degenerate empty-display case so the right loop stays a no-op.
+					local left_n = M.POSITION_LEFT and math.max(0, math.floor((#boxes - 1) / 2)) or 0
 					for i = left_n, 1, -1 do
 						add_box(boxes[i], M.POSITION_LEFT, true)
 					end
@@ -640,13 +691,18 @@ function M.theme_change_handler()
 		end
 	end
 
-	-- Recolor the active-app pill from the refreshed palette (always the "active" mauve
+	-- Recolor the active-app pill cluster from the refreshed palette (always the "active" mauve
 	-- treatment). Guarded — `theme_change` can fire before the first render builds it.
 	if M.app_built then
 		local app_colors = colorschemes.get_space_color_options(true, M.PIN_DARK_CHROME)
-		sbar.set(item.SPACES.APP_ICON, { icon = app_colors.icon })
-		sbar.set(item.SPACES.APP_TITLE, { label = app_colors.label })
-		sbar.set(item.SPACES.APP_BRACKET, { background = app_colors.background })
+		local mauve = app_colors.background.border_color
+		local knockout = colorschemes.get_bar_background(M.PIN_DARK_CHROME)
+		-- Both system pills (Apple badge + title): knockout glyph/text on a mauve box.
+		sbar.set(item.SPACES.APPLE, { icon = { color = knockout } })
+		sbar.set(item.SPACES.APPLE_BRACKET, { background = { color = mauve, border_color = mauve } })
+		sbar.set(item.SPACES.APP_ICON, { icon = { color = knockout } })
+		sbar.set(item.SPACES.APP_TITLE, { label = { color = knockout } })
+		sbar.set(item.SPACES.APP_BRACKET, { background = { color = mauve, border_color = mauve } })
 	end
 end
 

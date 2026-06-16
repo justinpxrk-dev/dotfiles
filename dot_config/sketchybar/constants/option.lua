@@ -27,7 +27,7 @@ local alias_opts = utils.merge(resource_opts, { alias = { update_freq = 2 } })
 --- @alias EventListenerOption "OPTIONS"
 --- @alias NowPlayingOption "ARTWORK_OPTIONS" | "TRACK_OPTIONS"
 --- @alias ResourcesOption "ALIAS" | "CPU_ICON" | "GPU_ICON" | "RAM_ICON" | "SENSORS_ICON"
---- @alias SpacesOption "APP_ICON" | "APP_TITLE" | "BRACKET" | "DIVIDER" | "GLYPH" | "NUM" | "SPACER"
+--- @alias SpacesOption "APPLE" | "APP_ICON" | "APP_TITLE" | "BRACKET" | "DIVIDER" | "GLYPH" | "NUM" | "SPACER"
 
 --- @type Option
 local M = {
@@ -199,16 +199,26 @@ local M = {
 			icon = { font = font.DEFAULT.APP_ICON },
 			label = { drawing = false },
 		},
-		-- Active-app pill, Apple-logo half: an SF Symbol apple logo (U+1008FA) in SF Pro,
-		-- drawn as the pill's leading icon (no label). `padding_left` is the pill's inner left margin
-		-- (10px from the border); `padding_right` is the 10px gap to the title half. The
-		-- handler (`app_icon_options`) layers on the foreground color. This pill is a
-		-- standalone singleton at the bar's far edge — not one of the per-space boxes. Every
-		-- gap is 10px, matching the space boxes.
-		APP_ICON = {
+		-- Apple-logo badge pill, leading the cluster: the SF Symbol apple logo (U+1008FA, SF Pro —
+		-- the app-font has no standalone Apple glyph) in its own box. `apple_icon_options` colors
+		-- the glyph with the surface fill the other pills use; `apple_bracket_options` fills the box
+		-- with the mauve accent. `padding_left`/`padding_right` are the 10px inner margins.
+		APPLE = {
 			icon = {
 				string = "\u{1008FA}",
 				font = font.DEFAULT.APPLE,
+			},
+			label = { drawing = false },
+			padding_left = 10,
+			padding_right = 10,
+		},
+		-- Title pill, icon half: the active app's sketchybar-app-font glyph (same source as the
+		-- space-box glyphs). `app_icon_options` layers on the glyph string and foreground color.
+		-- `padding_left` is the pill's inner left margin (10px), `padding_right` the 10px gap to the
+		-- name. The pill cluster sits at the bar's far edge — not one of the per-space boxes.
+		APP_ICON = {
+			icon = {
+				font = font.DEFAULT.APP_ICON,
 			},
 			label = { drawing = false },
 			padding_left = 10,
