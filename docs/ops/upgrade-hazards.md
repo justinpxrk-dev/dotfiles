@@ -35,6 +35,16 @@ The per-display space boxes (`dot_config/sketchybar/event/handlers/spaces.lua`) 
 
 Unrelated to upgrades but worth knowing: `yabairc` fans `space_*` / `window_*` / `application_front_switched` out to **both** bars on every change. The handler debounces (`sbar.delay` 50 ms); if it ever feels heavy, drop the `window_moved` signal or widen the debounce.
 
+## Sketchybar resource widgets (Stats menu-bar aliases)
+
+The top bar's resource widgets (`dot_config/sketchybar/plugins/resources.lua`) are sketchybar `alias` items that mirror [Stats](https://github.com/exelban/stats) menu-bar items — they render Stats' own graphs, so the cluster goes blank if any of three unchecked couplings breaks:
+
+1. **Screen Recording permission.** sketchybar captures the live menu bar to draw an alias, which needs Screen Recording permission (System Settings → Privacy & Security → Screen Recording → SketchyBar) and then a full restart of the bar (`launchctl kickstart -k gui/$(id -u)/me.justinpxrk.sketchybar`, likewise `-external`). Without it, `sketchybar --query default_menu_items` returns `Screen Recording Permissions not given` and every alias is blank. A consequence: macOS shows a persistent screen-recording indicator while the bar runs.
+2. **Alias names are OS- and Stats-specific.** An alias name must equal its source's `"<owner>,<name>"`. On macOS 26 third-party items are owned by `Control Center` (e.g. `Control Center,CPU`), not `Stats` — a macOS major upgrade, a Stats update, or toggling a module's widget type / `oneView` can rename them. Re-discover with `sketchybar --query default_menu_items` and update `constants/item.lua`. The current map assumes CPU/GPU/Sensors enabled (single merged item) and RAM with `oneView` off (separate `_state` + bar chart).
+3. **Stats must be running** with those modules enabled; it's a Homebrew cask (`dot_Brewfile`), but the menu-bar items only exist while Stats runs.
+
+**Failure mode:** the resource cluster is blank or partial with no error at `chezmoi apply` (and none in `~/Library/Logs/me.justinpxrk/sketchybar.log`) — usually a revoked Screen Recording permission after an OS update, or alias names that drifted.
+
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
 The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).

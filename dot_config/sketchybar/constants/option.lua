@@ -4,6 +4,17 @@ local padding = require("constants.padding")
 local colorschemes = require("helpers.colorschemes")
 local utils = require("helpers.utils")
 
+-- Shared options for every resource widget: the right region with no padding, so the
+-- icons, graphs, and status icons butt together — adjust `padding_left`/`padding_right`
+-- here to space them. `alias.update_freq` is the Stats re-capture cadence in seconds
+-- (Stats updates ~1s; 2s keeps capture cost low — tune to taste).
+local resource_opts = {
+	position = "right",
+	padding_left = 0,
+	padding_right = 0,
+}
+local alias_opts = utils.merge(resource_opts, { alias = { update_freq = 2 } })
+
 --- @class Option
 --- @field BAR table<BarOption, table<string, any>>
 --- @field DEFAULT table<DefaultOption, table<string, any>>
@@ -15,7 +26,7 @@ local utils = require("helpers.utils")
 --- @alias DefaultOption "OPTIONS"
 --- @alias EventListenerOption "OPTIONS"
 --- @alias NowPlayingOption "ARTWORK_OPTIONS" | "TRACK_OPTIONS"
---- @alias ResourcesOption "CPU" | "CPU_GRAPH"
+--- @alias ResourcesOption "ALIAS" | "CPU_ICON" | "GPU_ICON" | "RAM_ICON" | "SENSORS_ICON"
 --- @alias SpacesOption "APP_ICON" | "APP_TITLE" | "BRACKET" | "DIVIDER" | "GLYPH" | "NUM" | "SPACER"
 
 --- @type Option
@@ -102,24 +113,24 @@ local M = {
 		}),
 	},
 	RESOURCES = {
-		CPU = utils.merge(colorschemes.get_default_color_options(), {
-			icon = {
-				string = icon.RESOURCES.CPU,
-			},
-			position = "right",
+		-- Stats mirror aliases: the graph/visual, plus RAM's separate `_state` status
+		-- icon. Each renders a live Stats menu-bar item, which Stats colors — so no
+		-- color override here.
+		ALIAS = alias_opts,
+		-- SF Symbol icon per widget. The top bar is pinned dark, so each glyph takes the
+		-- always-dark palette color and is never repainted on theme change.
+		CPU_ICON = utils.merge(colorschemes.get_default_color_options(true), resource_opts, {
+			icon = { string = icon.RESOURCES.CPU },
 		}),
-		CPU_GRAPH = utils.merge(
-			colorschemes.get_default_color_options(),
-			colorschemes.get_resources_graph_color_options(),
-			{
-				background = {
-					drawing = true,
-					height = 24,
-					y_offset = 3,
-				},
-				position = "right",
-			}
-		),
+		GPU_ICON = utils.merge(colorschemes.get_default_color_options(true), resource_opts, {
+			icon = { string = icon.RESOURCES.GPU },
+		}),
+		RAM_ICON = utils.merge(colorschemes.get_default_color_options(true), resource_opts, {
+			icon = { string = icon.RESOURCES.RAM },
+		}),
+		SENSORS_ICON = utils.merge(colorschemes.get_default_color_options(true), resource_opts, {
+			icon = { string = icon.RESOURCES.SENSORS },
+		}),
 	},
 	-- Static styling for the per-display space indicators. The handler layers the
 	-- per-space colors (from `colorschemes.get_space_color_options`), `position`, and

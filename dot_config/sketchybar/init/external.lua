@@ -2,7 +2,6 @@ local sbar = require("sketchybar")
 
 local option = require("constants.option")
 local now_playing = require("event.handlers.now_playing")
-local resources = require("event.handlers.resources")
 local spaces = require("event.handlers.spaces")
 local theme = require("event.handlers.theme")
 
@@ -24,14 +23,11 @@ spaces.setup_app_pill()
 require("plugins.now_playing")
 -- Add center bar plugins
 require("plugins.spaces")
--- Add right bar plugins
-require("plugins.resources")
 
 -- Repaint the themed bar and every item on light/dark switch (and once at startup).
 -- Loaded last so all items exist before the initial trigger fires.
 require("plugins.theme").setup(function()
 	theme.theme_change_handler()
 	now_playing.theme_change_handler()
-	resources.theme_change_handler()
 	spaces.theme_change_handler()
 end)

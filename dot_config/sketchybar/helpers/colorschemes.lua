@@ -4,12 +4,12 @@ local themes = require("helpers.themes")
 
 --- @class Colorschemes
 --- @alias ColorschemePalette table<ColorschemePaletteOption, integer>
---- @alias ColorschemePaletteOption "ACTIVE_SPACE_BG" | "ACTIVE_SPACE_BORDER" | "ACTIVE_SPACE_FG" | "BACKGROUND" | "GRAPH" | "GRAPH_FILL" | "ICON" | "INACTIVE_LABEL" | "INACTIVE_SPACE_BG" | "INACTIVE_SPACE_BORDER" | "INACTIVE_SPACE_FG" | "LABEL"
+--- @alias ColorschemePaletteOption "ACTIVE_SPACE_BG" | "ACTIVE_SPACE_BORDER" | "ACTIVE_SPACE_FG" | "BACKGROUND" | "ICON" | "INACTIVE_LABEL" | "INACTIVE_SPACE_BG" | "INACTIVE_SPACE_BORDER" | "INACTIVE_SPACE_FG" | "LABEL"
 local M = {}
 
 --- Map a Catppuccin flavor palette (from the `catppuccin` LuaRocks module) to the
---- bar's semantic color roles. Translucent surfaces (background, graph fill,
---- inactive text/box) keep the 0xf2 alpha the bar used previously; foreground roles
+--- bar's semantic color roles. Translucent surfaces (background, inactive text/box)
+--- keep the 0xf2 alpha the bar used previously; foreground roles
 --- are fully opaque. Palette colors are objects, so the hex is read via `.hex`.
 ---
 --- The space-box roles drive the per-display space indicators: every box is a dim
@@ -26,8 +26,6 @@ local function roles(p)
 		ACTIVE_SPACE_BORDER = themes.hex_to_color(p.mauve.hex),
 		ACTIVE_SPACE_FG = themes.hex_to_color(p.text.hex),
 		BACKGROUND = themes.hex_to_color(p.base.hex, 0xf2),
-		GRAPH = themes.hex_to_color(p.text.hex),
-		GRAPH_FILL = themes.hex_to_color(p.mantle.hex, 0xf2),
 		ICON = themes.hex_to_color(p.text.hex),
 		INACTIVE_LABEL = themes.hex_to_color(p.surface1.hex, 0xf2),
 		INACTIVE_SPACE_BG = themes.hex_to_color(p.surface0.hex, 0xf2),
@@ -57,14 +55,18 @@ function M.get_bar_color_options()
 end
 
 --- Default item color options shared by every item's icon and label.
+--- @param pin_dark_chrome boolean? color from the always-dark palette instead of the
+--- live theme — for items on a bar whose background is pinned dark (the top bar's
+--- resource icons), so they never flip to a light color in light mode.
 --- @return table options sketchybar `icon` and `label` color overrides
-function M.get_default_color_options()
+function M.get_default_color_options(pin_dark_chrome)
+	local chrome = pin_dark_chrome and dark or colors
 	return {
 		label = {
-			color = colors.LABEL,
+			color = chrome.LABEL,
 		},
 		icon = {
-			color = colors.ICON,
+			color = chrome.ICON,
 		},
 	}
 end
@@ -133,17 +135,6 @@ function M.get_space_color_options(active, pin_dark_chrome)
 		},
 		dim = {
 			color = chrome.INACTIVE_SPACE_FG,
-		},
-	}
-end
-
---- Resources CPU graph color options (line and fill).
---- @return table options sketchybar `graph` color overrides
-function M.get_resources_graph_color_options()
-	return {
-		graph = {
-			color = colors.GRAPH,
-			fill_color = colors.GRAPH_FILL,
 		},
 	}
 end

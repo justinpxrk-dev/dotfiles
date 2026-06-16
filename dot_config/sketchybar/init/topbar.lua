@@ -30,6 +30,11 @@ spaces.setup_app_pill()
 -- Add space indicators
 require("plugins.spaces")
 
+-- Mirror Stats resource widgets (CPU/GPU/RAM/Sensors) into the right
+-- region. These are static (Stats-colored aliases + dark-pinned SF Symbol icons), so
+-- the theme handler below leaves them alone — the black bar never repaints them.
+require("plugins.resources")
+
 -- Repaint the space boxes on light/dark switch; the black bar never repaints.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
