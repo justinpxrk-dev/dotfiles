@@ -4,7 +4,7 @@
 --- @field SPACES table<SpacesItem, string>
 --- @field THEME table<ThemeItem, string>
 --- @alias NowPlayingItem "ARTWORK" | "EVENT_LISTENER" | "TRACK"
---- @alias ResourcesItem "CPU_ALIAS" | "CPU_ICON" | "GPU_ALIAS" | "GPU_ICON" | "RAM_CHART_ALIAS" | "RAM_ICON" | "RAM_STATE_ALIAS" | "SENSORS_ALIAS" | "SENSORS_ICON"
+--- @alias ResourcesItem "CPU_ALIAS" | "CPU_ICON" | "GPU_ALIAS" | "GPU_ICON" | "PILL_SPACER" | "RAM_CHART_ALIAS" | "RAM_ICON" | "RAM_STATE_ALIAS" | "SENSORS_ALIAS" | "SENSORS_ICON" | "STATS_PILL"
 --- @alias SpacesItem "APPLE" | "APPLE_BRACKET" | "APPLE_SPACER" | "APP_BRACKET" | "APP_ICON" | "APP_SPACER" | "APP_SPACER_L" | "APP_TITLE" | "EVENT_LISTENER" | "PREFIX"
 --- @alias ThemeItem "EVENT_LISTENER"
 
@@ -35,6 +35,12 @@ local M = {
 		RAM_STATE_ALIAS = "Control Center,RAM_state",
 		RAM_CHART_ALIAS = "Control Center,RAM_bar_chart",
 		SENSORS_ALIAS = "Control Center,Sensors",
+
+		-- The six Stats widgets are framed as ONE unit by the STATS_PILL bracket (see
+		-- plugins/resources.lua). `PILL_SPACER` is the prefix for the inter-section gap items
+		-- (suffixed by section index) and the trailing spacer (suffixed `trail`).
+		STATS_PILL = "resources_stats_pill",
+		PILL_SPACER = "resources_pill_spacer.",
 	},
 	-- Space indicators are dynamic (one set of items per live space), so their names
 	-- are built at runtime from PREFIX, e.g. `spaces.3.num` / `.div` / `.bracket`. The
