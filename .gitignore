@@ -8,6 +8,7 @@
 .obsidian/workspace.json
 
 # Node
+.pnpm-store
 node_modules
 
 # Python
