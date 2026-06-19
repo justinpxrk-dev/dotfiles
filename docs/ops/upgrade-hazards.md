@@ -23,6 +23,18 @@ All three are **5.5** today (Homebrew `lua` is `5.5.0`, matching SbarLua's pin).
 2. Reinstall the rock into the new tree: `luarocks install --local catppuccin`.
 3. Keep SbarLua's `LUA_DIR` pin aligned with Homebrew's `lua`.
 
+## markdown-it pin (pnpm override vs. markdownlint-cli2)
+
+`markdownlint-cli2` pins `markdown-it` to an exact version (`14.1.1` as of `0.22.1`), and `14.1.1` carries a quadratic-complexity DoS in the smartquotes rule ([GHSA-6v5v-wf23-fmfq](https://github.com/advisories/GHSA-6v5v-wf23-fmfq) / CVE-2026-48988, fixed in `14.2.0`). `pnpm-workspace.yaml` carries an `overrides` entry lifting `markdown-it@<14.2.0` to `>=14.2.0` so the patched release is what actually installs.
+
+**Failure mode:** bump `markdownlint-cli2` to a release whose own `markdown-it` pin is already `>=14.2.0` and the override becomes dead weight — harmless, but it silently masks the upstream pin and keeps forcing `markdown-it` even if a future `markdownlint-cli2` deliberately holds an older line for compatibility.
+
+**On a markdownlint-cli2 upgrade:**
+
+1. Check the new pin: `npm view markdownlint-cli2@<version> dependencies.markdown-it`.
+2. If it is already `>=14.2.0`, drop the `markdown-it` override from `pnpm-workspace.yaml` and re-run `pnpm install`.
+3. Re-run `pnpm run lint:md` to confirm markdownlint still parses cleanly under the resolved `markdown-it`.
+
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
 The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).
