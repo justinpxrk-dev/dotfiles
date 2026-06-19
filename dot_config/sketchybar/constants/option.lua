@@ -16,51 +16,58 @@ local utils = require("helpers.utils")
 --- @alias EventListenerOption "OPTIONS"
 --- @alias NowPlayingOption "ARTWORK_OPTIONS" | "TRACK_OPTIONS"
 --- @alias ResourcesOption "CPU" | "CPU_GRAPH"
---- @alias SpacesOption "APP_ICON" | "APP_TITLE" | "BRACKET" | "DIVIDER" | "GLYPH" | "NUM" | "SPACER"
+--- @alias SpacesOption "APPLE" | "APPLE_SPACER" | "APP_ICON" | "APP_TITLE" | "BRACKET" | "DIVIDER" | "GLYPH" | "NUM" | "SPACER"
 
 --- @type Option
 local M = {
 	BAR = {
-		-- External (LG) bottom bar: the floating, rounded style. `display` is a
-		-- monitor index (sketchybar has no "secondary" selector) — 2 is the external
-		-- here; flip to 1 if the bar lands on the built-in. Vanishes when undocked.
-		BOTTOM = utils.merge(colorschemes.get_bar_color_options(), {
-			corner_radius = 19,
+		-- External (LG) bottom bar: flush to the bottom edge, squared off, fully transparent so
+		-- its items float over the desktop. `display` is a monitor index (sketchybar has no
+		-- "secondary" selector) — 2 is the external here; flip to 1 if the bar lands on the
+		-- built-in. Vanishes when undocked.
+		BOTTOM = {
+			color = 0x00000000,
+			corner_radius = 0,
 			display = 2,
 			font_smoothing = true,
 			height = 38,
-			margin = 14,
+			margin = 0,
 			padding_left = padding.BAR.PADDING_LEFT,
 			padding_right = padding.BAR.PADDING_RIGHT,
 			position = "bottom",
-			shadow = true,
-			y_offset = 7,
-		}),
+			shadow = false,
+			y_offset = 0,
+		},
 		-- Built-in top bar mirroring the macOS menu bar: flush to the top edge, full
 		-- width, squared off, no float shadow. `main` is always the built-in panel.
-		-- Themed background that tracks light/dark like the external bar: `color` comes from
-		-- `colorschemes.get_bar_color_options()`, repainted on theme change by `theme.lua`.
+		-- Background is fully transparent (`0x00000000`), so its items float over the
+		-- desktop; the bar colour itself needs no repaint, but its items track light/dark
+		-- (see init/topbar.lua's theme `on_change`).
 		-- `notch_width` reserves the camera-notch gap so the `position = "e"` space row
 		-- (see `init/topbar.lua`) anchors just to the right of the notch. sketchybar
 		-- derives the anchor from the live display center (≈ center + notch_width/2), so
 		-- only the small notch-relative term is hardcoded — the dominant half-display
 		-- offset is recomputed, surviving a resolution/scaling change far better than an
-		-- absolute offset would. Tuned to 218 so the first box's left edge clears the
-		-- physical notch (measured right edge ~1054pt on the ~1901pt-wide built-in, a
-		-- ~206pt centered notch) by 10px. No effect on the external (notchless) bar.
-		TOP = utils.merge(colorschemes.get_bar_color_options(), {
+		-- absolute offset would. Tuned to 244 so the first box's left edge clears the
+		-- physical notch (measured right edge ~1197pt on the 2160pt-wide built-in, a
+		-- ~234pt centered notch) by 10px. No effect on the external (notchless) bar.
+		TOP = {
+			color = 0x00000000,
 			corner_radius = 0,
 			display = "main",
 			font_smoothing = true,
-			height = 38,
+			height = 42,
 			margin = 0,
-			notch_width = 218,
-			padding_left = padding.BAR.PADDING_LEFT,
+			notch_width = 244,
+			-- 10px (not the shared 15px) so the far-left Apple badge — the left-most item on this
+			-- flush-to-edge bar (margin 0) — sits 10px from the screen's left edge; the now-playing
+			-- pill that follows it in the `"left"` region shifts with it, keeping their 10px gap.
+			padding_left = 10,
 			padding_right = padding.BAR.PADDING_RIGHT,
 			position = "top",
 			shadow = false,
 			y_offset = 0,
-		}),
+		},
 	},
 	DEFAULT = {
 		OPTIONS = utils.merge(colorschemes.get_default_color_options(), {
@@ -126,8 +133,9 @@ local M = {
 	-- left to right: [number │ g1 g2 g3]. Each app glyph is its own item so the inter-icon
 	-- gaps can be set with item-level padding; the handler sets every inter-element gap
 	-- dynamically (see `glyph_options`). The frontmost-app name is NOT shown in the boxes —
-	-- it lives in a separate active-app pill (`APP_ICON` + `APP_TITLE`, an Apple glyph and
-	-- the front-app name) that the same handler maintains at the far edge of each bar.
+	-- it lives in a separate title pill (`APP_ICON` + `APP_TITLE`, the active app's app-font
+	-- glyph and its name) that the same handler maintains at the far edge of each bar; a
+	-- standalone Apple badge (`APPLE`) sits at the top bar's far-left edge.
 	SPACES = {
 		-- The box drawn behind a space's number/divider/glyph member items (and reused for
 		-- the active-app pill): a dark surface fill inside a thin border. The handler layers
@@ -188,13 +196,12 @@ local M = {
 			icon = { font = font.DEFAULT.APP_ICON },
 			label = { drawing = false },
 		},
-		-- Active-app pill, Apple-logo half: an SF Symbol apple logo (U+1008FA) in SF Pro,
-		-- drawn as the pill's leading icon (no label). `padding_left` is the pill's inner left margin
-		-- (10px from the border); `padding_right` is the 10px gap to the title half. The
-		-- handler (`app_icon_options`) layers on the foreground color. This pill is a
-		-- standalone singleton at the bar's far edge — not one of the per-space boxes. Every
-		-- gap is 10px, matching the space boxes.
-		APP_ICON = {
+		-- Apple-logo badge pill, a standalone singleton at the top bar's far-left edge (the external
+		-- bar omits it): the SF Symbol apple logo (U+1008FA, SF Pro — the app-font has no standalone
+		-- Apple glyph) in its own box. `apple_icon_options` colors the glyph with the surface fill the
+		-- other pills use; `apple_bracket_options` fills the box with the mauve accent.
+		-- `padding_left`/`padding_right` are the 10px inner margins.
+		APPLE = {
 			icon = {
 				string = "\u{1008FA}",
 				font = font.DEFAULT.APPLE,
@@ -203,8 +210,34 @@ local M = {
 			padding_left = 10,
 			padding_right = 10,
 		},
-		-- Active-app pill, title half: the macOS frontmost app's name in bold SF Pro
-		-- Display. `padding_left` is 0 (the Apple half owns the 10px inter-element gap);
+		-- Trailing spacer after the Apple badge: the gap from its mauve box to the now-playing pill
+		-- that follows it in the top bar's `"left"` region. 10px — the same inter-pill gap the Stats
+		-- and clock pills use — so the badge sits a uniform step from its neighbour. The following
+		-- pill's own inner `padding_*` is its margin, NOT part of this gap (so this spacer alone is the
+		-- full gap). Its own spacer, not the 5px box SPACER, so it tunes without touching the space
+		-- boxes.
+		APPLE_SPACER = {
+			drawing = true,
+			icon = { drawing = false },
+			label = { drawing = false },
+			padding_left = 0,
+			padding_right = 0,
+			width = 10,
+		},
+		-- Title pill, icon half: the active app's sketchybar-app-font glyph (same source as the
+		-- space-box glyphs). `app_icon_options` layers on the glyph string and foreground color.
+		-- `padding_left` is the pill's inner left margin (10px), `padding_right` the 5px gap to the
+		-- name. The pill sits at the bar's far edge — not one of the per-space boxes.
+		APP_ICON = {
+			icon = {
+				font = font.DEFAULT.APP_ICON,
+			},
+			label = { drawing = false },
+			padding_left = 10,
+			padding_right = 5,
+		},
+		-- Title pill, name half: the macOS frontmost app's name in bold SF Pro
+		-- Display. `padding_left` is 0 (the app-icon half owns the 5px gap to the name);
 		-- `padding_right` is the pill's inner right margin (10px to the border). The handler
 		-- (`app_title_options`) layers on the name string and color.
 		APP_TITLE = {

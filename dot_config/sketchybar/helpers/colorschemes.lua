@@ -15,8 +15,8 @@ local M = {}
 --- The space-box roles drive the per-display space indicators: every box is a dim
 --- translucent `surface0` fill. The visible (active) space has a `mauve` border and bright
 --- `text` number/glyphs with its leading app glyph in `mauve`; inactive boxes have a dim
---- `surface1` border and a dimmer `overlay1` foreground. Every role tracks the live theme
---- (Mocha in dark, Latte in light); the active space's `mauve` border is the accent.
+--- `surface1` border and a dimmer `overlay1` foreground. Every role tracks the live system
+--- theme (Mocha in dark mode, Latte in light) — the palette is re-derived by `M.refresh`.
 --- @param p table a Catppuccin flavor palette, e.g. `catppuccin.mocha()`
 --- @return ColorschemePalette
 local function roles(p)
@@ -40,12 +40,12 @@ end
 --- @type ColorschemePalette
 local colors = roles(catppuccin.latte())
 
---- Bar background color options.
---- @return table options sketchybar bar `color` override
-function M.get_bar_color_options()
-	return {
-		color = colors.BACKGROUND,
-	}
+--- The colour for the apple-badge / title-pill "knockout" glyphs and text: the bar's own
+--- (themed) `BACKGROUND` role, so the glyph reads as a cutout of the bar within the mauve pill.
+--- Tracks the live theme, so the knockout follows the bar's look in both light and dark.
+--- @return integer ARGB colour
+function M.get_bar_background()
+	return colors.BACKGROUND
 end
 
 --- Default item color options shared by every item's icon and label.
