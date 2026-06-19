@@ -11,9 +11,9 @@ local M = {
 		-- private-use-area glyphs, so they will most likely not be visible in the
 		-- editor. One leads each resource widget, in front of its Stats alias
 		-- (see plugins/resources.lua).
-		CPU = "􀧓",
+		CPU = "􀫥",
 		GPU = "􀢹",
-		RAM = "􀧖",
+		RAM = "􀫦",
 		SENSORS = "􂬮",
 	},
 	SPACES = {

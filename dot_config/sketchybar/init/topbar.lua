@@ -34,13 +34,15 @@ spaces.setup_app_pill()
 -- Add space indicators
 require("plugins.spaces")
 
--- Mirror Stats resource widgets (CPU/GPU/RAM/Sensors) into the right region: Stats-colored
--- aliases led by SF Symbol icons. The icons take the live theme color, so the on_change below
--- repaints them (resources.theme_change_handler) alongside the space boxes.
+-- Mirror Stats resource widgets (CPU/GPU/RAM/Sensors/battery) plus the macOS clock into the right
+-- region: Stats-colored aliases plus sketchybar-colored SF Symbol icons and pill/divider chrome,
+-- with the clock as its own pill at the right end. The icons and chrome track the live theme, so
+-- the `on_change` below repaints them (resources.theme_change_handler).
 require("plugins.resources")
 
--- Recolor the space boxes, app pill, and Stats icons on light/dark switch (and once at startup).
--- The bar background is transparent, so only the items need recolouring.
+-- Repaint every themed item on a light/dark switch (and once at startup): the space boxes + app
+-- pill, the Stats pill/icons/dividers. The bar background is transparent, so only the items need
+-- recolouring.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
 	spaces.theme_change_handler()
