@@ -71,6 +71,7 @@ brew "chezmoi"
 brew "mise"
 
 # Media
+brew "ffmpeg"
 brew "imagemagick"
 brew "media-control"
 brew "spicetify-cli"
