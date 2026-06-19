@@ -3,7 +3,7 @@
 --- @field RESOURCES table<ResourcesItem, string>
 --- @field SPACES table<SpacesItem, string>
 --- @field THEME table<ThemeItem, string>
---- @alias NowPlayingItem "ARTWORK" | "EVENT_LISTENER" | "TRACK"
+--- @alias NowPlayingItem "ARTWORK" | "EVENT_LISTENER" | "PILL" | "TRACK"
 --- @alias ResourcesItem "BATTERY_ALIAS" | "BATTERY_PCT_ALIAS" | "CLOCK_ALIAS" | "CLOCK_PILL" | "CPU_ALIAS" | "CPU_ICON" | "GPU_ALIAS" | "GPU_ICON" | "PILL_DIVIDER" | "PILL_SPACER" | "RAM_CHART_ALIAS" | "RAM_ICON" | "RAM_STATE_ALIAS" | "SENSORS_ALIAS" | "SENSORS_ICON" | "STATS_PILL"
 --- @alias SpacesItem "APPLE" | "APPLE_BRACKET" | "APPLE_SPACER" | "APP_BRACKET" | "APP_ICON" | "APP_SPACER" | "APP_TITLE" | "EVENT_LISTENER" | "PREFIX"
 --- @alias ThemeItem "EVENT_LISTENER"
@@ -14,6 +14,9 @@ local M = {
 		ARTWORK = "now_playing_artwork",
 		TRACK = "now_playing_track",
 		EVENT_LISTENER = "now_playing_event_listener",
+		-- Bracket framing the artwork + track as one surface pill (the dim inactive-space fill +
+		-- border), matching the Stats and clock pills. See plugins/now_playing.lua.
+		PILL = "now_playing_pill",
 	},
 	RESOURCES = {
 		-- Internal sketchybar item names for the SF Symbol icon that leads each

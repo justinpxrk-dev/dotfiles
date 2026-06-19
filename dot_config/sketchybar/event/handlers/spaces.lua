@@ -376,7 +376,7 @@ local function remove_title_pill()
 end
 
 --- Create the active-app pill items once at init, at the point in the profile's add sequence where
---- the title pill should sit among items sharing its region — before `now_playing` on the external
+--- the title pill should sit among items sharing its region — before the space boxes on the external
 --- bar, so it leads the centered cluster. On the split top bar the title pill must follow the left
 --- spaces, so `M.render` re-adds it after them (see `build_title_pill`). The standalone Apple badge
 --- (top bar only — when `M.APPLE_POSITION` is set) is created here too and never re-added.

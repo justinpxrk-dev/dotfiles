@@ -8,9 +8,10 @@ local themes = require("helpers.themes")
 local M = {}
 
 --- Map a Catppuccin flavor palette (from the `catppuccin` LuaRocks module) to the
---- bar's semantic color roles. Translucent surfaces (background, inactive text/box)
---- keep the 0xf2 alpha the bar used previously; foreground roles
---- are fully opaque. Palette colors are objects, so the hex is read via `.hex`.
+--- bar's semantic color roles. Translucent surfaces (background, the inactive space box's
+--- fill and border) keep the 0xf2 alpha the bar used previously; foreground roles — including
+--- the dim `overlay1` (`INACTIVE_LABEL`/`INACTIVE_SPACE_FG`) — are fully opaque. Palette colors
+--- are objects, so the hex is read via `.hex`.
 ---
 --- The space-box roles drive the per-display space indicators: every box is a dim
 --- translucent `surface0` fill. The visible (active) space has a `mauve` border and bright
@@ -26,7 +27,7 @@ local function roles(p)
 		ACTIVE_SPACE_FG = themes.hex_to_color(p.text.hex),
 		BACKGROUND = themes.hex_to_color(p.base.hex, 0xf2),
 		ICON = themes.hex_to_color(p.text.hex),
-		INACTIVE_LABEL = themes.hex_to_color(p.surface1.hex, 0xf2),
+		INACTIVE_LABEL = themes.hex_to_color(p.overlay1.hex),
 		INACTIVE_SPACE_BG = themes.hex_to_color(p.surface0.hex, 0xf2),
 		INACTIVE_SPACE_BORDER = themes.hex_to_color(p.surface1.hex, 0xf2),
 		INACTIVE_SPACE_FG = themes.hex_to_color(p.overlay1.hex),
@@ -46,7 +47,8 @@ function M.get_bar_background()
 	return colors.BACKGROUND
 end
 
---- Default item color options shared by every item's icon and label.
+--- Default item color options shared by every item's icon and label: the live theme's
+--- foreground (`LABEL`/`ICON`), so chrome tracks light/dark.
 --- @return table options sketchybar `icon` and `label` color overrides
 function M.get_default_color_options()
 	return {
@@ -59,24 +61,27 @@ function M.get_default_color_options()
 	}
 end
 
---- Now Playing artwork placeholder options. Picks the transparent logo image
---- matching the active theme, shown when no real track artwork is available.
+--- Now Playing artwork placeholder options. Picks the play-state-tinted logo image, shown when no
+--- real track artwork is available: the bright `text`-tinted logo while playing, the dim
+--- `overlay1`-tinted one when not — mirroring the track label's active/inactive colours. The logo
+--- tracks the active theme (the Mocha-tinted pair in dark mode, the Latte-tinted pair in light).
+--- @param playing boolean whether a track is currently playing (bright tint) or not (dim tint)
 --- @return table options sketchybar `background.image` override
-function M.get_now_playing_artwork_logo_color_options()
+function M.get_now_playing_artwork_logo_color_options(playing)
+	local art = asset.NOW_PLAYING.ARTWORK
+	local dark_logo = playing and art.DARK_ACTIVE or art.DARK_INACTIVE
+	local light_logo = playing and art.LIGHT_ACTIVE or art.LIGHT_INACTIVE
 	return {
 		background = {
 			image = {
-				string = themes.select(
-					asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_DARK_TRANSPARENT,
-					asset.NOW_PLAYING.ARTWORK.DEFAULT_IMAGE_LIGHT_TRANSPARENT
-				),
+				string = themes.select(dark_logo, light_logo),
 			},
 		},
 	}
 end
 
---- Now Playing track label color options. Uses the active label color while a
---- track is playing and the dimmed inactive color when paused or stopped.
+--- Now Playing track label color options. Uses the active label color while a track is playing
+--- and the dimmed inactive color when paused or stopped, both from the live theme palette.
 --- @param playing boolean whether a track is currently playing
 --- @return table options sketchybar `label` color override
 function M.get_now_playing_track_color_options(playing)
@@ -89,11 +94,13 @@ end
 
 --- Space-box color options for a single per-display space indicator. Returns the
 --- bracket `background` (fill + border) and the member items' `icon`/`label` colors,
---- so the handler can paint the bracket and the number/glyph items in one shape. Every
---- role tracks the live theme (Mocha in dark, Latte in light), like the external bar. The
---- returned `dim` is the dimmer foreground (`overlay1`) for the active space's non-leading
---- app glyphs (the apps other than the focused one). Inactive spaces use a dim `surface1`
---- border (no mauve); the active space uses the bright `text` foreground and `mauve` border.
+--- so the handler can paint the bracket and the number/glyph items in one shape.
+---
+--- Every role tracks the live theme. The active space carries the `mauve` border accent over a
+--- dim translucent `surface0` fill with bright `text` foreground; inactive spaces use a dim
+--- `surface1` border and a dimmer `overlay1` foreground. The returned `dim` is that dimmer
+--- foreground (`overlay1`), used for the active space's non-leading app glyphs (the apps other
+--- than the focused one).
 --- @param active boolean whether this is the display's visible (current) space
 --- @return table options sketchybar `background`, `icon`, `label`, and `dim` color overrides
 function M.get_space_color_options(active)
