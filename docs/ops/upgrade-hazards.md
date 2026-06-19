@@ -23,17 +23,20 @@ All three are **5.5** today (Homebrew `lua` is `5.5.0`, matching SbarLua's pin).
 2. Reinstall the rock into the new tree: `luarocks install --local catppuccin`.
 3. Keep SbarLua's `LUA_DIR` pin aligned with Homebrew's `lua`.
 
-## markdown-it pin (pnpm override vs. markdownlint-cli2)
+## markdownlint-cli2 exact pins (pnpm overrides vs. transitive DoS)
 
-`markdownlint-cli2` pins `markdown-it` to an exact version (`14.1.1` as of `0.22.1`), and `14.1.1` carries a quadratic-complexity DoS in the smartquotes rule ([GHSA-6v5v-wf23-fmfq](https://github.com/advisories/GHSA-6v5v-wf23-fmfq) / CVE-2026-48988, fixed in `14.2.0`). `pnpm-workspace.yaml` carries an `overrides` entry lifting `markdown-it@<14.2.0` to `>=14.2.0` so the patched release is what actually installs.
+`markdownlint-cli2` pins several dependencies to exact versions, and two of those pins (as of `0.22.1`) carry quadratic-complexity DoS advisories. `pnpm-workspace.yaml` carries one `overrides` entry per pin, lifting each to its patched release so the fixed version is what actually installs:
 
-**Failure mode:** bump `markdownlint-cli2` to a release whose own `markdown-it` pin is already `>=14.2.0` and the override becomes dead weight — harmless, but it silently masks the upstream pin and keeps forcing `markdown-it` even if a future `markdownlint-cli2` deliberately holds an older line for compatibility.
+- **markdown-it** — pinned to `14.1.1`; DoS in the smartquotes rule ([GHSA-6v5v-wf23-fmfq](https://github.com/advisories/GHSA-6v5v-wf23-fmfq) / CVE-2026-48988, fixed in `14.2.0`; Dependabot alert #1). Override: `markdown-it@<14.2.0` → `>=14.2.0`.
+- **js-yaml** — pinned to `4.1.1`; DoS in merge-key handling via repeated aliases ([GHSA-h67p-54hq-rp68](https://github.com/advisories/GHSA-h67p-54hq-rp68) / CVE-2026-53550, fixed in `4.2.0`; Dependabot alert #2). Override: `js-yaml@<4.2.0` → `>=4.2.0`.
+
+**Failure mode:** bump `markdownlint-cli2` to a release whose own pin is already at or past the patched version and that override becomes dead weight — harmless, but it silently masks the upstream pin and keeps forcing the dependency even if a future `markdownlint-cli2` deliberately holds an older line for compatibility.
 
 **On a markdownlint-cli2 upgrade:**
 
-1. Check the new pin: `npm view markdownlint-cli2@<version> dependencies.markdown-it`.
-2. If it is already `>=14.2.0`, drop the `markdown-it` override from `pnpm-workspace.yaml` and re-run `pnpm install`.
-3. Re-run `pnpm run lint:md` to confirm markdownlint still parses cleanly under the resolved `markdown-it`.
+1. Check the new pins: `npm view markdownlint-cli2@<version> dependencies.markdown-it dependencies.js-yaml`.
+2. For any pin already at or past its patched version, drop the matching override from `pnpm-workspace.yaml` and re-run `pnpm install`.
+3. Re-run `pnpm run lint:md` to confirm markdownlint still parses cleanly under the resolved dependencies.
 
 ## GitHub Actions SHA pins (no Dependabot to bump them)
 

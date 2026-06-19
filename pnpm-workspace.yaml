@@ -4,3 +4,7 @@ overrides:
   # DoS in the smartquotes rule (Dependabot alert #1, fixed in 14.2.0). Force the patched
   # release; drop this override once markdownlint-cli2 bumps its pin past 14.1.1.
   markdown-it@<14.2.0: ">=14.2.0"
+  # markdownlint-cli2 pins js-yaml to exactly 4.1.1, which has a quadratic-complexity DoS
+  # in merge key handling via repeated aliases (Dependabot alert #2, fixed in 4.2.0). Force
+  # the patched release; drop this override once markdownlint-cli2 bumps its pin past 4.1.1.
+  js-yaml@<4.2.0: ">=4.2.0"
