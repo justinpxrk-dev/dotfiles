@@ -87,6 +87,7 @@ cask "codex"
 
 # Secrets
 brew "bitwarden-cli"
+brew "gnupg"
 
 # Applications
 cask "appcleaner"
