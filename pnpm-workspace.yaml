@@ -1,0 +1,6 @@
+# pnpm settings (pnpm >= 11 no longer reads the "pnpm" field in package.json).
+overrides:
+  # markdownlint-cli2 pins markdown-it to exactly 14.1.1, which has a quadratic-complexity
+  # DoS in the smartquotes rule (Dependabot alert #1, fixed in 14.2.0). Force the patched
+  # release; drop this override once markdownlint-cli2 bumps its pin past 14.1.1.
+  markdown-it@<14.2.0: ">=14.2.0"
