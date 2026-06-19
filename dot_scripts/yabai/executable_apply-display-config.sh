@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-# apply-display-config.sh — set per-display yabai bottom padding, keyed by each
-# display's stable UUID. Padding in yabai is a per-space setting with no
+# apply-display-config.sh — set per-display yabai top/bottom padding, keyed by
+# each display's stable UUID. Padding in yabai is a per-space setting with no
 # per-display selector, and both the space-to-display mapping and the display
 # index reshuffle on dock/undock — so resolve each monitor by UUID (stable) and
-# pad every space on it to clear that monitor's sketchybar:
-#   - built-in "Color LCD" (main): bar mirrors the top menubar, so nothing sits
-#     at the bottom — reclaim it (18, matching the other edges).
-#   - external "LG 34GN850": bottom-of-screen bar, so reserve 66px.
+# pad every space on it so windows sit a uniform 14px from that monitor's bar
+# pills — the same gap yabairc gives the other (bar-less) edges. The bar-edge
+# value is tuned because each bar's pills sit at a different offset:
+#   - built-in "Color LCD" (main): 8px top lands windows 14px below the pills.
+#   - external "LG 34GN850": 47px bottom lands them 14px above the pills.
 # yabairc wires this to the display add/remove signals and runs it once on load.
 #
 # BUILTIN_UUID is hardware-specific: replacing the built-in panel means updating
@@ -23,8 +24,10 @@ if [[ ":${PATH:-}:" != *":/opt/homebrew/bin:"* ]]; then
 fi
 
 readonly BUILTIN_UUID="37D8832A-2D66-02CA-B9F7-8F30A301B230"
-readonly MAIN_BOTTOM_PADDING=18     # built-in: top bar, nothing to clear below
-readonly EXTERNAL_BOTTOM_PADDING=66 # external: bottom bar to clear
+readonly MAIN_TOP_PADDING=8         # built-in: 14px below the top-bar pills
+readonly MAIN_BOTTOM_PADDING=14     # built-in: no bottom bar, plain edge gap
+readonly EXTERNAL_TOP_PADDING=14    # external: no top bar, plain edge gap
+readonly EXTERNAL_BOTTOM_PADDING=47 # external: 14px above the bottom-bar pills
 
 # Snapshot the per-display space list up front. A failed query (e.g. a
 # display_added signal firing before the window server settles) is invisible to
@@ -44,10 +47,14 @@ fi
 # sweep continues, rather than aborting and leaving padding half-applied.
 while read -r uuid space; do
 	if [[ "$uuid" == "$BUILTIN_UUID" ]]; then
-		padding=$MAIN_BOTTOM_PADDING
+		top=$MAIN_TOP_PADDING
+		bottom=$MAIN_BOTTOM_PADDING
 	else
-		padding=$EXTERNAL_BOTTOM_PADDING
+		top=$EXTERNAL_TOP_PADDING
+		bottom=$EXTERNAL_BOTTOM_PADDING
 	fi
-	yabai -m config --space "$space" bottom_padding "$padding" ||
-		echo "apply-display-config: could not pad space $space" >&2
+	yabai -m config --space "$space" top_padding "$top" ||
+		echo "apply-display-config: could not set top padding on space $space" >&2
+	yabai -m config --space "$space" bottom_padding "$bottom" ||
+		echo "apply-display-config: could not set bottom padding on space $space" >&2
 done <<<"$mapping"

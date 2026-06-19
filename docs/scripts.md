@@ -150,8 +150,16 @@ Opens a new Ghostty window — tiled by default, floating centered with `--float
 
 ## `yabai/apply-display-config.sh`
 
-Sets each display's yabai `bottom_padding` to clear whatever sketchybar lives on it, keyed by the display's stable UUID — yabai padding is per-space with no per-display selector, and both the space→display mapping and display indices reshuffle on dock/undock. The built-in panel mirrors the top menubar so its bottom is reclaimed (18); the external keeps its bottom bar's 66px reservation. `yabairc` runs it once on load and on `display_added`/`display_removed`, so the layout re-mirrors whenever a monitor is plugged or unplugged.
+Sets each display's yabai top and bottom padding to clear whatever sketchybar lives on it, keyed by the display's stable UUID — yabai padding is per-space with no per-display selector, and both the space→display mapping and display indices reshuffle on dock/undock. Each bar edge is tuned so windows sit a uniform 14px from that bar's pills — the same gap `yabairc` gives the bar-less edges: 8px top on the built-in lands 14px below its top-bar pills, 47px bottom on the external lands 14px above its bottom-bar pills. `yabairc` runs it once on load and on `display_added`/`display_removed`, so the layout re-mirrors whenever a monitor is plugged or unplugged.
 
 ```sh
 ~/.scripts/yabai/apply-display-config.sh
+```
+
+## `sketchybar/trigger-bars.sh`
+
+Fans a sketchybar `--trigger` out to **both** instances — the default top bar and the `external` bar (`git.felix.external`). yabai's space/window/app signals call it so each display's space indicators refresh together: a bare `sketchybar --trigger` only reaches the default instance, so the external one is selected explicitly via `exec -a external`. The external trigger is best-effort (stderr suppressed, never fails), so it's a harmless no-op when the external display is undocked.
+
+```sh
+~/.scripts/sketchybar/trigger-bars.sh <event>
 ```
