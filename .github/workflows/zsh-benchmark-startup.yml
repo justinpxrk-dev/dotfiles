@@ -39,7 +39,7 @@ jobs:
       - name: Detect startup-relevant changes
         id: filter
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3.0.3
         with:
           filters: |
             zsh:
