@@ -49,7 +49,7 @@ Two deploy workflows run a real `chezmoi apply` against the macOS runner using t
 
 ## Worktrees
 
-When working in a worktree, some tools require per-path trust or registration before they function. Run any required setup after creating a worktree, and clean up before removing it — the `/merge` skill handles cleanup automatically.
+When working in a worktree, some tools require per-path trust or registration before they function. Run any required setup after creating a worktree, and clean up before removing it.
 
 **mise** — trust the config before any mise command, then install tools and bootstrap Node packages using the mise-managed PATH:
 
@@ -57,5 +57,12 @@ When working in a worktree, some tools require per-path trust or registration be
 mise trust                          # required before mise install
 mise install                        # install tools
 mise exec -- pnpm install           # bootstrap lefthook and other PATH-dependent tools
-mise trust --untrust mise.toml      # on exit (handled by /merge)
+mise trust --untrust mise.toml      # on exit, before removing the worktree
+```
+
+Tear the worktree down manually once its branch is merged:
+
+```sh
+git worktree remove <path>          # run from the main checkout, not the worktree
+git branch -d <branch>
 ```
