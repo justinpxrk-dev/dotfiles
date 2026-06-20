@@ -1,4 +1,0 @@
-interface:
-  display_name: "Merge"
-  short_description: "Rebase and fast-forward merge branches"
-  default_prompt: "Use $merge to merge a worktree branch into main."

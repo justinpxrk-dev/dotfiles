@@ -1,3 +1,1 @@
-# CLAUDE.md
-
-@.agents/AGENTS.md
+.agents/memories/AGENTS.md

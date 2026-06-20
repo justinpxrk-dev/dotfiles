@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commit"
+  short_description: "Write a conventional-commit-style commit for this repo"
+  default_prompt: "Use the commit skill to commit the current repository changes."

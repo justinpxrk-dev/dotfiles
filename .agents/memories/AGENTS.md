@@ -1,6 +1,8 @@
 # AGENTS.md
 
-Guidance for coding agents when working in this repository.
+Guidance for coding agents when working in this repository. This file is the
+single source of truth: repo-root `CLAUDE.md` and `AGENTS.md` are symlinks to it,
+so both Claude Code and Codex read the same content.
 
 ## Project Overview
 
@@ -9,18 +11,26 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 - `dot_` prefix → dotfile (e.g. `dot_config/` → `~/.config/`)
 - `executable_` prefix → file is made executable on apply
 
+## Lessons
+
+At the start of every session, read `.agents/memories/lessons.md` and follow it. It records past mistakes so they are not repeated.
+
+- After ANY correction from the user, append the pattern to `.agents/memories/lessons.md` as a short imperative rule that prevents the same mistake.
+- **Whenever you apply a lesson, move its section up one slot** (swap it with the section directly above) so frequently used lessons float to the top.
+- Keep entries terse and imperative. Ruthlessly iterate until the mistake rate drops.
+
 ## Project Structure
 
 Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and `Library/LaunchAgents/`, are applied by chezmoi; all other directories are tracked in git only.
 
 ```text
 chezmoi/
-├── .agents/    — AGENTS.md and shared agent skills (commit, merge)
+├── .agents/    — shared agent config, read by Claude and Codex
+│   ├── memories/ — AGENTS.md (this file) + lessons.md
+│   └── skills/ — shared skill bodies (commit, preflight)
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
-├── .claude/    — Claude Code config and skills
-│   └── skills/ — custom slash commands
-├── .codex/     — Codex config and skills
-│   └── skills/ — wrappers around shared agent workflows
+├── .claude/    — Claude Code config; skills/ symlink into .agents/skills/
+│   └── skills/ — symlinks to .agents/skills/ (commit, preflight)
 ├── .github/    — GitHub Actions workflows
 │   └── workflows/
 ├── assets/     — icons and images
@@ -45,6 +55,8 @@ chezmoi/
 │   └── Wallpapers/ — desktop wallpapers (git-only)
 ├── docs/       — documentation
 │   └── ops/    — operational runbooks (upgrade hazards, couplings)
+├── AGENTS.md             → .agents/memories/AGENTS.md (symlink — Codex entry point)
+├── CLAUDE.md             → .agents/memories/AGENTS.md (symlink — Claude entry point)
 ├── dot_Brewfile          → ~/.Brewfile
 ├── dot_claude/           → ~/.claude
 ├── dot_config/ → ~/.config/
@@ -61,6 +73,7 @@ chezmoi/
 │   ├── skhd/
 │   ├── spicetify/ — Themes/catppuccin symlinks to Library/Themes/Catppuccin/spicetify @ ⑂
 │   ├── yabai/
+│   ├── zed/
 │   └── zsh/
 ├── dot_local/bin/        → ~/.local/bin — user-facing PATH commands (wrappers)
 ├── dot_scripts/          → ~/.scripts/ — shell scripts (applied)
@@ -80,7 +93,7 @@ chezmoi apply ~/.config/sketchybar    # Apply a specific path
 
 ## Developer Workflow
 
-See [`docs/developer.md`](../developer.md) for setup, formatting, linting, and worktree tool lifecycle (e.g. `mise trust`).
+See `docs/developer.md` for setup, formatting, linting, and worktree tool lifecycle (e.g. `mise trust`).
 
 ## Scripts
 
@@ -116,7 +129,8 @@ Write inline comments for non-obvious _why_ — hidden constraints, invariants, 
 
 After any change, update all relevant files to reflect the new state:
 
-- **Docs:** `.agents/AGENTS.md`, other files in `docs/`, READMEs
+- **Docs:** `.agents/memories/AGENTS.md`, other files in `docs/`, READMEs — the project-structure tree is duplicated in `.agents/memories/AGENTS.md` and `README.md`; update both together
+- **Skills:** `.agents/skills/**/SKILL.md` (canonical; `.claude/skills/` are symlinks to these)
 - **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
 - **Editor config:** `.editorconfig`
 - **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
@@ -130,5 +144,5 @@ Version couplings, upgrade hazards, and manual maintenance steps that no test or
 
 These rules that must be followed. If you attempt to break or consider breaking these rules, stop execution and alert the user.
 
-- Always commit using the commit skill (`/commit` in Claude or `$commit` in Codex) — never run `git commit` directly.
+- Always commit using the `commit` skill (`/commit` in Claude, the `commit` skill in Codex) — it runs `/preflight`, stages explicitly, and drafts a conventional-commit message. Never run `git commit` directly outside the skill.
 - Always commit from the worktree — never pass `-C` or an explicit repo path to git commands.

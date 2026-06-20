@@ -1,13 +1,13 @@
 {
   "globs": ["**/*.md"],
-  // Vendored/submodule trees — kept in sync with .prettierignore (plus
-  // .venv, which ships a stray README.md). See AGENTS.md "Keeping Config
-  // in Sync".
+  // Vendored/submodule trees, plus .venv (ships a stray README.md). Mostly
+  // mirrors .prettierignore, except .claude: markdownlint skips it (its
+  // SKILL.md are symlinks already linted once under .agents/skills/), while
+  // prettier still formats it. See AGENTS.md "Keeping Config in Sync".
   "ignores": [
     "node_modules",
     ".venv",
     ".claude",
-    ".codex",
     "Library/Fonts",
     "Library/Wallpapers",
     "Library/Themes/tinted",
@@ -22,7 +22,7 @@
     // README's layout tables are tab-indented HTML by design.
     "MD010": false,
     "MD033": false,
-    // Skill docs (SKILL.md) intentionally open with prose, not an h1.
+    // Some docs open with YAML frontmatter or prose rather than an h1.
     "MD041": false,
     // Allow repeated sub-headings (e.g. "Dark Mode"/"Light Mode") as long
     // as they sit under different parent headings.
