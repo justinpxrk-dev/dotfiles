@@ -13,7 +13,11 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Lessons
 
-At the start of every session, read `.agents/memories/lessons.md` and follow it. It records past mistakes so they are not repeated.
+At the start of every session, read `.agents/memories/lessons.md` and follow it. It records past mistakes so they are not repeated. Claude Code inlines it automatically through the import below; other agents (e.g. Codex) must read it explicitly.
+
+<!-- The import path is relative to this file's real directory (.agents/memories/), so it must stay `@lessons.md`. The repo-root form `@.agents/memories/lessons.md` resolves to a nonexistent nested path and silently fails to load (verified via a headless memory probe). -->
+
+@lessons.md
 
 - After ANY correction from the user, append the pattern to `.agents/memories/lessons.md` as a short imperative rule that prevents the same mistake.
 - **Whenever you apply a lesson, move its section up one slot** (swap it with the section directly above) so frequently used lessons float to the top.
