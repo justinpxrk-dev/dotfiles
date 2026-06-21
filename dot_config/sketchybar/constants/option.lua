@@ -98,22 +98,37 @@ local M = {
 		},
 	},
 	NOW_PLAYING = {
-		ARTWORK_OPTIONS = utils.merge(colorschemes.get_now_playing_artwork_logo_color_options(), {
+		-- Album-art thumbnail, the now-playing pill's left half: a 20px rounded image — the real
+		-- artwork (pre-sized to 20x20 by the dispatcher) or the Apple Music placeholder logo. Sized
+		-- 1:1 to `background.height`, since sketchybar draws the image at the background height with
+		-- no scale factor; the dispatcher's resize, this height, and the placeholder PNGs must all
+		-- agree (see event/dispatchers/now_playing.sh and assets/apple-music). `padding_left` is the
+		-- pill's inner-left margin (to the bracket border); `padding_right` the gap to the track label.
+		-- `false`: the bar starts in the "Not Playing" state, so the placeholder uses the dim
+		-- (inactive) tint. The theme handler re-sets it from the live theme once a state is known;
+		-- this only sets the initial colour.
+		ARTWORK_OPTIONS = utils.merge(colorschemes.get_now_playing_artwork_logo_color_options(false), {
 			background = {
-				height = 24,
+				height = 20,
 				image = {
 					corner_radius = 6,
 				},
 				drawing = true,
 			},
+			padding_left = 10,
+			padding_right = 5,
 			position = "left",
 		}),
 
+		-- Scrolling track label, the pill's right half. `padding_left` is 0 (the artwork owns the gap
+		-- between them); `padding_right` is the pill's inner-right margin to the bracket border.
 		TRACK_OPTIONS = utils.merge(colorschemes.get_now_playing_track_color_options(false), {
 			label = {
 				max_chars = 40,
 				string = "Not Playing",
 			},
+			padding_left = 0,
+			padding_right = 10,
 			position = "left",
 			scroll_texts = true,
 		}),
@@ -123,8 +138,8 @@ local M = {
 		-- icon. Each renders a live Stats menu-bar item, which Stats colors — so no
 		-- color override here.
 		ALIAS = alias_opts,
-		-- SF Symbol icon per widget. Each glyph takes the live theme color (like the rest of
-		-- the bar) and is repainted on light/dark by event/handlers/resources.lua.
+		-- SF Symbol icon per widget, in the live theme foreground. The Stats theme handler repaints
+		-- these on a light/dark switch (see event/handlers/resources.lua).
 		CPU_ICON = utils.merge(colorschemes.get_default_color_options(), resource_opts, {
 			icon = { string = icon.RESOURCES.CPU },
 		}),

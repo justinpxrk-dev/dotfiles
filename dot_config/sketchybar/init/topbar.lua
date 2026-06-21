@@ -1,6 +1,7 @@
 local sbar = require("sketchybar")
 
 local option = require("constants.option")
+local now_playing = require("event.handlers.now_playing")
 local resources = require("event.handlers.resources")
 local spaces = require("event.handlers.spaces")
 local theme = require("event.handlers.theme")
@@ -22,13 +23,14 @@ spaces.DISPLAY = 1
 spaces.POSITION = "e"
 spaces.POSITION_LEFT = "q"
 -- The title pill (active app's icon + name) shares the left-of-notch `"q"` region, leading the
--- left-side spaces. The standalone Apple badge sits apart in the far-left `"left"` region
--- (mirroring the macOS Apple menu's top-left corner).
+-- left-side spaces. The standalone Apple badge sits apart in the far-left `"left"` region — added
+-- before the now-playing pill below so it is the bar's left-most item (mirroring the macOS Apple
+-- menu's top-left corner).
 spaces.APP_POSITION = "q"
 spaces.APPLE_POSITION = "left"
 theme.refresh_palette()
 -- Create the active-app pill items (the far-left Apple badge + the left-of-notch title pill)
--- before the space boxes are rendered.
+-- before the space boxes are rendered and before now-playing is added to the `"left"` region.
 spaces.setup_app_pill()
 
 -- Add space indicators
@@ -40,11 +42,17 @@ require("plugins.spaces")
 -- the `on_change` below repaints them (resources.theme_change_handler).
 require("plugins.resources")
 
+-- Now-playing pill (artwork + scrolling track) on the far-left `"left"` region, plus its
+-- media-control dispatcher — launched here, so its triggers route to this default instance
+-- via `$BAR_NAME` (see event/dispatchers/now_playing.sh).
+require("plugins.now_playing")
+
 -- Repaint every themed item on a light/dark switch (and once at startup): the space boxes + app
--- pill, the Stats pill/icons/dividers. The bar background is transparent, so only the items need
--- recolouring.
+-- pill, the Stats pill/icons/dividers, and the now-playing pill. The bar background is transparent,
+-- so only the items need recolouring.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
 	spaces.theme_change_handler()
 	resources.theme_change_handler()
+	now_playing.theme_change_handler()
 end)

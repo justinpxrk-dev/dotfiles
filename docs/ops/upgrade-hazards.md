@@ -82,6 +82,10 @@ The top bar's resource widgets (`dot_config/sketchybar/plugins/resources.lua`) a
 
 **Failure mode:** the resource cluster is blank or partial with no error at `chezmoi apply` (and none in `~/Library/Logs/me.justinpxrk/sketchybar.log`) — usually a revoked Screen Recording permission after an OS update, or alias names that drifted. After a Stats reinstall the pills may also show a frame inside each pill until the per-module chart frame is turned back off.
 
+## Sketchybar now-playing artwork (pre-baked placeholder PNGs)
+
+The now-playing pill's placeholder logos (`assets/apple-music/logo-{dark,light}.{active,inactive}.20x20.png`) are **pre-baked per theme × play-state** because sketchybar cannot tint an image at runtime. They encode specific Catppuccin foreground colours (`text` / `overlay1`), so a **palette change** silently leaves stale-coloured placeholders — regenerate them from the 800×800 masters in the same directory: `magick MASTER -fill HEX -colorize 100 -channel A -threshold 60% +channel -filter Lanczos -resize 20x20 OUT` (see the comment in `constants/asset.lua` for the exact roles). The `20x20` size must also stay in sync with the artwork `background.height` (`constants/option.lua`) and the dispatcher's resize (`event/dispatchers/now_playing.sh`); all three are hand-coupled, nothing checks them.
+
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
 The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).

@@ -1,7 +1,6 @@
 local sbar = require("sketchybar")
 
 local option = require("constants.option")
-local now_playing = require("event.handlers.now_playing")
 local spaces = require("event.handlers.spaces")
 local theme = require("event.handlers.theme")
 
@@ -20,8 +19,6 @@ theme.refresh_palette()
 -- Create the title pill before the space boxes so it leads the centered cluster.
 spaces.setup_app_pill()
 
--- Add left bar plugins
-require("plugins.now_playing")
 -- Add center bar plugins
 require("plugins.spaces")
 
@@ -30,6 +27,5 @@ require("plugins.spaces")
 -- initial trigger fires.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
-	now_playing.theme_change_handler()
 	spaces.theme_change_handler()
 end)

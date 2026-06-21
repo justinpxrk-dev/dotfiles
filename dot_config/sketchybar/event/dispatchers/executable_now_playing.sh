@@ -77,16 +77,21 @@ exec media-control stream | while IFS= read -r line; do
 				base64 -d >"$artwork_path" &&
 				magick "$artwork_path" \
 					-background none \
-					-resize 24x24^ \
+					-resize 20x20^ \
 					-gravity center \
-					-extent 24x24 \
-					"$artwork_path" &&
-				magick "$artwork_path" \
-					-alpha set \
-					-channel A \
-					-evaluate multiply 0.3 \
-					+channel \
-					"$inactive_artwork_path"
+					-extent 20x20 \
+					"$artwork_path"
+		fi
+		# Regenerate the dimmed variant whenever it alone is missing: the color image may already be
+		# cached while a prior run was interrupted (or the .inactive.png pruned) before this ran,
+		# which would otherwise leave the inactive path pointing at a nonexistent file.
+		if [[ ! -f "$inactive_artwork_path" && -f "$artwork_path" ]]; then
+			magick "$artwork_path" \
+				-alpha set \
+				-channel A \
+				-evaluate multiply 0.3 \
+				+channel \
+				"$inactive_artwork_path"
 		fi
 
 		trigger --trigger \
