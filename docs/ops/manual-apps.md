@@ -5,7 +5,7 @@ GUI apps installed by hand — dragged from a DMG or run from a `.pkg` — rathe
 Everything else in `/Applications` is tracked elsewhere and is deliberately left out of the table below:
 
 - **Homebrew casks** — declared in `dot_Brewfile`, reinstalled with `brew bundle --file ~/.Brewfile`. Audit with `brew list --cask`. Includes pkg-based casks (Logi Tune, Zoom, SF Symbols) that install through macOS's installer but are still Homebrew-managed.
-- **Mac App Store** — reinstalled with `mas`. Audit with `mas list`; currently Copilot, Dynamic wallpaper, and Steam Link.
+- **Mac App Store** — reinstalled with `mas`. Audit with `mas list`; currently Copilot, Dynamic wallpaper, and Flow.
 - **Apple system apps** — Safari and friends ship with macOS.
 
 ## Apps

@@ -43,7 +43,7 @@ Initialises all git submodules and builds/installs their outputs (MonoLisa fonts
 
 ## `brew/install-packages.sh`
 
-Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes.
+Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes. In CI, `mas` (Mac App Store) apps are skipped via `HOMEBREW_BUNDLE_MAS_SKIP` because the runner has no App Store sign-in; the deploy workflow validates their IDs with `mas info` instead.
 
 ```sh
 ~/.scripts/brew/install-packages.sh
