@@ -1,6 +1,6 @@
 --- @class Font
 --- @field DEFAULT table<DefaultFontOption, FontSettings>
---- @alias DefaultFontOption "BOLD_LABEL" | "ICON" | "LABEL" | "APP_ICON" | "APP_TITLE" | "APPLE"
+--- @alias DefaultFontOption "BOLD_LABEL" | "ICON" | "LABEL" | "APP_ICON" | "APP_TITLE" | "APPLE" | "NERD_FONT"
 --- @alias FontSettings table<FontSetting, string | number>
 --- @alias FontSetting "family" | "style" | "size"
 
@@ -42,6 +42,19 @@ local M = {
 			family = "SF Pro",
 			style = "Bold",
 			size = 14.0,
+		},
+		-- Nerd Font symbol family for the updates pill's per-segment glyphs (see constants/icon.lua
+		-- and plugins/updates.lua). The proportional "Symbols Nerd Font" (NOT "…Mono"): Mono force-
+		-- fits every glyph into one fixed cell, which only matters in a terminal grid and shrinks the
+		-- wider icons — a bar renders each glyph at its natural width. Sized 18pt — larger than the
+		-- 14pt app glyphs / Apple badge because Nerd Font private-use glyphs sit smaller within their
+		-- em box than SF Symbols, so an equal point size reads visibly smaller; 18pt makes the
+		-- brew/mise icons optically match their neighbours. Requires the font installed (it ships
+		-- separately from the MonoLisa Nerd Font patch) — see docs/ops/upgrade-hazards.md.
+		NERD_FONT = {
+			family = "Symbols Nerd Font",
+			style = "Regular",
+			size = 18.0,
 		},
 	},
 }

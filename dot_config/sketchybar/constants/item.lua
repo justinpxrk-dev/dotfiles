@@ -3,10 +3,12 @@
 --- @field RESOURCES table<ResourcesItem, string>
 --- @field SPACES table<SpacesItem, string>
 --- @field THEME table<ThemeItem, string>
+--- @field UPDATES table<UpdatesItem, string>
 --- @alias NowPlayingItem "ARTWORK" | "EVENT_LISTENER" | "PILL" | "TRACK"
 --- @alias ResourcesItem "BATTERY_ALIAS" | "BATTERY_PCT_ALIAS" | "CLOCK_ALIAS" | "CLOCK_PILL" | "CPU_ALIAS" | "CPU_ICON" | "GPU_ALIAS" | "GPU_ICON" | "PILL_DIVIDER" | "PILL_SPACER" | "RAM_CHART_ALIAS" | "RAM_ICON" | "RAM_STATE_ALIAS" | "SENSORS_ALIAS" | "SENSORS_ICON" | "STATS_PILL"
 --- @alias SpacesItem "APPLE" | "APPLE_BRACKET" | "APPLE_SPACER" | "APP_BRACKET" | "APP_ICON" | "APP_SPACER" | "APP_TITLE" | "EVENT_LISTENER" | "PREFIX"
 --- @alias ThemeItem "EVENT_LISTENER"
+--- @alias UpdatesItem "PILL" | "PREFIX" | "SPACER"
 
 --- @type Item
 local M = {
@@ -82,6 +84,17 @@ local M = {
 		APP_BRACKET = "spaces.app_title.bracket",
 	},
 	THEME = { EVENT_LISTENER = "theme_event_listener" },
+	-- Updates pill (see plugins/updates.lua). Per-provider segments and the hairline dividers
+	-- between them are dynamic (one set per registered provider), so their names are built at
+	-- runtime from PREFIX: the segment is `updates.<provider>` (e.g. `updates.brew`) and the
+	-- divider that follows it `updates.<provider>.div`. PILL (the framing bracket) and SPACER (the
+	-- trailing inter-pill gap to the Stats pill) are singletons, named without the dotted PREFIX so
+	-- they never collide with a provider segment.
+	UPDATES = {
+		PREFIX = "updates.",
+		PILL = "updates_pill",
+		SPACER = "updates_spacer",
+	},
 }
 
 return M

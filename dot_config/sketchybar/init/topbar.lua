@@ -5,6 +5,7 @@ local now_playing = require("event.handlers.now_playing")
 local resources = require("event.handlers.resources")
 local spaces = require("event.handlers.spaces")
 local theme = require("event.handlers.theme")
+local updates = require("event.handlers.updates")
 
 -- Built-in top bar (default instance), mirroring the macOS menu bar.
 sbar.default(option.DEFAULT.OPTIONS)
@@ -42,17 +43,24 @@ require("plugins.spaces")
 -- the `on_change` below repaints them (resources.theme_change_handler).
 require("plugins.resources")
 
+-- Updates pill (outdated-package counts: brew, mise) into the right region, just left of the Stats
+-- pill — required AFTER resources so its right-to-left add lands it there. Hidden until a provider
+-- reports updates; its chrome tracks the live theme, so the `on_change` below repaints it
+-- (updates.theme_change_handler).
+require("plugins.updates")
+
 -- Now-playing pill (artwork + scrolling track) on the far-left `"left"` region, plus its
 -- media-control dispatcher — launched here, so its triggers route to this default instance
 -- via `$BAR_NAME` (see event/dispatchers/now_playing.sh).
 require("plugins.now_playing")
 
 -- Repaint every themed item on a light/dark switch (and once at startup): the space boxes + app
--- pill, the Stats pill/icons/dividers, and the now-playing pill. The bar background is transparent,
--- so only the items need recolouring.
+-- pill, the Stats pill/icons/dividers, the updates pill, and the now-playing pill. The bar
+-- background is transparent, so only the items need recolouring.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
 	spaces.theme_change_handler()
 	resources.theme_change_handler()
+	updates.theme_change_handler()
 	now_playing.theme_change_handler()
 end)
