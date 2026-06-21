@@ -116,6 +116,6 @@ cask "zoom"
 
 # Mac App Store
 brew "mas"
-# mas "Copilot", id: 1447330651
-# mas "Dynamic wallpaper", id: 1582358382
-# mas "Steam Link", id: 1246969117
+mas "Copilot", id: 1447330651
+mas "Dynamic wallpaper", id: 1582358382
+mas "Flow", id: 1423210932

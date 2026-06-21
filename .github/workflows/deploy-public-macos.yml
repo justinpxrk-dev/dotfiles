@@ -37,3 +37,18 @@ jobs:
 
       - name: Apply dotfiles
         run: chezmoi apply
+
+      # mas apps are skipped during `brew bundle` on CI (the runner has no App
+      # Store auth), so nothing else checks them. `mas info` needs no auth and
+      # exits non-zero on a missing id, catching a typo'd or pulled App Store id
+      # that only a real signed-in `mas install` would otherwise surface. mas
+      # itself is installed by the bundle in the apply step above.
+      - name: Validate Mac App Store IDs
+        run: |
+          ids="$(grep -E '^[[:space:]]*mas ' "$HOME/.Brewfile" | grep -oE 'id:[[:space:]]*[0-9]+' | grep -oE '[0-9]+' || true)"
+          for id in $ids; do
+            if ! mas info "$id" >/dev/null; then
+              echo "::error::mas id $id not found in the App Store"
+              exit 1
+            fi
+          done
