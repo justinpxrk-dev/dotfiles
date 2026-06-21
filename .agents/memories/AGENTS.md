@@ -161,3 +161,4 @@ These rules that must be followed. If you attempt to break or consider breaking 
 
 - Always commit using the `commit` skill (`/commit` in Claude, the `commit` skill in Codex) — it runs `/preflight`, stages explicitly, and drafts a conventional-commit message. Never run `git commit` directly outside the skill.
 - Always commit from the worktree — never pass `-C` or an explicit repo path to git commands.
+- Never add AI attribution — no "Generated with Claude Code" footers or `Co-Authored-By: Claude` trailers — in commits, PR descriptions, or any repo artifact.
