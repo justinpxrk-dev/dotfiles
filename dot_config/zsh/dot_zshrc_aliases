@@ -48,3 +48,40 @@ function twig() {
 	worktree=$(git worktree list --porcelain | awk '/^worktree/ {print $2}' | fzf)
 	[[ -n "$worktree" ]] && tig -C "$worktree"
 }
+
+# sketchybar updates pill — push the new outdated count after a successful brew/mise command that can
+# change it, so the pill reflects an upgrade at once instead of waiting for its periodic poll. These
+# are wrappers (not a precmd hook) because the prompt (p10k) consumes $? before a precmd hook runs,
+# so only the command's direct caller reads its exit status reliably. The count is computed once by
+# the provider script and pushed with the trigger (COUNT=…); the handler applies it and redraws only
+# if it changed (see dot_config/sketchybar/plugins/updates.lua — keep the event names in sync). The
+# trigger runs in a detached subshell `( … & )` so computing the count never blocks the prompt, and
+# `command` calls the real binary so the wrapper doesn't recurse.
+function brew() {
+	command brew "$@"
+	local ret=$?
+	if ((ret == 0)); then
+		case "$1" in
+		upgrade | install | uninstall | reinstall | remove | rm | bundle)
+			(command -v sketchybar >/dev/null 2>&1 &&
+				sketchybar --trigger updates_brew_refresh \
+					COUNT="$("$HOME/.config/sketchybar/event/providers/brew.sh")" &) >/dev/null 2>&1
+			;;
+		esac
+	fi
+	return $ret
+}
+function mise() {
+	command mise "$@"
+	local ret=$?
+	if ((ret == 0)); then
+		case "$1" in
+		up | upgrade | install | use | uninstall | remove | rm | prune)
+			(command -v sketchybar >/dev/null 2>&1 &&
+				sketchybar --trigger updates_mise_refresh \
+					COUNT="$("$HOME/.config/sketchybar/event/providers/mise.sh")" &) >/dev/null 2>&1
+			;;
+		esac
+	fi
+	return $ret
+}

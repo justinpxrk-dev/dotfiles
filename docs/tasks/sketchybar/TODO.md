@@ -19,5 +19,5 @@
 ## System Items
 
 - [ ] CPU/GPU Performance, RAM usage, disk read/write, network down/up
-- [ ] Outdated homebrew packages
-- [ ] Outdated app store apps
+- [x] Outdated homebrew packages — the `updates` pill (`plugins/updates.lua`), a modular provider registry that also covers **mise** outdated tools (scoped to the dotfiles toolchain). Add a source = one registry entry + `event/providers/<name>.sh`.
+- [ ] ~~Outdated app store apps~~ — deferred: no `mas`-managed apps (`dot_Brewfile` has none), and GUI apps are casks already counted by `brew outdated`. Revisit if `mas` apps are added.

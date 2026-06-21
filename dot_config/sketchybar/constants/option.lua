@@ -22,12 +22,14 @@ local alias_opts = utils.merge(resource_opts, { alias = { update_freq = 2 } })
 --- @field NOW_PLAYING table<NowPlayingOption, table<string, any>>
 --- @field RESOURCES table<ResourcesOption, table<string, any>>
 --- @field SPACES table<SpacesOption, table<string, any>>
+--- @field UPDATES table<UpdatesOption, table<string, any>>
 --- @alias BarOption "TOP" | "BOTTOM"
 --- @alias DefaultOption "OPTIONS"
 --- @alias EventListenerOption "OPTIONS"
 --- @alias NowPlayingOption "ARTWORK_OPTIONS" | "TRACK_OPTIONS"
 --- @alias ResourcesOption "ALIAS" | "CPU_ICON" | "GPU_ICON" | "RAM_ICON" | "SENSORS_ICON"
 --- @alias SpacesOption "APPLE" | "APPLE_SPACER" | "APP_ICON" | "APP_TITLE" | "BRACKET" | "DIVIDER" | "GLYPH" | "NUM" | "SPACER"
+--- @alias UpdatesOption "SEGMENT"
 
 --- @type Option
 local M = {
@@ -283,6 +285,34 @@ local M = {
 			padding_left = 0,
 			padding_right = 0,
 			width = 5,
+		},
+	},
+	-- Updates pill (see plugins/updates.lua). Only the segment's static styling lives here; the
+	-- pill bracket, hairline dividers, and inter-pill spacer reuse the space-box chrome
+	-- (`option.SPACES.BRACKET` / `DIVIDER` / `SPACER`) and are assembled in the plugin, exactly as
+	-- the Stats pill reuses them in `plugins/resources.lua`.
+	UPDATES = {
+		-- One segment = one item: a Nerd Font glyph (icon) plus its count (label). `icon.string` (the
+		-- per-provider glyph) is layered on at add time, and `label.string` (the count) plus the
+		-- item-level `padding_left`/`padding_right` are set dynamically by the handler on every
+		-- recompute (so they are omitted here, not shadowed). `icon.padding_right` is the small fixed
+		-- gap from the glyph to its count. Starts hidden (`drawing = false`) so nothing flashes before
+		-- the first poll; the handler shows it once its count is > 0. The glyph + count take the
+		-- knockout colour (the bar's own background) so they read as cutouts in the pill's mauve fill
+		-- — the system-pill look of the Apple badge / app pill; repainted by
+		-- `event/handlers/updates.lua:theme_change_handler`.
+		SEGMENT = {
+			drawing = false,
+			icon = {
+				font = font.DEFAULT.NERD_FONT,
+				padding_right = 4,
+				color = colorschemes.get_bar_background(),
+			},
+			label = {
+				font = font.DEFAULT.LABEL,
+				color = colorschemes.get_bar_background(),
+			},
+			position = "right",
 		},
 	},
 }
