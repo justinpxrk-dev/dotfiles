@@ -1,6 +1,7 @@
 local sbar = require("sketchybar")
 
 local option = require("constants.option")
+local resources = require("event.handlers.resources")
 local spaces = require("event.handlers.spaces")
 local theme = require("event.handlers.theme")
 
@@ -33,9 +34,17 @@ spaces.setup_app_pill()
 -- Add space indicators
 require("plugins.spaces")
 
--- Recolor the space boxes and app pill on light/dark switch (and once at startup). The bar
--- background is transparent, so only the items need recolouring.
+-- Mirror Stats resource widgets (CPU/GPU/RAM/Sensors/battery) plus the macOS clock into the right
+-- region: Stats-colored aliases plus sketchybar-colored SF Symbol icons and pill/divider chrome,
+-- with the clock as its own pill at the right end. The icons and chrome track the live theme, so
+-- the `on_change` below repaints them (resources.theme_change_handler).
+require("plugins.resources")
+
+-- Repaint every themed item on a light/dark switch (and once at startup): the space boxes + app
+-- pill, the Stats pill/icons/dividers. The bar background is transparent, so only the items need
+-- recolouring.
 require("plugins.theme").setup(function()
 	theme.refresh_palette()
 	spaces.theme_change_handler()
+	resources.theme_change_handler()
 end)

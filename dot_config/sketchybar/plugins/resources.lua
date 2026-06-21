@@ -1,8 +1,6 @@
-local sbar = require("sketchybar")
-
-local item = require("constants.item")
-local option = require("constants.option")
-
-sbar.add("item", item.RESOURCES.EVENT_LISTENER, option.EVENT_LISTENER.OPTIONS)
-sbar.add("graph", item.RESOURCES.CPU_GRAPH, 40, option.RESOURCES.CPU_GRAPH)
-sbar.add("item", item.RESOURCES.CPU, option.RESOURCES.CPU)
+-- Build the Stats resource widgets into the top bar's right region. The construction — the
+-- mirrored Stats `alias` items, the pixel-tuned spacing, and the pill/divider chrome — lives in
+-- `event/handlers/resources.lua` (`M.build`), beside the theme repaint that shares its
+-- `PILLS`/`DIVIDERS`, so this plugin is just the entry point that runs the build at the right
+-- point in the init sequence (see `init/topbar.lua`).
+require("event.handlers.resources").build()
