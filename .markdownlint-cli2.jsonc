@@ -3,7 +3,9 @@
   // Vendored/submodule trees, plus .venv (ships a stray README.md). Mostly
   // mirrors .prettierignore, except .claude: markdownlint skips it (its
   // SKILL.md are symlinks already linted once under .agents/skills/), while
-  // prettier still formats it. See AGENTS.md "Keeping Config in Sync".
+  // prettier still formats it. lessons.md is gitignored agent memory that
+  // Prettier already skips via .gitignore, so it is excluded here too. See
+  // AGENTS.md "Keeping Config in Sync".
   "ignores": [
     "node_modules",
     ".venv",
@@ -14,7 +16,8 @@
     "Library/Themes/Catppuccin",
     "dot_config/sketchybar/lib",
     "Library/Unmanaged",
-    ".obsidian"
+    ".obsidian",
+    ".agents/memories/lessons.md"
   ],
   "config": {
     // Prettier owns line wrapping for Markdown.

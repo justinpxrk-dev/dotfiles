@@ -13,15 +13,26 @@ Personal macOS dotfiles managed with [chezmoi](https://chezmoi.io). The repo roo
 
 ## Lessons
 
-At the start of every session, read `.agents/memories/lessons.md` and follow it. It records past mistakes so they are not repeated. Claude Code inlines it automatically through the import below; other agents (e.g. Codex) must read it explicitly.
+`.agents/memories/lessons.md` records past mistakes so they are not repeated. It is **gitignored** — machine-local agent memory that accumulates per clone and is never committed, keeping its churn out of git history. Since it is untracked, a fresh clone won't have it; the only committed copy is the seed block at the end of this section. It is excluded from lint/format (Prettier skips gitignored files; markdownlint excludes it explicitly), so keep entries tidy by hand.
 
-<!-- The import path is relative to this file's real directory (.agents/memories/), so it must stay `@lessons.md`. The repo-root form `@.agents/memories/lessons.md` resolves to a nonexistent nested path and silently fails to load (verified via a headless memory probe). -->
-
-@lessons.md
+**At the start of every session:** if `.agents/memories/lessons.md` does not exist, create it verbatim from the seed block below, then read it and follow it. (It is no longer auto-imported — a static `@import` to a gitignored file breaks on fresh clones — so every agent, Claude or Codex, loads it via this step.)
 
 - After ANY correction from the user, append the pattern to `.agents/memories/lessons.md` as a short imperative rule that prevents the same mistake.
 - **Whenever you apply a lesson, move its section up one slot** (swap it with the section directly above) so frequently used lessons float to the top.
 - Keep entries terse and imperative. Ruthlessly iterate until the mistake rate drops.
+- To make a lesson survive a fresh clone, also copy it into the seed block below — that is the only committed copy.
+
+### lessons.md seed
+
+If `.agents/memories/lessons.md` is missing, create it with exactly this content:
+
+```markdown
+# Lessons
+
+Past mistakes, recorded so they are not repeated. Read at the start of every session — see the **Lessons** section in `AGENTS.md` for the recording protocol.
+
+<!-- Add each lesson as a short `## Title` section: an imperative rule, optionally with a one-line "why". -->
+```
 
 ## Project Structure
 
@@ -30,7 +41,7 @@ Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and
 ```text
 chezmoi/
 ├── .agents/    — shared agent config, read by Claude and Codex
-│   ├── memories/ — AGENTS.md (this file) + lessons.md
+│   ├── memories/ — AGENTS.md (this file) + lessons.md (gitignored; seeded from AGENTS.md)
 │   └── skills/ — shared skill bodies (commit, preflight)
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config; skills/ symlink into .agents/skills/

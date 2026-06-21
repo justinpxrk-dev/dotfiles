@@ -80,7 +80,7 @@ Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and
 ```text
 chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── .agents/                            — shared agent config, read by Claude and Codex
-│   ├── memories/                       — AGENTS.md (symlinked from repo root) + lessons.md
+│   ├── memories/                       — AGENTS.md (symlinked from repo root) + lessons.md (gitignored; seeded from AGENTS.md)
 │   └── skills/                         — shared skill bodies (commit, preflight)
 ├── .chezmoiscripts/                    — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/                            — Claude Code config; skills/ symlink into .agents/skills/

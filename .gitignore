@@ -1,3 +1,7 @@
+# Agent memory — lessons.md is machine-local, churned by agents, and seeded
+# from AGENTS.md on first run; only the seed (in AGENTS.md) is committed.
+.agents/memories/lessons.md
+
 # Claude
 .claude/settings.local.json
 .claude/worktrees
