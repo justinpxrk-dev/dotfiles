@@ -44,6 +44,7 @@ brew "lazygit"
 brew "leetgo"
 brew "p7zip"
 brew "tig"
+brew "wakeonlan"
 
 # CLI — Shell
 brew "bash"
