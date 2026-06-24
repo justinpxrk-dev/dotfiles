@@ -1,14 +1,15 @@
-local sbar = require("sketchybar")
-
 local colorschemes = require("helpers.colorschemes")
 local themes = require("helpers.themes")
 
 local M = {}
 
-function M.theme_change_handler()
+--- Re-derive the active palette from the current system theme (Mocha in dark, Latte
+--- in light) without repainting the bar. Both bars use this: their backgrounds are
+--- static (transparent), but the chrome still needs the refreshed palette to recolor.
+--- @return nil
+function M.refresh_palette()
 	themes.refresh()
 	colorschemes.refresh()
-	sbar.bar(colorschemes.get_bar_color_options())
 end
 
 return M
