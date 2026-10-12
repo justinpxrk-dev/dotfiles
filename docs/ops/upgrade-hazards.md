@@ -2,6 +2,16 @@
 
 Things that break silently when an upstream tool is upgraded — nothing here is caught by a test or lint, so scan this before `brew upgrade`, or when something stops working right after one.
 
+## Homebrew tap trust (Brewfile and cleanup)
+
+Homebrew requires explicit trust for non-official formulae, casks, and commands by default. `HOMEBREW_REQUIRE_TAP_TRUST` is deprecated because it requests that default; leave it unset. Declare `trusted: true` on each fully qualified third-party formula in `dot_Brewfile` so Bundle grants trust before loading it. See [Tap Trust](https://docs.brew.sh/Tap-Trust) and [Brewfile trust declarations](https://docs.brew.sh/Brew-Bundle-and-Brewfile#trusted).
+
+**Failure mode:** when `brew bundle cleanup` performs cleanup (with `--force` or after confirmation), it resets Homebrew's global trust store to the selected Brewfile's declarations. Trust granted manually or by a bootstrap script disappears if it is absent from that Brewfile; a file with no trust declarations clears every explicit trust entry.
+
+When adding a third-party dependency, use its fully qualified name and `trusted: true` in `dot_Brewfile`. Declare only the individual formulae this setup uses. `spicetify-cli` comes from official `homebrew/core`, so it needs neither `spicetify/tap` nor a trust declaration.
+
+After a trust-related failure, inspect `brew trust` and `brew untrust`, then run `brew bundle install --global` to restore the declared formula trust. Existing whole-tap trust is retained by an install; cleanup with this Brewfile narrows it to the declared formulae.
+
 ## Lua version coupling (sketchybar + LuaRocks)
 
 The Catppuccin palette reaches sketchybar as a LuaRocks rock loaded by SbarLua's embedded Lua. That ties the bar to a single Lua `major.minor`, which appears in three places that must all agree:

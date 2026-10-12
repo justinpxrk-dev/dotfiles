@@ -1,14 +1,15 @@
 # Formulas
+# Declare trust on individual formulae so bundle cleanup preserves the allowlist.
 tap "asmvik/formulae"
 tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
 tap "tinted-theming/tinted"
 
 # Window Manager
-brew "FelixKratz/formulae/borders", restart_service: :changed
-brew "FelixKratz/formulae/sketchybar"
-brew "asmvik/formulae/skhd"
-brew "asmvik/formulae/yabai"
+brew "FelixKratz/formulae/borders", restart_service: :changed, trusted: true
+brew "FelixKratz/formulae/sketchybar", trusted: true
+brew "asmvik/formulae/skhd", trusted: true
+brew "asmvik/formulae/yabai", trusted: true
 
 # Terminal Toys
 brew "cbonsai"
@@ -65,8 +66,8 @@ brew "make"
 brew "zlib"
 
 # Themes
-brew "cormacrelf/tap/dark-notify"
-brew "tinted-theming/tinted/tinted-builder-rust"
+brew "cormacrelf/tap/dark-notify", trusted: true
+brew "tinted-theming/tinted/tinted-builder-rust", trusted: true
 
 # General
 brew "chezmoi"
