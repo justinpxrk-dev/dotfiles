@@ -1,6 +1,7 @@
 [tools]
 node = "latest"
-"npm:pnpm" = "latest"
+# Avoid the npm backend's broken launcher for pnpm 12's native executable.
+pnpm = "latest"
 ruff = "latest"
 stylua = "latest"
 lua-language-server = "latest"
