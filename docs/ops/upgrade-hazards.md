@@ -2,14 +2,6 @@
 
 Things that break silently when an upstream tool is upgraded — nothing here is caught by a test or lint, so scan this before `brew upgrade`, or when something stops working right after one.
 
-## pnpm native binaries (mise backend)
-
-`mise.toml` uses the `pnpm` shorthand, whose preferred backend is `aqua:pnpm/pnpm`. It downloads the standalone release executable directly. Keep this backend when updating pnpm. The previous `npm:pnpm` installation left a Node.js shim pointing at pnpm 12's install-time placeholder and crashed with `SyntaxError: Invalid or unexpected token` before local or CI commands ran. See [mise's pnpm registry entry](https://mise.jdx.dev/registry.html#pnpm).
-
-After a backend change, run `mise install pnpm`, then check `mise tool pnpm`, `mise which pnpm`, and `mise exec -- pnpm --version`. The active executable should come from mise's `pnpm` installation, rather than `npm-pnpm`. Existing npm-backend installations can remain on disk; mise selects the backend declared by this repository.
-
-CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `pnpm install --frozen-lockfile` before package scripts; Lint also needs `uv sync --dev`. Installing dependencies in the Format job does not prepare the Lint job.
-
 ## Lua version coupling (sketchybar + LuaRocks)
 
 The Catppuccin palette reaches sketchybar as a LuaRocks rock loaded by SbarLua's embedded Lua. That ties the bar to a single Lua `major.minor`, which appears in three places that must all agree:
@@ -79,3 +71,11 @@ Website transparency has a second, profile-local leg: the Zen Internet extension
 
 1. Web pages opaque: re-set `browser.tabs.allow_transparent_browser` to `true` in about:config and restart Zen.
 2. Chrome surfaces opaque: re-locate the painted element or variable in the Zen bundle (`unzip -o /Applications/Zen.app/Contents/Resources/browser/omni.ja -d /tmp/zen-omni`, then grep `chrome/browser/content/browser/zen-styles/`) and adjust the overrides in the chrome css.
+
+## pnpm native binaries (mise backend)
+
+`mise.toml` uses the `pnpm` shorthand, whose preferred backend is `aqua:pnpm/pnpm`. It downloads the standalone release executable directly. Keep this backend when updating pnpm. The previous `npm:pnpm` installation left a Node.js shim pointing at pnpm 12's install-time placeholder and crashed with `SyntaxError: Invalid or unexpected token` before local or CI commands ran. See [mise's pnpm registry entry](https://mise.jdx.dev/registry.html#pnpm).
+
+After a backend change, run `mise install pnpm`, then check `mise tool pnpm`, `mise which pnpm`, and `mise exec -- pnpm --version`. The active executable should come from mise's `pnpm` installation, rather than `npm-pnpm`. Existing npm-backend installations can remain on disk; mise selects the backend declared by this repository.
+
+CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `pnpm install --frozen-lockfile` before package scripts; Lint also needs `uv sync --dev`. Installing dependencies in the Format job does not prepare the Lint job.
