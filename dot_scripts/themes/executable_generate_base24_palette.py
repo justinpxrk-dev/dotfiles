@@ -1,11 +1,10 @@
-from collections.abc import Callable
-from typing import cast
 import math
+from collections.abc import Callable
 from pathlib import Path
+from typing import cast
 
-from materialyoucolor.hct import Hct  # pyright: ignore[reportMissingTypeStubs]
 import sympy  # pyright: ignore[reportMissingTypeStubs]
-
+from materialyoucolor.hct import Hct  # pyright: ignore[reportMissingTypeStubs]
 
 # -------- Theme System functions ----------
 
@@ -70,7 +69,7 @@ def hct_to_argb(h: int, c: int, t: int) -> int:
 
 
 def argb_to_hex(argb: int) -> str:
-    return "#{:06x}".format(argb & 0xFFFFFF)
+    return f"#{argb & 0xFFFFFF:06x}"
 
 
 # -------- Luminance solver ----------
