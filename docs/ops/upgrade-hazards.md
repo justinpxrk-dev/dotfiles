@@ -33,20 +33,19 @@ All three are **5.5** today (Homebrew `lua` is `5.5.0`, matching SbarLua's pin).
 2. Reinstall the rock into the new tree: `luarocks install --local catppuccin`.
 3. Keep SbarLua's `LUA_DIR` pin aligned with Homebrew's `lua`.
 
-## markdownlint-cli2 exact pins (pnpm overrides vs. transitive DoS)
+## markdownlint-cli2 dependency pins and compatibility
 
-`markdownlint-cli2` pins several dependencies to exact versions, and two of those pins (as of `0.22.1`) carry quadratic-complexity DoS advisories. `pnpm-workspace.yaml` carries one `overrides` entry per pin, lifting each to its patched release so the fixed version is what actually installs:
+`markdownlint-cli2` 0.23.3 supports `js-yaml` 5 and `markdown-it` 15. Its dependency pins already include the fixes that required the previous `js-yaml` 4.2.0 and `markdown-it` 14.2.0 overrides, so those overrides are removed.
 
-- **markdown-it** — pinned to `14.1.1`; DoS in the smartquotes rule ([GHSA-6v5v-wf23-fmfq](https://github.com/advisories/GHSA-6v5v-wf23-fmfq) / CVE-2026-48988, fixed in `14.2.0`; Dependabot alert #1). Override: `markdown-it@<14.2.0` → `>=14.2.0`.
-- **js-yaml** — pinned to `4.1.1`; DoS in merge-key handling via repeated aliases ([GHSA-h67p-54hq-rp68](https://github.com/advisories/GHSA-h67p-54hq-rp68) / CVE-2026-53550, fixed in `4.2.0`; Dependabot alert #2). Override: `js-yaml@<4.2.0` → `>=4.2.0`.
+`markdownlint-cli2` still pins `smol-toml` to 1.8.0, which has a quadratic-time parsing denial-of-service vulnerability ([GHSA-r4xh-jqrq-34v2](https://github.com/advisories/GHSA-r4xh-jqrq-34v2), fixed in 1.9.0). `pnpm-workspace.yaml` overrides affected versions with `^1.9.0`, keeping the patch within the supported major. Remove this override once the linter's own pin includes the fix.
 
-**Failure mode:** bump `markdownlint-cli2` to a release whose own pin is already at or past the patched version and that override becomes dead weight — harmless, but it silently masks the upstream pin and keeps forcing the dependency even if a future `markdownlint-cli2` deliberately holds an older line for compatibility.
+**Failure mode:** an override with only a lower bound can allow Dependabot to cross a dependency's major version while its parent remains unchanged. `markdownlint-cli2` 0.22.1 imports a default export from `js-yaml`, so replacing that dependency with version 5 crashes the linter before it checks any Markdown. Update the parent to a compatible release and keep any remaining security overrides within its supported dependency majors.
 
 **On a markdownlint-cli2 upgrade:**
 
-1. Check the new pins: `npm view markdownlint-cli2@<version> dependencies.markdown-it dependencies.js-yaml`.
-2. For any pin already at or past its patched version, drop the matching override from `pnpm-workspace.yaml` and re-run `pnpm install`.
-3. Re-run `pnpm run lint:md` to confirm markdownlint still parses cleanly under the resolved dependencies.
+1. Check the new pins: `npm view markdownlint-cli2@<version> dependencies`.
+2. Remove overrides whose fixes are already included upstream; bound any remaining overrides to compatible major versions and run `pnpm install`.
+3. Run `pnpm run check` to verify the refreshed dependency tree and repository configuration together.
 
 ## GitHub Actions SHA pins (no Dependabot to bump them)
 
