@@ -39,15 +39,19 @@ if [[ -z "$mapping" ]]; then
 	exit 1
 fi
 
-# Pad each space for whichever bar lives on its display, resolved by UUID. A
-# transient per-space failure (a space renumbered mid dock/undock) logs and the
-# sweep continues, rather than aborting and leaving padding half-applied.
+# A space can be renumbered while displays change. Attempt the whole snapshot
+# and report partial failure after the sweep so other spaces still get padding.
+padding_status=0
 while read -r uuid space; do
 	if [[ "$uuid" == "$BUILTIN_UUID" ]]; then
 		padding=$MAIN_BOTTOM_PADDING
 	else
 		padding=$EXTERNAL_BOTTOM_PADDING
 	fi
-	yabai -m config --space "$space" bottom_padding "$padding" ||
+	if ! yabai -m config --space "$space" bottom_padding "$padding"; then
 		echo "apply-display-config: could not pad space $space" >&2
+		padding_status=1
+	fi
 done <<<"$mapping"
+
+exit "$padding_status"
