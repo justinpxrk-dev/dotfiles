@@ -2,7 +2,6 @@
 tap "asmvik/formulae"
 tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
-tap "spicetify/tap"
 tap "tinted-theming/tinted"
 
 # Window Manager
