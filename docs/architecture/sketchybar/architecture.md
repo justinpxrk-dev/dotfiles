@@ -35,3 +35,13 @@ Each display's yabai `bottom_padding` clears whatever bar lives there (`~/.scrip
 ## Display targeting
 
 The spaces panel uses `option.BAR.BOTTOM.display`, a hardcoded monitor index (`2`) because sketchybar has no "secondary display" selector. Flip it to `1` if the external bar lands on the built-in; the index follows the System Settings arrangement, and the bar disappears when undocked.
+
+## Space state model
+
+`model/spaces.lua` creates a model with `new(display_uuid)` and updates it with `update(snapshot)`. Each model owns its history for one physical display. A snapshot supplies yabai displays, spaces, and windows, plus an optional front-app name. The result contains the current display index, an ordered `spaces` list (`id`, `index`, `active`, `apps`), and the visible space's app title.
+
+The display is resolved by UUID on every update. App recency and title history use the stable space `id`; the displayed number and sort order use its current `index`. Duplicate app windows produce one entry, the focused app moves to the front, new apps append, and closed apps drop out. Window membership comes from each space's window-ID list, including sticky windows.
+
+A windowless front app can name the focused space's title without becoming an app entry. Empty spaces retain their own last title, while new or departed spaces cannot inherit another space's history. A disconnected display returns empty state and clears its cached history.
+
+The next refresh and rendering features will supply snapshots and consume this state. See [the developer guide](../../developer.md#testing) for the small model check file.

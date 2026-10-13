@@ -7,6 +7,7 @@
     "prepare": "lefthook install || true",
     "fix": "pnpm run lint:fix && pnpm run format",
     "check": "pnpm run format:check && pnpm run lint",
+    "test:sketchybar": "lua tests/sketchybar_spaces.lua",
     "format": "pnpm run format:md && pnpm run format:sh && pnpm run format:lua && pnpm run format:py",
     "format:check": "pnpm run format:check:md && pnpm run format:check:sh && pnpm run format:check:lua && pnpm run format:check:py",
     "lint": "pnpm run lint:lua && pnpm run lint:md && pnpm run lint:py && pnpm run lint:sh",
