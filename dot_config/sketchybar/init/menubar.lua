@@ -1,10 +1,11 @@
+--- Configure a bar with media, space, and resource widgets.
 local sbar = require("sketchybar")
 
 local option = require("constants.option")
 
 -- Initialize bar and default options
 sbar.default(option.DEFAULT.OPTIONS)
-sbar.bar(option.BAR.BOTTOM)
+sbar.bar(option.BAR.TOP)
 
 -- Add theme plugin
 require("plugins.theme")

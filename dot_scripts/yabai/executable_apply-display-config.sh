@@ -5,10 +5,10 @@
 # per-display selector, and both the space-to-display mapping and the display
 # index reshuffle on dock/undock — so resolve each monitor by UUID (stable) and
 # pad every space on it to clear that monitor's sketchybar:
-#   - built-in "Color LCD" (main): bar mirrors the top menubar, so nothing sits
-#     at the bottom — reclaim it (18, matching the other edges).
-#   - external "LG 34GN850": bottom-of-screen bar, so reserve 66px.
-# yabairc wires this to the display add/remove signals and runs it once on load.
+#   - built-in "Color LCD" (main): menubar at the top, so reclaim the bottom
+#     (18, matching the other edges).
+#   - external "LG 34GN850": spaces panel at the bottom, so reserve 66px.
+# yabairc refreshes padding when spaces or displays change, and once on load.
 #
 # BUILTIN_UUID is hardware-specific: replacing the built-in panel means updating
 # it (find the new value via `yabai -m query --displays | jq -r '.[].uuid'`).
