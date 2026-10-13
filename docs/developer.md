@@ -20,7 +20,7 @@ uv sync --dev
 ## Formatting and Linting
 
 ```sh
-pnpm run check           # Run all checks: format:check + lint (mirrors CI and the pre-commit hook)
+pnpm run check           # Run formatting, linting, and SketchyBar regression tests
 pnpm run fix             # Auto-fix everything fixable: lint fixes (ruff --fix, markdownlint --fix) then format
 pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
 pnpm run format:check    # Check formatting without writing
@@ -36,9 +36,19 @@ pnpm run lint:sh / lint:lua / lint:py
 
 shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths are excluded there. The `--apply-ignore` flag must be passed for shfmt to respect them.
 
+## SketchyBar tests
+
+The standalone Lua runtime is pinned in `mise.toml` and installed by `mise install`. Run the regression suite without launching any desktop services:
+
+```sh
+mise exec -- pnpm run test:sketchybar
+```
+
+`tests/sketchybar.lua` exercises space recency, per-display app titles, renderer ordering and themes, and asynchronous query failure/recovery. The tests use a recording SketchyBar implementation and run on both macOS and Linux. `pnpm run check` includes this suite; the pre-commit hook continues to enforce formatting and linting.
+
 ## CI
 
-The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks; the Lint job also uses `uv sync --dev` for Python tools.
+The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks; the Lint job also uses `uv sync --dev` for Python tools and runs the SketchyBar regression suite.
 
 Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
 

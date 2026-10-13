@@ -70,6 +70,7 @@ chezmoi/
 │   └── Wallpapers/ — desktop wallpapers (git-only)
 ├── docs/       — documentation
 │   └── ops/    — operational runbooks (upgrade hazards, couplings)
+├── tests/      — SketchyBar regression tests (git-only)
 ├── AGENTS.md             → .agents/memories/AGENTS.md (symlink — Codex entry point)
 ├── CLAUDE.md             → .agents/memories/AGENTS.md (symlink — Claude entry point)
 ├── dot_Brewfile          → ~/.Brewfile

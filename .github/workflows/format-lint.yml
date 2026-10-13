@@ -60,3 +60,6 @@ jobs:
 
       - name: Lint
         run: pnpm run lint
+
+      - name: Test space indicators
+        run: pnpm run test:sketchybar

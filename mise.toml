@@ -1,4 +1,5 @@
 [tools]
+lua = "5.5.1"
 node = "latest"
 pnpm = "latest"
 ruff = "latest"
