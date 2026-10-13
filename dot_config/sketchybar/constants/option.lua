@@ -34,10 +34,8 @@ local M = {
 			shadow = true,
 			y_offset = 7,
 		}),
-		-- Built-in top bar mirroring the macOS menu bar: flush to the top edge, full
-		-- width, squared off, no float shadow. `main` is always the built-in panel.
-		-- Pinned to pure opaque black rather than the themed background, so it stays
-		-- black across light/dark (the top bar loads no theme handler to repaint it).
+		-- Built-in top bar: flush to the top edge, full width, squared off, no
+		-- shadow. `main` is always the built-in panel.
 		TOP = {
 			color = 0xff000000,
 			corner_radius = 0,

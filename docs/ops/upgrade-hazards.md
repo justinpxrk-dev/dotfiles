@@ -33,6 +33,26 @@ All three are **5.5** today (Homebrew `lua` is `5.5.0`, matching SbarLua's pin).
 2. Reinstall the rock into the new tree: `luarocks install --local catppuccin`.
 3. Keep SbarLua's `LUA_DIR` pin aligned with Homebrew's `lua`.
 
+## SketchyBar instance names
+
+The external LaunchAgent's `ProgramArguments[0]` and the trigger helper's `exec -a` must use `sketchybar-external`. SketchyBar exports this name as `BAR_NAME`, which `init.lua` passes to SbarLua's `set_bar_name`; the messaging service is `git.felix.sketchybar-external`.
+
+`SKETCHYBAR_PROFILE` selects a configuration style separately: `menubar` or `spaces-panel`. Each value must match its Lua source filename under `init/`. Both LaunchAgents declare their profile explicitly; the internal LaunchAgent selects `menubar`, the external selects `spaces-panel`, and the dispatcher defaults to `menubar` when the profile is unset.
+
+A full `chezmoi apply` reloads the external LaunchAgent when its plist changes, retiring the old `git.felix.external` service and registering the new name. If applying only the SketchyBar config, also apply its LaunchAgent and reload it before sending triggers:
+
+```sh
+reload-launch-agent me.justinpxrk.sketchybar-external
+```
+
+## Yabai signal reloads
+
+Yabai app, window, space, display, and padding signals in `yabairc` have labels and are replaced on reload. When upgrading from the old unlabeled configuration, restart yabai once after applying the new files to discard its old signals. Simply reloading `yabairc` leaves those old registrations active alongside the named ones.
+
+```sh
+yabai --restart-service
+```
+
 ## markdownlint-cli2 dependency pins and compatibility
 
 `markdownlint-cli2` 0.23.3 supports `js-yaml` 5 and `markdown-it` 15. Its dependency pins already include the fixes that required the previous `js-yaml` 4.2.0 and `markdown-it` 14.2.0 overrides, so those overrides are removed.
