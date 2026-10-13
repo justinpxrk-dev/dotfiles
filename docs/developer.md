@@ -20,7 +20,7 @@ uv sync --dev
 ## Formatting and Linting
 
 ```sh
-pnpm run check           # Run all checks: format:check + lint (mirrors CI and the pre-commit hook)
+pnpm run check           # Run formatting, linting, and SketchyBar regression tests
 pnpm run fix             # Auto-fix everything fixable: lint fixes (ruff --fix, markdownlint --fix) then format
 pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
 pnpm run format:check    # Check formatting without writing
@@ -36,16 +36,28 @@ pnpm run lint:sh / lint:lua / lint:py
 
 shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths are excluded there. The `--apply-ignore` flag must be passed for shfmt to respect them.
 
+## SketchyBar tests
+
+The standalone Lua runtime is pinned in `mise.toml` and installed by `mise install`. Run the regression suite without launching any desktop services:
+
+```sh
+mise exec -- pnpm run test:sketchybar
+```
+
+`tests/sketchybar.lua` exercises space recency, per-display app titles, renderer ordering and themes, and asynchronous query failure/recovery. The tests use a recording SketchyBar implementation and run on both macOS and Linux. `pnpm run check` includes this suite; the pre-commit hook continues to enforce formatting and linting.
+
 ## CI
 
-GitHub Actions runs `format:check` and `lint` on every push and pull request to any branch. The workflow mirrors local setup: mise installs all tools, then `pnpm install --frozen-lockfile` and `uv sync --dev` install package dependencies before running checks.
+The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks; the Lint job also uses `uv sync --dev` for Python tools and runs the SketchyBar regression suite.
 
 Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
 
-- `deploy-public-macos.yml` — runs on every push and pull request (any branch), `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 3 3,15 * * *`). No secrets, so fork PRs are safe; private submodules fail silently.
+- `deploy-public-macos.yml` — runs on pushes to `main`, pull requests targeting `main`, `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 3 3,15 * * *`). No secrets, so fork PRs are safe; private submodules fail silently.
 - `deploy-authenticated-macos.yml` — runs on every push (any branch), `workflow_dispatch`, and a staggered 12-hour schedule (`cron: 7 7,19 * * *`, offset from the public deploy to avoid runner contention). Uses `webfactory/ssh-agent` with deploy keys for private submodules. `pull_request` is intentionally excluded so deploy-key secrets are never exposed to fork PRs.
 
-`zsh-benchmark-startup.yml` measures shell startup time on the macOS runner. It runs on `workflow_dispatch`, a 12-hour schedule (`cron: 9 9,21 * * *`), and on push/pull request when startup-relevant files change — the zsh config plus everything that shapes the benchmarked HOME (`dot_zshenv.tmpl`, `dot_config/git/**`, `dot_Brewfile`, `.chezmoiscripts/**`, the workflow itself). It applies the branch's dotfiles, warms up the shell and verifies every antidote plugin actually cloned (a failed clone would benchmark a degraded, artificially fast shell), then gates hyperfine's min against `THRESHOLD_MS` — runner noise is strictly additive, so the min tracks config cost where the mean tracks VM contention.
+All three macOS workflows run `brew update` before `chezmoi apply`. The startup benchmark performs this setup only when its benchmark gate is enabled.
+
+`zsh-benchmark-startup.yml` measures shell startup time on the macOS runner. It runs on `workflow_dispatch`, a 12-hour schedule (`cron: 9 9,21 * * *`), pushes to `main`, and pull requests targeting `main`. For push/pull request events, it benchmarks only when startup-relevant files change — the zsh config plus everything that shapes the benchmarked HOME (`dot_zshenv.tmpl`, `dot_config/git/**`, `dot_Brewfile`, `.chezmoiscripts/**`, the workflow itself). Manual and scheduled runs always benchmark. It applies the branch's dotfiles, warms up the shell and verifies every antidote plugin actually cloned (a failed clone would benchmark a degraded, artificially fast shell), then gates hyperfine's min against `THRESHOLD_MS` — runner noise is strictly additive, so the min tracks config cost where the mean tracks VM contention.
 
 ## Worktrees
 

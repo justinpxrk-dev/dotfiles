@@ -52,8 +52,14 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
 
+      - name: Install node dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Install Python dependencies
         run: uv sync --dev
 
       - name: Lint
         run: pnpm run lint
+
+      - name: Test space indicators
+        run: pnpm run test:sketchybar

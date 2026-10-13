@@ -1,49 +1,40 @@
 # Sketchybar architecture
 
-Two independent sketchybar instances run at once, one per display:
+Two independent SketchyBar instances share one configuration tree:
 
-| Instance               | Display           | Bar                 | LaunchAgent                         |
-| ---------------------- | ----------------- | ------------------- | ----------------------------------- |
-| `sketchybar` (default) | built-in (`main`) | top, menu-bar style | `me.justinpxrk.sketchybar`          |
-| `external`             | external (LG)     | bottom, transparent | `me.justinpxrk.sketchybar-external` |
+| Instance               | Display    | Bar                 | LaunchAgent                         |
+| ---------------------- | ---------- | ------------------- | ----------------------------------- |
+| `sketchybar` (default) | built-in   | top, transparent    | `me.justinpxrk.sketchybar`          |
+| `external`             | LG monitor | bottom, transparent | `me.justinpxrk.sketchybar-external` |
 
-A single instance has one global `bar` config (position, height, …) applied to every display it draws on, so a top bar on one screen and a bottom bar on another is impossible within one instance — hence two.
+An instance has one global bar configuration, so separate instances allow different positions on the two displays. `init.lua` selects the profile from `SKETCHYBAR_PROFILE` and directs SbarLua to the external instance with `sbar.set_bar_name("external")` when needed.
 
-## How an instance is named and addressed
+## Instance routing
 
-sketchybar derives its identity from **`basename(argv[0])`** and registers a mach bootstrap service `git.felix.<argv[0]>` (default `git.felix.sketchybar`); the CLI and SbarLua reach a bar by looking that name up. It does **not** read an env var to choose its name — instead it _exports_ the chosen name as `$BAR_NAME` to child scripts.
+SketchyBar names its Mach service from `basename(argv[0])`: `git.felix.sketchybar` or `git.felix.external`. The external LaunchAgent uses `ProgramArguments[0] = external`; `$BAR_NAME` is exported to child scripts rather than selecting the instance itself.
 
-So the external bar is launched as `external` (LaunchAgent `Program` = the real binary, `ProgramArguments[0]` = `external`), registering `git.felix.external`. Its config matches that port two ways:
+A bare `sketchybar --trigger` reaches the default instance. The Now Playing dispatcher re-invokes the CLI with `exec -a "$BAR_NAME"`; yabai uses `~/.scripts/sketchybar/trigger-bars.sh` to reach both instances. Either trigger is best-effort while its daemon is absent. Named yabai signals are replaced on reload, including `window_focused` so switching between windows of the same app refreshes the indicators.
 
-- `SKETCHYBAR_PROFILE=external` (set by the LaunchAgent) makes `init.lua` load `init/external.lua` instead of `init/topbar.lua`.
-- `sbar.set_bar_name("external")` repoints SbarLua — which otherwise always targets `git.felix.sketchybar` — at the external port.
+## Display targeting and padding
 
-`init.lua` is just that dispatcher, so `sketchybarrc` is unchanged and shared by both instances.
+Each profile supplies its monitor's UUID to `spaces.setup`. Every successful refresh resolves that UUID to yabai's current arrangement index and uses the same index for the bar and its space row. The bar starts hidden. A successful refresh hides it when its monitor is disconnected instead of selecting the other monitor's spaces. Hardware replacement requires updating the profile UUID; the built-in UUID also appears in `yabai/apply-display-config.sh`.
 
-## Routing triggers to the right instance
+Yabai padding remains coupled to the pill geometry: 8px top on the built-in, 47px bottom on the external, and 14px on the edges without bars. These values place tiled windows 14px from the current pills. `apply-display-config.sh` resolves displays by UUID and runs at startup, on space creation or switching, and on display addition, removal, or movement. Changes to bar geometry require matching padding changes.
 
-A bare `sketchybar --trigger …` always hits `git.felix.sketchybar` (the default/top bar). Items on the external bar therefore need their triggers re-invoked under `external`:
+## Space state and rendering
 
-- `event/dispatchers/now_playing.sh` re-invokes via `exec -a "$BAR_NAME"` (the daemon exported `BAR_NAME=external` to it).
-- `yabairc`'s space/window/app signals call `~/.scripts/sketchybar/trigger-bars.sh`, which fires `spaces_change` at the default bar _and_ re-invokes the `external` bar via `exec -a external` (yabai isn't a sketchybar child, so the name is explicit) — both displays show their own spaces, so the event fans out to both.
+- `event/handlers/spaces.lua` coalesces signals for 50 ms and collects displays, spaces, windows, and the macOS front app asynchronously. Only one query batch runs at a time. Signals received before the batch starts are absorbed; signals during it discard that batch and request one later refresh, avoiding publication of a snapshot known to be stale. A failed yabai query preserves the current UI and releases the handler for the next event.
+- `model/spaces.lua` contains the app ordering and title state, with no SketchyBar dependency. Recency is keyed by stable yabai space ID, while the displayed number follows the current space index. Each app appears once per space, focused apps move to the front, new apps append, and closed apps drop out. The space's window list also handles sticky windows. Departed spaces are pruned.
+- `views/spaces.lua` owns item names, layout, colors, and the rendered cache. Content and theme changes update existing items. Changes to space indices or app counts rebuild the row in one SbarLua callback transaction, preserving region order.
 
-## Coupling with yabai padding
+Space boxes retain the outlined design: translucent `surface0`, 2px borders, 10px inner margins, and 5px between app glyphs. Visible spaces use a mauve border with a bright number and leading glyph; remaining glyphs use `overlay1`. Inactive spaces use a dim border and foreground. Empty spaces show only their number.
 
-Each display's yabai top/bottom padding is tuned so windows sit a uniform 14px from that display's bar pills (`~/.scripts/yabai/apply-display-config.sh`): 8px top on the built-in lands 14px below its top-bar pills, 47px bottom on the external lands 14px above its bottom-bar pills (the bar-less edges are a plain 14px). **Moving a bar's position means updating the matching yabai padding**, and vice-versa — nothing enforces it.
+The active-app title pill has an app-font glyph and name on solid mauve, with the themed base color as its foreground. It shows the visible space's leading app on each display. A windowless front app on the focused space can name the pill without becoming a space glyph, even if that app has a window elsewhere. An empty space remembers its own last title when it loses focus; an unrelated empty space does not inherit that title. An unresolved title hides both its pill and spacer. The top bar also has a standalone Apple badge at the far left.
 
-## Display targeting
+The top bar splits spaces around the notch: the title and first `floor(n/2)` spaces occupy `q`, with the remainder in `e`. Five spaces read `[title][1][2] | [3][4][5]`. The Apple badge is outside this group. Because `q` grows leftward, its items are added in reverse visual order; structural rebuilds re-add the title after the left spaces so it remains outermost. `notch_width = 244` is tuned for this panel. The external bar centers its title and spaces and omits the Apple badge.
 
-`option.BAR.BOTTOM.display` is a hardcoded monitor index (`2`) because sketchybar has no "secondary display" selector. Flip it to `1` if the external bar lands on the built-in; the index follows the System Settings arrangement, and the bar disappears when undocked.
+Both bar backgrounds remain transparent. `plugins/theme.lua:setup(on_change)` refreshes the Catppuccin palette and repaints each profile's items on light/dark changes. Theme repainting uses cached space state and does not query yabai.
 
-## The `model/` boundary
+## Regression tests
 
-Pure domain logic lives under `model/`, kept apart from the bar wiring. A module belongs there only if it takes **no `require("sketchybar")`**, carries **no presentation concerns** (it speaks in domain values — app names, space indices — never glyphs or item names), and is **unit-testable as plain Lua** — the config's only sketchybar-free, testable zone. Its first occupant is `model/mru.lua`, the per-space **most-recently-used app ordering** that `event/handlers/spaces.lua` reads to lay out each space's app glyphs (most-recent first, deduped, with closed apps dropped); the handler drives it through `mru.promote` / `mru.reconcile` / `mru.prune`, while the ordering rules and their state live in the model. The renderer's own _view-mirror_ state — which space indices and glyph counts are currently materialized (`M.RENDERED` / `M.GLYPH_COUNT` / `M.ACTIVE`) — deliberately stays in the handler, because that is presentation bookkeeping, not domain state.
-
-## Space indicators
-
-There is no native sketchybar `space` item (that needs the SIP scripting addition), so `event/handlers/spaces.lua` draws each display's spaces itself: it filters yabai's spaces by `display` index (`M.DISPLAY`, set per profile) and re-queries `yabai -m query --spaces|--windows` on a custom `spaces_change` event that `yabairc` fans out to both bars (debounced 50 ms). Each space is a bracket box (number, divider, recent-app glyphs) — a dark `surface0` fill inside a thin (2px) border, with a uniform 10px gap throughout (border→number→divider→glyph→…→border). The active (visible) space has a **mauve** border and bright foreground number/glyphs, with its leading (active-app) glyph at full foreground and the other apps in a dimmer (`overlay1`) foreground; inactive spaces have a dim `surface1` border and a dimmer foreground throughout. The app pill shares the active mauve border.
-
-- **Active-app pill.** The active app is _not_ named in the space boxes — it lives in a **title pill** carrying the active app's app-font icon glyph (the same source as the space-box glyphs) plus its name, accompanied (on the top bar only) by a standalone **Apple badge** (the Apple glyph, `U+1008FA` in SF Pro — the sketchybar-app-font has no standalone Apple logo) pinned at the bar's far-left edge, apart from the title pill. Both are "system pills" — a solid **mauve** box with **knockout** content: the glyph and text take the bar's own `BACKGROUND` colour (`colorschemes.get_bar_background`), so they read as cutouts and stand clearly apart from the surface-filled space pills. The title pill shows **that display's** active app — the leading app of its visible space (captured in `M.render`), so it tracks that display's apps rather than the global frontmost app. A windowless front app on the _focused_ space (a Finder desktop) names the pill but is _not_ shown as a box glyph; on an _unfocused_ display, where the global front app no longer identifies this display's space, the pill keeps its last app (`M.app_title`) rather than blanking. On the top bar the Apple badge sits in the far-left `"left"` region (`M.APPLE_POSITION`, before the now-playing pill) and the title pill leads the `"q"` (left-of-notch) group, counting toward the notch split (see **Notch**); on the external bar the badge is omitted (`M.APPLE_POSITION` unset) and the title pill leads the centered row.
-- **Flicker-free.** An unchanged set of space indices updates in place (`sbar.set`); create/destroy tears down and rebuilds the boxes. Both commit as one SbarLua transaction. The app pill is a singleton on the external bar (never torn down — only `set`); on the split top bar it is re-added after the left spaces on each structural rebuild so it stays left-most, with `M.app_title` restoring its app across the rebuild.
-- **Notch.** `position = "center"` lands dead-center behind the notch, so the top bar splits its row across the two notch-aware regions: the **title pill** plus the first `floor((n-1)/2)` spaces (by sorted index) sit in `"q"` ("left of notch") and the rest in `"e"` ("right of notch"), balanced around the notch _including_ the title pill (so 5 spaces give `[title][1][2] | [3][4][5]`; counting left items incl. the pill vs right, the split runs (2,1), (2,2), (3,2), (3,3), (4,3), (4,4)…). The standalone Apple badge is _not_ part of this split — it sits in the separate far-left `"left"` region (see **Active-app pill**). `"q"` stacks right-to-left, so the left boxes are added in reverse to read the same left-to-right as the right side, and the title pill is re-added after them to stay left-most. Both anchors are derived from the live display center and the bar's `notch_width` (tuned on `option.BAR.TOP` so the row clears the physical notch by 10px), avoiding a hardcoded display-width offset. The external bar has no notch, so it leaves `M.POSITION_LEFT` unset and centers the whole row.
-- **Theme.** Both bars are **fully transparent** (`color = 0x00000000`), so their backgrounds are never repainted — only their items track light/dark. `plugins/theme.lua:setup(on_change)` refreshes the palette (`theme.refresh_palette`) and recolors the space boxes, glyphs, text, and pills from the live palette (Mocha in dark, Latte in light) on every switch. The active space's **mauve** border is the accent; inactive boxes use a dim `surface1` border.
+`mise exec -- pnpm run test:sketchybar` runs the model, renderer, and coordinator against recorded SketchyBar calls and controlled async callbacks. The suite covers recency after space renumbering, monitor reordering and disconnection, windowless app titles, notch ordering, palette changes, failed queries, and signal bursts. It also runs in the Format/Lint workflow's Lint job.

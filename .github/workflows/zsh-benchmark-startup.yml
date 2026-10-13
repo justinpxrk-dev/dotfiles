@@ -84,6 +84,11 @@ jobs:
           mkdir -p "$HOME/.local/share"
           ln -sfn "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
 
+      # Runner images can contain stale cask definitions for unversioned fonts.
+      - name: Refresh Homebrew metadata
+        if: steps.gate.outputs.run == 'true'
+        run: brew update
+
       - name: Install chezmoi
         if: steps.gate.outputs.run == 'true'
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
@@ -123,8 +128,8 @@ jobs:
         # Gate on hyperfine's min (see THRESHOLD_MS); the mean is reported
         # alongside for context only.
         run: |
-          min_ms=$(jq '.results[0].min * 1000' result.json)
-          mean_ms=$(jq '.results[0].mean * 1000' result.json)
+          min_ms=$(jq '.results[0].summary.time_wall_clock.min * 1000' result.json)
+          mean_ms=$(jq '.results[0].summary.time_wall_clock.mean * 1000' result.json)
           printf 'Min startup: %.1f ms (limit %s ms); mean %.1f ms\n' "$min_ms" "$THRESHOLD_MS" "$mean_ms"
           printf 'Min startup: %.1f ms (limit %s ms); mean %.1f ms\n' "$min_ms" "$THRESHOLD_MS" "$mean_ms" >>"$GITHUB_STEP_SUMMARY"
           awk -v m="$min_ms" -v t="$THRESHOLD_MS" 'BEGIN { exit (m > t) }' \

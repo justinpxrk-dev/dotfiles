@@ -20,7 +20,6 @@ export PATH="$HOME/.local/bin${PATH:+:$PATH}"
 	local homebrew_opt_prefix="$HOMEBREW_PREFIX/opt"
 	export PATH="$HOMEBREW_PREFIX/bin${PATH:+:$PATH}"
 	export HOMEBREW_AUTO_UPDATE_SECS=86400
-	export HOMEBREW_REQUIRE_TAP_TRUST=1
 
 	# curl
 	export CPPFLAGS="-I$homebrew_opt_prefix/curl/include${CPPFLAGS:+ $CPPFLAGS}"

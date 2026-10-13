@@ -9,7 +9,7 @@
 # value is tuned because each bar's pills sit at a different offset:
 #   - built-in "Color LCD" (main): 8px top lands windows 14px below the pills.
 #   - external "LG 34GN850": 47px bottom lands them 14px above the pills.
-# yabairc wires this to the display add/remove signals and runs it once on load.
+# yabairc refreshes padding when spaces or displays change, and once on load.
 #
 # BUILTIN_UUID is hardware-specific: replacing the built-in panel means updating
 # it (find the new value via `yabai -m query --displays | jq -r '.[].uuid'`).

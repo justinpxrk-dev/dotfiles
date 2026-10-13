@@ -32,6 +32,10 @@ jobs:
           mkdir -p "$HOME/.local/share"
           ln -sfn "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
 
+      # Runner images can contain stale cask definitions for unversioned fonts.
+      - name: Refresh Homebrew metadata
+        run: brew update
+
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 

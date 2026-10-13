@@ -14,7 +14,7 @@ local M = {}
 ---
 --- The space-box roles drive the per-display space indicators: every box is a dim
 --- translucent `surface0` fill. The visible (active) space has a `mauve` border and bright
---- `text` number/glyphs with its leading app glyph in `mauve`; inactive boxes have a dim
+--- `text` number and leading glyph; inactive boxes have a dim
 --- `surface1` border and a dimmer `overlay1` foreground. Every role tracks the live system
 --- theme (Mocha in dark mode, Latte in light) — the palette is re-derived by `M.refresh`.
 --- @param p table a Catppuccin flavor palette, e.g. `catppuccin.mocha()`

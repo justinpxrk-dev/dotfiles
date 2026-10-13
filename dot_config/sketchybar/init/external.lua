@@ -10,16 +10,12 @@ local theme = require("event.handlers.theme")
 sbar.default(option.DEFAULT.OPTIONS)
 sbar.bar(option.BAR.BOTTOM)
 
--- This instance renders the external display's (yabai display 2) spaces, centered. The title
--- pill shares that centered region and is created first, so it leads the cluster. This bar omits
--- the standalone Apple badge (`APPLE_POSITION` left unset). Refresh the palette up front so the
--- first space paint is themed.
-spaces.DISPLAY = 2
-spaces.POSITION = "center"
-spaces.APP_POSITION = "center"
 theme.refresh_palette()
--- Create the title pill before the space boxes so it leads the centered cluster.
-spaces.setup_app_pill()
+spaces.setup({
+	display_uuid = "8504812E-7847-4FC1-8787-047CEB3BF80A",
+	position = "center",
+	app_position = "center",
+})
 
 -- Add left bar plugins
 require("plugins.now_playing")

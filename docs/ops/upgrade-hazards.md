@@ -2,6 +2,16 @@
 
 Things that break silently when an upstream tool is upgraded — nothing here is caught by a test or lint, so scan this before `brew upgrade`, or when something stops working right after one.
 
+## Homebrew tap trust (Brewfile and cleanup)
+
+Homebrew requires explicit trust for non-official formulae, casks, and commands by default. `HOMEBREW_REQUIRE_TAP_TRUST` is deprecated because it requests that default; leave it unset. Declare `trusted: true` on each fully qualified third-party formula in `dot_Brewfile` so Bundle grants trust before loading it. See [Tap Trust](https://docs.brew.sh/Tap-Trust) and [Brewfile trust declarations](https://docs.brew.sh/Brew-Bundle-and-Brewfile#trusted).
+
+**Failure mode:** when `brew bundle cleanup` performs cleanup (with `--force` or after confirmation), it resets Homebrew's global trust store to the selected Brewfile's declarations. Trust granted manually or by a bootstrap script disappears if it is absent from that Brewfile; a file with no trust declarations clears every explicit trust entry.
+
+When adding a third-party dependency, use its fully qualified name and `trusted: true` in `dot_Brewfile`. Declare only the individual formulae this setup uses. `spicetify-cli` comes from official `homebrew/core`, so it needs neither `spicetify/tap` nor a trust declaration.
+
+After a trust-related failure, inspect `brew trust` and `brew untrust`, then run `brew bundle install --global` to restore the declared formula trust. Existing whole-tap trust is retained by an install; cleanup with this Brewfile narrows it to the declared formulae.
+
 ## Lua version coupling (sketchybar + LuaRocks)
 
 The Catppuccin palette reaches sketchybar as a LuaRocks rock loaded by SbarLua's embedded Lua. That ties the bar to a single Lua `major.minor`, which appears in three places that must all agree:
@@ -22,21 +32,21 @@ All three are **5.5** today (Homebrew `lua` is `5.5.0`, matching SbarLua's pin).
 1. Bump the `5.5` in `executable_sketchybarrc`'s `package.path` to the new `major.minor`.
 2. Reinstall the rock into the new tree: `luarocks install --local catppuccin`.
 3. Keep SbarLua's `LUA_DIR` pin aligned with Homebrew's `lua`.
+4. Update the `lua` test-runtime pin in `mise.toml` and run `pnpm run test:sketchybar`. This pin supplies the standalone regression tests; SbarLua still uses its embedded runtime.
 
-## markdownlint-cli2 exact pins (pnpm overrides vs. transitive DoS)
+## markdownlint-cli2 dependency pins and compatibility
 
-`markdownlint-cli2` pins several dependencies to exact versions, and two of those pins (as of `0.22.1`) carry quadratic-complexity DoS advisories. `pnpm-workspace.yaml` carries one `overrides` entry per pin, lifting each to its patched release so the fixed version is what actually installs:
+`markdownlint-cli2` 0.23.3 supports `js-yaml` 5 and `markdown-it` 15. Its dependency pins already include the fixes that required the previous `js-yaml` 4.2.0 and `markdown-it` 14.2.0 overrides, so those overrides are removed.
 
-- **markdown-it** — pinned to `14.1.1`; DoS in the smartquotes rule ([GHSA-6v5v-wf23-fmfq](https://github.com/advisories/GHSA-6v5v-wf23-fmfq) / CVE-2026-48988, fixed in `14.2.0`; Dependabot alert #1). Override: `markdown-it@<14.2.0` → `>=14.2.0`.
-- **js-yaml** — pinned to `4.1.1`; DoS in merge-key handling via repeated aliases ([GHSA-h67p-54hq-rp68](https://github.com/advisories/GHSA-h67p-54hq-rp68) / CVE-2026-53550, fixed in `4.2.0`; Dependabot alert #2). Override: `js-yaml@<4.2.0` → `>=4.2.0`.
+`markdownlint-cli2` still pins `smol-toml` to 1.8.0, which has a quadratic-time parsing denial-of-service vulnerability ([GHSA-r4xh-jqrq-34v2](https://github.com/advisories/GHSA-r4xh-jqrq-34v2), fixed in 1.9.0). `pnpm-workspace.yaml` overrides affected versions with `^1.9.0`, keeping the patch within the supported major. Remove this override once the linter's own pin includes the fix.
 
-**Failure mode:** bump `markdownlint-cli2` to a release whose own pin is already at or past the patched version and that override becomes dead weight — harmless, but it silently masks the upstream pin and keeps forcing the dependency even if a future `markdownlint-cli2` deliberately holds an older line for compatibility.
+**Failure mode:** an override with only a lower bound can allow Dependabot to cross a dependency's major version while its parent remains unchanged. `markdownlint-cli2` 0.22.1 imports a default export from `js-yaml`, so replacing that dependency with version 5 crashes the linter before it checks any Markdown. Update the parent to a compatible release and keep any remaining security overrides within its supported dependency majors.
 
 **On a markdownlint-cli2 upgrade:**
 
-1. Check the new pins: `npm view markdownlint-cli2@<version> dependencies.markdown-it dependencies.js-yaml`.
-2. For any pin already at or past its patched version, drop the matching override from `pnpm-workspace.yaml` and re-run `pnpm install`.
-3. Re-run `pnpm run lint:md` to confirm markdownlint still parses cleanly under the resolved dependencies.
+1. Check the new pins: `npm view markdownlint-cli2@<version> dependencies`.
+2. Remove overrides whose fixes are already included upstream; bound any remaining overrides to compatible major versions and run `pnpm install`.
+3. Run `pnpm run check` to verify the refreshed dependency tree and repository configuration together.
 
 ## GitHub Actions SHA pins (no Dependabot to bump them)
 
@@ -59,17 +69,27 @@ git ls-remote https://github.com/<owner>/<repo> 'refs/tags/<tag>' 'refs/tags/<ta
 
 Use the dereferenced (`^{}`) commit SHA for annotated tags; the bare ref already is the commit for lightweight tags.
 
-## Sketchybar space indicators (app-font icon map + yabai display indices)
+## Sketchybar space indicators (font map, monitor identity, and notch)
 
-The per-display space boxes (`dot_config/sketchybar/event/handlers/spaces.lua`) lean on two things nothing checks:
+The space model and renderer are regression-tested, but these hardware and upstream dependencies require manual maintenance:
 
-1. **The generated app-font icon map.** `helpers/app_icons.lua` `dofile`s `~/.config/sketchybar/helpers/icon_map.lua`, installed by `install_sketchybar_app_font()` in `git/install-submodules.sh` (`pnpm run build:install`). A sketchybar-app-font upgrade regenerates that map; if upstream ever changes its shape (today `return { ["App"] = ":glyph:" }`) or the build stops emitting it, every app falls back to `:default:` — or the bar errors at load if the file is missing. Reinstall the font submodule and the map together.
-2. **Display indices.** Each instance filters spaces by yabai `display` index (`spaces.DISPLAY` = 1 built-in / 2 external) and must agree with the matching bar's `option.BAR.*.display`. Both reshuffle on dock/undock the same way the bar already does — if the bars land on the wrong screens, the space rows do too.
-3. **Notch clearance.** The top bar anchors its space row with the notch-aware `position = "e"` ("right of notch") region (`init/topbar.lua`), whose anchor sketchybar computes as ≈ `display_center + notch_width/2`. The `notch_width` (`244`, on `option.BAR.TOP`) is tuned so the first box clears the physical notch by 10px — measured live via `swift` + `NSScreen.auxiliaryTopRightArea` (notch right edge ~1197pt on the ~2160pt-wide built-in, a ~234pt centered notch). Two upgrade hazards, neither flagged at apply time: (a) the `q`/`e` position names are flagged **experimental** upstream — a sketchybar upgrade that renames/removes them breaks the anchor (the row would jump to a corner); re-check against the [item docs](https://felixkratz.github.io/SketchyBar/config/items) after `brew upgrade sketchybar`. (b) `notch_width` is a point value, so a built-in resolution/scaling change rescales the physical notch's point-width and the 10px gap drifts — re-measure the notch edge and re-tune `notch_width`. This is still far less brittle than an absolute offset: the dominant ~950pt half-display term is recomputed by sketchybar, not hardcoded.
+1. **App-font icon map.** `helpers/app_icons.lua` loads `~/.config/sketchybar/helpers/icon_map.lua`, generated by `install_sketchybar_app_font()` in `git/install-submodules.sh`. A missing, invalid, or incomplete map falls back to `:default:`. After a font upgrade, reinstall both the font and map and confirm the generated file still returns a table mapping app names to ligatures.
+2. **Monitor UUIDs.** `init/topbar.lua` and `init/external.lua` identify the built-in panel and LG monitor by UUID. Arrangement indices are resolved on each refresh and shared by the bar and space row. A disconnected monitor hides its bar; replacing a monitor requires updating its profile UUID. The built-in UUID must also match `BUILTIN_UUID` in `yabai/apply-display-config.sh`. Find current values with `yabai -m query --displays | jq -r '.[].uuid'`.
+3. **Notch clearance.** The `q`/`e` regions anchor from the display center using `option.BAR.TOP.notch_width = 244`. This point value was tuned for a roughly 234pt notch on the 2160pt-wide built-in panel. After changing display scaling, remeasure with `NSScreen.auxiliaryTopRightArea` and retune the clearance. After a SketchyBar upgrade, check the [item positioning API](https://felixkratz.github.io/SketchyBar/config/items) still supports the notch regions.
 
-**Failure mode:** after a font upgrade, app glyphs all show the default icon (or the bar drops on load); after a display reshuffle, a bar shows the other display's spaces. Neither is flagged at `chezmoi apply` time.
+Yabai fans app, window, space, and display events out to both bars. Named signals are replaced on reload; when upgrading from the old unlabeled configuration, restart yabai once to discard its old signals. The 50ms debounce absorbs queued bursts and prevents overlapping query batches. If dragging windows produces excessive queries, reduce `window_moved` notifications or increase the debounce.
 
-Unrelated to upgrades but worth knowing: `yabairc` fans `space_*` / `window_*` / `application_front_switched` out to **both** bars on every change. The handler debounces (`sbar.delay` 50 ms); if it ever feels heavy, drop the `window_moved` signal or widen the debounce.
+## Homebrew cask metadata and download failures on macOS CI
+
+The macOS deploy workflows and startup benchmark refresh Homebrew with `brew update` before applying dotfiles. Runner images can contain stale cask metadata, while unversioned font downloads can change their installer filenames. On 2026-10-12, the cached `font-sf-pro` definition expected `SF Pro Fonts.pkg`, but Apple's download contained `SFProFonts.pkg`; the current [Homebrew cask definition](https://github.com/Homebrew/homebrew-cask/blob/master/Casks/font/font-s/font-sf-pro.rb) already uses the new filename.
+
+Keep the explicit metadata-refresh step in both deploy workflows and inside the startup benchmark's setup gate. Refresh metadata first when an installer artifact no longer matches a cask definition.
+
+## Hyperfine JSON schema (startup benchmark)
+
+The startup workflow reads [Hyperfine 2's JSON export](https://github.com/sharkdp/hyperfine/releases/tag/v2.0.0) from `results[0].summary.time_wall_clock.min` and `.mean`. These values are exported in seconds and multiplied by 1000 before reporting milliseconds; the startup limit remains `THRESHOLD_MS=200`. Hyperfine 1's `results[0].min` and `.mean` fields no longer exist.
+
+After a Hyperfine major upgrade, inspect a fresh `--export-json` result and check the workflow's field paths and units before interpreting a reporting failure as a startup regression.
 
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
@@ -83,3 +103,11 @@ Website transparency has a second, profile-local leg: the Zen Internet extension
 
 1. Web pages opaque: re-set `browser.tabs.allow_transparent_browser` to `true` in about:config and restart Zen.
 2. Chrome surfaces opaque: re-locate the painted element or variable in the Zen bundle (`unzip -o /Applications/Zen.app/Contents/Resources/browser/omni.ja -d /tmp/zen-omni`, then grep `chrome/browser/content/browser/zen-styles/`) and adjust the overrides in the chrome css.
+
+## pnpm native binaries (mise backend)
+
+`mise.toml` uses the `pnpm` shorthand, whose preferred backend is `aqua:pnpm/pnpm`. It downloads the standalone release executable directly. Keep this backend when updating pnpm. The previous `npm:pnpm` installation left a Node.js shim pointing at pnpm 12's install-time placeholder and crashed with `SyntaxError: Invalid or unexpected token` before local or CI commands ran. See [mise's pnpm registry entry](https://mise.jdx.dev/registry.html#pnpm).
+
+After a backend change, run `mise install pnpm`, then check `mise tool pnpm`, `mise which pnpm`, and `mise exec -- pnpm --version`. The active executable should come from mise's `pnpm` installation, rather than `npm-pnpm`. Existing npm-backend installations can remain on disk; mise selects the backend declared by this repository.
+
+CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `pnpm install --frozen-lockfile` before package scripts; Lint also needs `uv sync --dev`. Installing dependencies in the Format job does not prepare the Lint job.

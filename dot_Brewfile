@@ -1,15 +1,15 @@
 # Formulas
+# Declare trust on individual formulae so bundle cleanup preserves the allowlist.
 tap "asmvik/formulae"
 tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
-tap "spicetify/tap"
 tap "tinted-theming/tinted"
 
 # Window Manager
-brew "FelixKratz/formulae/borders", restart_service: :changed
-brew "FelixKratz/formulae/sketchybar"
-brew "asmvik/formulae/skhd"
-brew "asmvik/formulae/yabai"
+brew "FelixKratz/formulae/borders", restart_service: :changed, trusted: true
+brew "FelixKratz/formulae/sketchybar", trusted: true
+brew "asmvik/formulae/skhd", trusted: true
+brew "asmvik/formulae/yabai", trusted: true
 
 # Terminal Toys
 brew "cbonsai"
@@ -44,6 +44,8 @@ brew "lazygit"
 brew "leetgo"
 brew "p7zip"
 brew "tig"
+brew "typst"
+brew "wakeonlan"
 
 # CLI — Shell
 brew "bash"
@@ -64,8 +66,8 @@ brew "make"
 brew "zlib"
 
 # Themes
-brew "cormacrelf/tap/dark-notify"
-brew "tinted-theming/tinted/tinted-builder-rust"
+brew "cormacrelf/tap/dark-notify", trusted: true
+brew "tinted-theming/tinted/tinted-builder-rust", trusted: true
 
 # General
 brew "chezmoi"
@@ -120,3 +122,4 @@ brew "mas"
 mas "Copilot", id: 1447330651
 mas "Dynamic wallpaper", id: 1582358382
 mas "Flow", id: 1423210932
+mas "KakaoTalk", id: 869223134

@@ -43,7 +43,11 @@ Initialises all git submodules and builds/installs their outputs (MonoLisa fonts
 
 ## `brew/install-packages.sh`
 
-Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes. In CI, `mas` (Mac App Store) apps are skipped via `HOMEBREW_BUNDLE_MAS_SKIP` because the runner has no App Store sign-in; the deploy workflow validates their IDs with `mas info` instead.
+Installs all Homebrew packages declared in `~/.Brewfile` via `brew bundle`. Run automatically by chezmoi (`run_onchange_`) whenever `dot_Brewfile` changes.
+
+`dot_Brewfile` declares `trusted: true` on the fully qualified third-party formula entries. Homebrew Bundle grants that trust before loading or installing them, keeping package and trust declarations together. Official core formulae, including `spicetify-cli`, need no explicit trust.
+
+In CI, `mas` (Mac App Store) apps are skipped via `HOMEBREW_BUNDLE_MAS_SKIP` because the runner has no App Store sign-in; the deploy workflow validates their IDs with `mas info` instead.
 
 ```sh
 ~/.scripts/brew/install-packages.sh
@@ -150,7 +154,7 @@ Opens a new Ghostty window — tiled by default, floating centered with `--float
 
 ## `yabai/apply-display-config.sh`
 
-Sets each display's yabai top and bottom padding to clear whatever sketchybar lives on it, keyed by the display's stable UUID — yabai padding is per-space with no per-display selector, and both the space→display mapping and display indices reshuffle on dock/undock. Each bar edge is tuned so windows sit a uniform 14px from that bar's pills — the same gap `yabairc` gives the bar-less edges: 8px top on the built-in lands 14px below its top-bar pills, 47px bottom on the external lands 14px above its bottom-bar pills. `yabairc` runs it once on load and on `display_added`/`display_removed`, so the layout re-mirrors whenever a monitor is plugged or unplugged.
+Sets each display's yabai top and bottom padding to clear whatever sketchybar lives on it, keyed by the display's stable UUID — yabai padding is per-space with no per-display selector, and both the space→display mapping and display indices reshuffle on dock/undock. Each bar edge is tuned so windows sit a uniform 14px from that bar's pills — the same gap `yabairc` gives the bar-less edges: 8px top on the built-in lands 14px below its top-bar pills, 47px bottom on the external lands 14px above its bottom-bar pills. `yabairc` runs it once on load, on `space_created`/`space_changed`, and on `display_added`/`display_removed`/`display_moved`. Newly created or relocated spaces therefore receive the padding for their current monitor.
 
 ```sh
 ~/.scripts/yabai/apply-display-config.sh
@@ -158,7 +162,7 @@ Sets each display's yabai top and bottom padding to clear whatever sketchybar li
 
 ## `sketchybar/trigger-bars.sh`
 
-Fans a sketchybar `--trigger` out to **both** instances — the default top bar and the `external` bar (`git.felix.external`). yabai's space/window/app signals call it so each display's space indicators refresh together: a bare `sketchybar --trigger` only reaches the default instance, so the external one is selected explicitly via `exec -a external`. The external trigger is best-effort (stderr suppressed, never fails), so it's a harmless no-op when the external display is undocked.
+Fans a sketchybar `--trigger` out to **both** instances — the default top bar and the `external` bar (`git.felix.external`). yabai's space/window/app signals call it so each display's space indicators refresh together: a bare `sketchybar --trigger` only reaches the default instance, so the external one is selected explicitly via `exec -a external`. Both deliveries are best-effort (stderr suppressed), so a missing daemon does not prevent reaching the other bar. The script requires exactly one nonempty event name.
 
 ```sh
 ~/.scripts/sketchybar/trigger-bars.sh <event>

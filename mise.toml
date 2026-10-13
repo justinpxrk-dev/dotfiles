@@ -1,6 +1,7 @@
 [tools]
+lua = "5.5.1"
 node = "latest"
-"npm:pnpm" = "latest"
+pnpm = "latest"
 ruff = "latest"
 stylua = "latest"
 lua-language-server = "latest"
