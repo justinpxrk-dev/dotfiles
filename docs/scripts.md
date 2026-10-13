@@ -156,6 +156,8 @@ Opens a new Ghostty window — tiled by default, floating centered with `--float
 
 Sets each display's yabai `bottom_padding` to clear whatever sketchybar lives on it, keyed by the display's stable UUID — yabai padding is per-space with no per-display selector, and both the space→display mapping and display indices reshuffle on dock/undock. The internal display has the top menubar, so its bottom is reclaimed (18); the external display has the bottom spaces panel, so it keeps a 66px reservation. `yabairc` runs it once on load, on `space_created`/`space_changed`, and on `display_added`/`display_removed`/`display_moved`. Newly created or relocated spaces therefore receive the padding for their current monitor.
 
+Padding errors are logged while the remaining spaces are attempted. The script exits `1` if any padding command failed, or `0` if all succeeded; failed or empty display queries also exit `1`.
+
 ```sh
 ~/.scripts/yabai/apply-display-config.sh
 ```
