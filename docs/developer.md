@@ -11,8 +11,6 @@ Instructions for setting up and configuring developer tools.
 
 Install all tools managed by `mise`, install Node.js packages, and sync Python dev dependencies. The `pnpm install` step also runs `lefthook install` via the `prepare` script, which sets up the pre-commit hook. The `uv sync --dev` step creates the virtual environment at `.venv/` and installs all Python dependencies into it.
 
-pnpm uses mise's preferred release backend (`pnpm` → `aqua:pnpm/pnpm`), which installs the standalone executable. After switching from `npm:pnpm`, run `mise install pnpm` and confirm `mise exec -- pnpm --version` succeeds.
-
 ```sh
 mise install
 pnpm install
