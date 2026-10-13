@@ -23,8 +23,6 @@ jobs:
     timeout-minutes: 30
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # GitHub release downloads can briefly return 5xx responses.
-      HOMEBREW_CURL_RETRIES: "5"
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2

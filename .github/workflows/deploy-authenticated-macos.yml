@@ -20,8 +20,6 @@ jobs:
     timeout-minutes: 30
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # GitHub release downloads can briefly return 5xx responses.
-      HOMEBREW_CURL_RETRIES: "5"
     steps:
       - name: Configure SSH for private submodules
         uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0

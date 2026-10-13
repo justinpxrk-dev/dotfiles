@@ -65,8 +65,6 @@ The macOS deploy workflows and startup benchmark refresh Homebrew with `brew upd
 
 Keep the explicit metadata-refresh step in both deploy workflows and inside the startup benchmark's setup gate. Refresh metadata first when an installer artifact no longer matches a cask definition.
 
-All three workflows set `HOMEBREW_CURL_RETRIES=5`, increasing [Homebrew's default of three download retries](https://docs.brew.sh/Manpage#environment) to tolerate transient 5xx responses from release hosting. Persistent download failures and installer errors still fail the job. Keep the retry count bounded rather than retrying the entire dotfiles bootstrap.
-
 ## Hyperfine JSON schema (startup benchmark)
 
 The startup workflow reads [Hyperfine 2's JSON export](https://github.com/sharkdp/hyperfine/releases/tag/v2.0.0) from `results[0].summary.time_wall_clock.min` and `.mean`. These values are exported in seconds and multiplied by 1000 before reporting milliseconds; the startup limit remains `THRESHOLD_MS=200`. Hyperfine 1's `results[0].min` and `.mean` fields no longer exist.
