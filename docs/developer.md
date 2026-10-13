@@ -11,6 +11,8 @@ Instructions for setting up and configuring developer tools.
 
 Install all tools managed by `mise`, install Node.js packages, and sync Python dev dependencies. The `pnpm install` step also runs `lefthook install` via the `prepare` script, which sets up the pre-commit hook. The `uv sync --dev` step creates the virtual environment at `.venv/` and installs all Python dependencies into it.
 
+pnpm uses mise's preferred release backend (`pnpm` → `aqua:pnpm/pnpm`), which installs the standalone executable. After switching from `npm:pnpm`, run `mise install pnpm` and confirm `mise exec -- pnpm --version` succeeds.
+
 ```sh
 mise install
 pnpm install
@@ -38,7 +40,7 @@ shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths 
 
 ## CI
 
-GitHub Actions runs `format:check` and `lint` on every push and pull request to any branch. The workflow mirrors local setup: mise installs all tools, then `pnpm install --frozen-lockfile` and `uv sync --dev` install package dependencies before running checks.
+The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks; the Lint job also uses `uv sync --dev` for Python tools.
 
 Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
 
