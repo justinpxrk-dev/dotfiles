@@ -67,6 +67,12 @@ Keep the explicit metadata-refresh step in both deploy workflows and inside the 
 
 All three workflows set `HOMEBREW_CURL_RETRIES=5`, increasing [Homebrew's default of three download retries](https://docs.brew.sh/Manpage#environment) to tolerate transient 5xx responses from release hosting. Persistent download failures and installer errors still fail the job. Keep the retry count bounded rather than retrying the entire dotfiles bootstrap.
 
+## Hyperfine JSON schema (startup benchmark)
+
+The startup workflow reads [Hyperfine 2's JSON export](https://github.com/sharkdp/hyperfine/releases/tag/v2.0.0) from `results[0].summary.time_wall_clock.min` and `.mean`. These values are exported in seconds and multiplied by 1000 before reporting milliseconds; the startup limit remains `THRESHOLD_MS=200`. Hyperfine 1's `results[0].min` and `.mean` fields no longer exist.
+
+After a Hyperfine major upgrade, inspect a fresh `--export-json` result and check the workflow's field paths and units before interpreting a reporting failure as a startup regression.
+
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
 The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).
