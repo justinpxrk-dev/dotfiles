@@ -23,6 +23,8 @@ jobs:
     timeout-minutes: 15
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # GitHub release downloads can briefly return 5xx responses.
+      HOMEBREW_CURL_RETRIES: "5"
       # Hard ceiling for the fastest observed startup (hyperfine min). The gate
       # uses min, not mean: shared-runner noise only ever adds time, so the min
       # tracks true config cost while the mean tracks VM contention. Observed
@@ -83,6 +85,11 @@ jobs:
         run: |
           mkdir -p "$HOME/.local/share"
           ln -sfn "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
+
+      # Runner images can contain stale cask definitions for unversioned fonts.
+      - name: Refresh Homebrew metadata
+        if: steps.gate.outputs.run == 'true'
+        run: brew update
 
       - name: Install chezmoi
         if: steps.gate.outputs.run == 'true'

@@ -59,6 +59,14 @@ git ls-remote https://github.com/<owner>/<repo> 'refs/tags/<tag>' 'refs/tags/<ta
 
 Use the dereferenced (`^{}`) commit SHA for annotated tags; the bare ref already is the commit for lightweight tags.
 
+## Homebrew cask metadata and download failures on macOS CI
+
+The macOS deploy workflows and startup benchmark refresh Homebrew with `brew update` before applying dotfiles. Runner images can contain stale cask metadata, while unversioned font downloads can change their installer filenames. On 2026-10-12, the cached `font-sf-pro` definition expected `SF Pro Fonts.pkg`, but Apple's download contained `SFProFonts.pkg`; the current [Homebrew cask definition](https://github.com/Homebrew/homebrew-cask/blob/master/Casks/font/font-s/font-sf-pro.rb) already uses the new filename.
+
+Keep the explicit metadata-refresh step in both deploy workflows and inside the startup benchmark's setup gate. Refresh metadata first when an installer artifact no longer matches a cask definition.
+
+All three workflows set `HOMEBREW_CURL_RETRIES=5`, increasing [Homebrew's default of three download retries](https://docs.brew.sh/Manpage#environment) to tolerate transient 5xx responses from release hosting. Persistent download failures and installer errors still fail the job. Keep the retry count bounded rather than retrying the entire dotfiles bootstrap.
+
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
 The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).
