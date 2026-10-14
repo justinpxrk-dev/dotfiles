@@ -1,6 +1,7 @@
 # Unmanaged Directories
 assets
 docs
+tests
 Library/Fonts
 Library/Themes
 Library/Unmanaged

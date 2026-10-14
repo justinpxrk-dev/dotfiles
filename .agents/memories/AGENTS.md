@@ -70,6 +70,7 @@ chezmoi/
 │   └── Wallpapers/ — desktop wallpapers (git-only)
 ├── docs/       — documentation
 │   └── ops/    — operational runbooks (upgrade hazards, couplings)
+├── tests/      — automated tests (git-only)
 ├── AGENTS.md             → .agents/memories/AGENTS.md (symlink — Codex entry point)
 ├── CLAUDE.md             → .agents/memories/AGENTS.md (symlink — Claude entry point)
 ├── dot_Brewfile          → ~/.Brewfile
@@ -82,9 +83,10 @@ chezmoi/
 │   ├── git/
 │   ├── nvim/
 │   ├── sketchybar/
-│   │   └── lib/
-│   │       ├── sketchybar-app-font @
-│   │       └── SbarLua @
+│   │   ├── lib/
+│   │   │   ├── sketchybar-app-font @
+│   │   │   └── SbarLua @
+│   │   └── model/ — space state logic
 │   ├── skhd/
 │   ├── spicetify/ — Themes/catppuccin symlinks to Library/Themes/Catppuccin/spicetify @ ⑂
 │   ├── yabai/

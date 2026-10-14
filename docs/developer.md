@@ -36,9 +36,19 @@ pnpm run lint:sh / lint:lua / lint:py
 
 shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths are excluded there. The `--apply-ignore` flag must be passed for shfmt to respect them.
 
+## Testing
+
+Run the focused app-recency and space-renumbering checks from the repository root. The script uses `lua` from PATH, provided locally by Homebrew:
+
+```sh
+pnpm run test:sketchybar
+```
+
 ## CI
 
 The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks; the Lint job also uses `uv sync --dev` for Python tools.
+
+`unit-tests.yml` runs unit tests separately on pushes to `main` and pull requests targeting `main`. It installs Node.js and pnpm through `mise`, installs Lua on the Ubuntu runner, and runs `pnpm run test:sketchybar`.
 
 Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
 

@@ -53,6 +53,10 @@ Yabai app, window, space, display, and padding signals in `yabairc` have labels 
 yabai --restart-service
 ```
 
+## Yabai space snapshot fields
+
+The space model uses display `uuid`/`index`, space `id`/`index`/`display`/`windows`/`is-visible`/`has-focus`, and window `id`/`app`/`has-focus`. Space `id` owns history; `index` is only the current Mission Control number. Membership follows the space's window-ID list, which also includes sticky windows. After a yabai upgrade, inspect `yabai -m query --displays`, `--spaces`, and `--windows` for compatible fields; the focused model checks use fixtures rather than the live daemon's JSON schema.
+
 ## markdownlint-cli2 dependency pins and compatibility
 
 `markdownlint-cli2` 0.23.3 supports `js-yaml` 5 and `markdown-it` 15. Its dependency pins already include the fixes that required the previous `js-yaml` 4.2.0 and `markdown-it` 14.2.0 overrides, so those overrides are removed.
