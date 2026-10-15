@@ -67,20 +67,13 @@
     "dock": "left"
   },
 
+  "disable_ai": true,
   "agent": {
     "dock": "right",
     "favorite_models": [],
     "model_parameters": [],
     "threads_sidebar": {
       "position": "right"
-    }
-  },
-  "agent_servers": {
-    "claude-acp": {
-      "type": "registry"
-    },
-    "codex-acp": {
-      "type": "registry"
     }
   },
 
