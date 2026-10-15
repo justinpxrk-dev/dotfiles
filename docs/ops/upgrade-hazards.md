@@ -100,6 +100,16 @@ The startup workflow reads [Hyperfine 2's JSON export](https://github.com/sharkd
 
 After a Hyperfine major upgrade, inspect a fresh `--export-json` result and check the workflow's field paths and units before interpreting a reporting failure as a startup regression.
 
+## Zed Catppuccin backgrounds and stacked alpha
+
+`dot_config/zed/settings.json` uses one shared background for the empty workspace and plain editor. The workspace `background` uses the theme's original editor RGB color with `f2` alpha (242/255, about 94.9% opacity): Mocha `#1e1e2ef2`, Latte `#eff1f5f2`. `editor.background` and `editor.gutter.background` use the same RGB with `00` alpha, so opening a tab adds no background opacity. Keep the workspace background visible: it also paints the area when no tabs are open. The empty workspace deliberately shares the editor's base color instead of the theme's separate workspace shade.
+
+`terminal.background` is also transparent; terminal views inherit their underlying workspace or dock background. Other surface backgrounds use their original RGB values with `f2` alpha; syntax colors, borders, and diagnostic overlays inherit the theme defaults.
+
+Zed 1.24.2's macOS renderer adds background alpha values, clamping at full opacity, rather than using the usual source-over alpha formula. See the [versioned renderer](https://github.com/zed-industries/zed/blob/v1.24.2/crates/gpui_apple/src/metal_renderer.rs#L1337-L1343). Applying `f2` to both the workspace and editor therefore makes the editor opaque. Some surfaces paint the same background repeatedly: the project dock and its rows both use `panel.background`, and tabs paint over the tab bar. Those areas can be fully opaque with these settings. Uniform 95% opacity across every area is not the target; original surface colors take priority.
+
+The RGB values were checked against Catppuccin extension 0.2.27's `themes/catppuccin-mauve.json`. After updating Catppuccin, compare overridden RGB values with the installed theme under `~/Library/Application Support/Zed/extensions/installed/catppuccin/themes/`. After updating Zed, recheck the renderer's alpha blend factors and overlapping backgrounds before changing alpha values.
+
 ## Zen Browser transparency (userChrome overrides + profile pref)
 
 The Zen chrome css (`Library/Application Support/zen/Profiles/Default User/chrome/`) layers personal overrides over the Catppuccin zen submodule that target Zen's private internals: the `#zen-toolbar-background` layer inside `hbox#titlebar`, the `--zen-main-browser-background[-toolbar]` variables, the `--toolbar-bgcolor` wash, and the `about:blank` page Zen loads for empty tabs. None of this is API — a Zen update can rename or restructure any of it (verified against Zen `1.20.2b`).

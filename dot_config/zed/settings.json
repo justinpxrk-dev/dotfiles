@@ -1,0 +1,137 @@
+{
+  "icon_theme": {
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Latte",
+    "mode": "system"
+  },
+  "theme": {
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Latte",
+    "mode": "system"
+  },
+  "title_bar": {
+    "show_sign_in": false
+  },
+  "ui_font_family": "SF Pro",
+  "ui_font_size": 16,
+
+  "buffer_font_family": "MonoLisa",
+  "buffer_font_size": 14.0,
+  "buffer_line_height": "comfortable",
+  "diff_view_style": "unified",
+  "format_on_save": "on",
+  "inlay_hints": {
+    "enabled": true,
+    "show_background": true,
+    "show_other_hints": true,
+    "show_parameter_hints": true,
+    "show_type_hints": true,
+    "show_value_hints": true
+  },
+  "minimap": {
+    "show": "always"
+  },
+  "preview_tabs": {
+    "enabled": true
+  },
+  "show_whitespaces": "boundary",
+  "show_wrap_guides": true,
+  "soft_wrap": "editor_width",
+  "tabs": {
+    "file_icons": true,
+    "git_status": true,
+    "show_diagnostics": "errors"
+  },
+  "vim_mode": true,
+  "wrap_guides": [80, 120],
+
+  "markdown_preview": {
+    "font_family": "SF Pro Text",
+    "font_size": 16.0
+  },
+  "mermaid_font_family": "SF Pro Text",
+  "terminal": {
+    "font_family": "MonoLisa Nerd Font"
+  },
+
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "project_panel": {
+    "dock": "left"
+  },
+
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+    "threads_sidebar": {
+      "position": "right"
+    }
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    }
+  },
+
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  "theme_overrides": {
+    "Catppuccin Latte": {
+      "background": "#eff1f5f2",
+      "background.appearance": "blurred",
+      "editor.background": "#eff1f500",
+      "editor.gutter.background": "#eff1f500",
+      "editor.subheader.background": "#e6e9eff2",
+      "elevated_surface.background": "#e6e9eff2",
+      "panel.background": "#e6e9eff2",
+      "panel.overlay_background": "#e6e9eff2",
+      "scrollbar.track.background": "#dce0e8f2",
+      "status_bar.background": "#dce0e8f2",
+      "surface.background": "#e6e9eff2",
+      "tab.active_background": "#eff1f5f2",
+      "tab.inactive_background": "#d2d7e2f2",
+      "tab_bar.background": "#dce0e8f2",
+      "terminal.background": "#eff1f500",
+      "title_bar.background": "#dce0e8f2",
+      "title_bar.inactive_background": "#e6e9eef2",
+      "toolbar.background": "#eff1f5f2"
+    },
+    "Catppuccin Mocha": {
+      "background": "#1e1e2ef2",
+      "background.appearance": "blurred",
+      "editor.background": "#1e1e2e00",
+      "editor.gutter.background": "#1e1e2e00",
+      "editor.subheader.background": "#181825f2",
+      "elevated_surface.background": "#181825f2",
+      "panel.background": "#181825f2",
+      "panel.overlay_background": "#181825f2",
+      "scrollbar.track.background": "#11111bf2",
+      "status_bar.background": "#11111bf2",
+      "surface.background": "#181825f2",
+      "tab.active_background": "#1e1e2ef2",
+      "tab.inactive_background": "#0b0b11f2",
+      "tab_bar.background": "#11111bf2",
+      "terminal.background": "#1e1e2e00",
+      "title_bar.background": "#11111bf2",
+      "title_bar.inactive_background": "#171725f2",
+      "toolbar.background": "#1e1e2ef2"
+    }
+  }
+}
