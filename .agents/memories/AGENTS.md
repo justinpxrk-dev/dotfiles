@@ -57,13 +57,12 @@ chezmoi/
 │   │   └── lib/
 │   │       └── monolisa-nerdfont-patch @ †
 │   ├── LaunchAgents/
-│   ├── Themes/ — theme definitions (git-only, see Themes System)
+│   ├── Themes/ — theme definitions (git-only)
 │   │   ├── Catppuccin/
 │   │   │   ├── delta @
 │   │   │   ├── ghostty @
 │   │   │   ├── spicetify @ ⑂
 │   │   │   └── zen @
-│   │   ├── Petrichor/ — Base24 palette definitions
 │   │   └── tinted/ — tinted-builder template upstreams
 │   │       └── tinted-shell @ ⑂
 │   ├── Unmanaged/ — reference configs not managed by chezmoi (git-only)
@@ -112,7 +111,7 @@ See `docs/developer.md` for setup, formatting, linting, and worktree tool lifecy
 
 ## Scripts
 
-Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply) ; run them by path (e.g. `~/.scripts/tinted/apply-templates.sh petrichor-dark`). For full per-script documentation, read `docs/scripts.md`.
+Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply) ; run them by path (e.g. `~/.scripts/themes/handle-theme-change.sh`). For full per-script documentation, read `docs/scripts.md`.
 
 User-facing scripts also get `~/.local/bin` PATH commands via thin `exec` wrappers: `handle-theme-change`, `handle-theme-change-spicetify`, `reload-launch-agent`, and `benchmark-startup`.
 
@@ -148,7 +147,7 @@ After any change, update all relevant files to reflect the new state:
 - **Skills:** `.agents/skills/**/SKILL.md` (canonical; `.claude/skills/` are symlinks to these)
 - **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
 - **Editor config:** `.editorconfig`
-- **Formatter / linter configs:** `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
+- **Formatter / linter configs:** `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
 - **Tool scripts:** `package.json` (pnpm lint/format scripts), `mise.toml` (tool versions)
 
 ### Operational Notes

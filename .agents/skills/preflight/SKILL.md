@@ -15,7 +15,7 @@ Run in order. All tools are mise-managed — prefix commands with `mise exec --`
    - `.agents/memories/AGENTS.md` — project structure, conventions, rules
    - `docs/**` (developer.md, scripts.md, ops/\*) and any README
    - Ignore files — `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
-   - Editor / formatter / linter configs — `.editorconfig`, `pyproject.toml`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
+   - Editor / formatter / linter configs — `.editorconfig`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
    - Tool manifests — `package.json` (pnpm scripts), `mise.toml` (tool versions)
    - `.agents/skills/**/SKILL.md` — if a workflow described there has changed
 
@@ -28,5 +28,5 @@ Run in order. All tools are mise-managed — prefix commands with `mise exec --`
 ## Rules
 
 - The doc scan is a proposal step: never edit docs without explicit approval.
-- Never bypass the pre-commit hook — no `--no-verify`. Non-auto-fixable lint (shellcheck, `pyright`, `lua-language-server`) is enforced by the hook at commit time; if it fails there, fix the issue and commit again.
+- Never bypass the pre-commit hook — no `--no-verify`. Non-auto-fixable lint (shellcheck, `lua-language-server`) is enforced by the hook at commit time; if it fails there, fix the issue and commit again.
 - Safe to run standalone (e.g. before opening a PR or running `chezmoi apply`), not just from `/commit`. Run `pnpm check` directly for the full lint/format gate without committing.
