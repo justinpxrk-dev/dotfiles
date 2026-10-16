@@ -20,8 +20,6 @@ mise.toml
 node_modules
 package.json
 pnpm-lock.yaml
-pyproject.toml
-uv.lock
 
 # Misc
 LICENSE

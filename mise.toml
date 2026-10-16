@@ -1,7 +1,6 @@
 [tools]
 node = "latest"
 pnpm = "latest"
-ruff = "latest"
 stylua = "latest"
 lua-language-server = "latest"
 lefthook = "latest"

@@ -129,7 +129,6 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
     │   │   ├── ghostty @               — Ghostty terminal theme
     │   │   ├── spicetify @ ⑂           — Spotify theme templates
     │   │   └── zen @                   — Zen Browser theme
-    │   ├── Petrichor/                  — Base24 palette definitions
     │   └── tinted/                     — tinted-builder template upstreams
     │       └── tinted-shell @ ⑂        — shell theme templates
     ├── Unmanaged/                      — reference configs not managed by chezmoi (git-only)

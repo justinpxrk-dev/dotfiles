@@ -5,40 +5,38 @@ Instructions for setting up and configuring developer tools.
 ## Requirements
 
 - `mise`
-- `uv`
 
 ## Setup
 
-Install all tools managed by `mise`, install Node.js packages, and sync Python dev dependencies. The `pnpm install` step also runs `lefthook install` via the `prepare` script, which sets up the pre-commit hook. The `uv sync --dev` step creates the virtual environment at `.venv/` and installs all Python dependencies into it.
+Install all tools managed by `mise` and install Node.js packages. The `pnpm install` step also runs `lefthook install` via the `prepare` script, which sets up the pre-commit hook.
 
 ```sh
 mise install
 pnpm install
-uv sync --dev
 ```
 
 ## Formatting and Linting
 
 ```sh
 pnpm run check           # Run all checks: format:check + lint (mirrors CI and the pre-commit hook)
-pnpm run fix             # Auto-fix everything fixable: lint fixes (ruff --fix, markdownlint --fix) then format
-pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua, Python via ruff)
+pnpm run fix             # Auto-fix Markdown lint issues, then format all files
+pnpm run format          # Format all (Markdown via prettier, shell via shfmt, Lua via stylua)
 pnpm run format:check    # Check formatting without writing
-pnpm run lint            # Lint Markdown (markdownlint), shell (shellcheck), Lua (lua-language-server), and Python (ruff, pyright)
+pnpm run lint            # Lint Markdown (markdownlint), shell (shellcheck), and Lua (lua-language-server)
 ```
 
 Individual formatters:
 
 ```sh
-pnpm run format:md / format:sh / format:lua / format:py
-pnpm run lint:sh / lint:lua / lint:py
+pnpm run format:md / format:sh / format:lua
+pnpm run lint:md / lint:sh / lint:lua
 ```
 
 shfmt uses `.editorconfig` for ignore rules — submodule and third-party paths are excluded there. The `--apply-ignore` flag must be passed for shfmt to respect them.
 
 ## CI
 
-The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks; the Lint job also uses `uv sync --dev` for Python tools.
+The Format/Lint workflow runs on pushes to `main` and pull requests targeting `main`. Both jobs install Node dependencies with `pnpm install --frozen-lockfile` before running their checks.
 
 Two deploy workflows run a real `chezmoi apply` against the macOS runner using the branch under test as the source dir (checked out and symlinked to `~/.local/share/chezmoi`):
 
