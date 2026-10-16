@@ -74,7 +74,6 @@ Third-party actions in `.github/workflows/` are pinned to full commit SHAs with 
 | Action                 | SHA                                        | Version   |
 | ---------------------- | ------------------------------------------ | --------- |
 | `jdx/mise-action`      | `1648a7812b9aeae629881980618f079932869151` | `v4.0.1`  |
-| `astral-sh/setup-uv`   | `d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86` | `v5.4.2`  |
 | `dorny/paths-filter`   | `d1c1ffe0248fe513906c8e24db8ea791d46f8590` | `v3.0.3`  |
 | `webfactory/ssh-agent` | `e83874834305fe9a4a2997156cb26c5de65a8555` | `v0.10.0` |
 
@@ -129,4 +128,4 @@ Website transparency has a second, profile-local leg: the Zen Internet extension
 
 After a backend change, run `mise install pnpm`, then check `mise tool pnpm`, `mise which pnpm`, and `mise exec -- pnpm --version`. The active executable should come from mise's `pnpm` installation, rather than `npm-pnpm`. Existing npm-backend installations can remain on disk; mise selects the backend declared by this repository.
 
-CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `pnpm install --frozen-lockfile` before package scripts; Lint also needs `uv sync --dev`. Installing dependencies in the Format job does not prepare the Lint job.
+CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `pnpm install --frozen-lockfile` before package scripts. Installing dependencies in the Format job does not prepare the Lint job.

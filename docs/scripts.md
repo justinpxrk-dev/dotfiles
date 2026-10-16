@@ -77,14 +77,6 @@ Builds the zsh theme output (shell profile helper and theme-switch scripts) from
 ~/.scripts/tinted/apply-templates.sh <theme-name>
 ```
 
-## `themes/generate_base24_palette.py`
-
-Generates Base24 dark and light palette YAML files using HCT color space algorithms. Run after modifying the palette generation logic in `dot_scripts/themes/`.
-
-```sh
-uv run ~/.scripts/themes/generate_base24_palette.py
-```
-
 ## `themes/handle-theme-change.sh`
 
 Orchestrator for per-appearance theme state. Resolves the mode — `$1` from dark-notify, else via `read-theme-mode.sh` — then fans out to each tool's sibling handler with it:
