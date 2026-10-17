@@ -2,24 +2,5 @@
   "devDependencies": {
     "markdownlint-cli2": "^0.23.3",
     "prettier": "^3.8.4"
-  },
-  "scripts": {
-    "prepare": "lefthook install || true",
-    "fix": "pnpm run lint:fix && pnpm run format",
-    "check": "pnpm run format:check && pnpm run lint",
-    "format": "pnpm run format:md && pnpm run format:sh && pnpm run format:lua",
-    "format:check": "pnpm run format:check:md && pnpm run format:check:sh && pnpm run format:check:lua",
-    "lint": "pnpm run lint:lua && pnpm run lint:md && pnpm run lint:sh",
-    "lint:fix": "pnpm run lint:fix:md",
-    "format:md": "prettier --write .",
-    "format:check:md": "prettier --check .",
-    "lint:md": "markdownlint-cli2",
-    "lint:fix:md": "markdownlint-cli2 --fix",
-    "lint:sh": "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Library/Themes/tinted/*' -not -path './Library/Themes/Catppuccin/*' -not -path './.obsidian/*' | xargs shellcheck",
-    "format:sh": "shfmt --apply-ignore -w .",
-    "format:check:sh": "shfmt --apply-ignore -d .",
-    "lint:lua": "lua-language-server --check=dot_config/nvim --checklevel=Warning && lua-language-server --check=dot_config/sketchybar --checklevel=Warning",
-    "format:lua": "stylua .",
-    "format:check:lua": "stylua --check ."
   }
 }

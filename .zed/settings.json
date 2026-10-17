@@ -1,0 +1,132 @@
+{
+  "format_on_save": "on",
+  "languages": {
+    "CSS": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "pnpm",
+            "exec",
+            "prettier",
+            "--stdin-filepath",
+            "{buffer_path}"
+          ]
+        }
+      }
+    },
+    "HTML": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "pnpm",
+            "exec",
+            "prettier",
+            "--stdin-filepath",
+            "{buffer_path}"
+          ]
+        }
+      }
+    },
+    "JavaScript": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "pnpm",
+            "exec",
+            "prettier",
+            "--stdin-filepath",
+            "{buffer_path}"
+          ]
+        }
+      }
+    },
+    "JSON": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "pnpm",
+            "exec",
+            "prettier",
+            "--stdin-filepath",
+            "{buffer_path}"
+          ]
+        }
+      }
+    },
+    "Lua": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "stylua",
+            "--respect-ignores",
+            "--stdin-filepath",
+            "{buffer_path}",
+            "-"
+          ]
+        }
+      }
+    },
+    "Markdown": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "pnpm",
+            "exec",
+            "prettier",
+            "--stdin-filepath",
+            "{buffer_path}"
+          ]
+        }
+      }
+    },
+    "Shell Script": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "shfmt",
+            "--apply-ignore",
+            "--filename",
+            "{buffer_path}"
+          ]
+        }
+      }
+    },
+    "YAML": {
+      "formatter": {
+        "external": {
+          "command": "mise",
+          "arguments": [
+            "exec",
+            "--",
+            "pnpm",
+            "exec",
+            "prettier",
+            "--stdin-filepath",
+            "{buffer_path}"
+          ]
+        }
+      }
+    }
+  }
+}

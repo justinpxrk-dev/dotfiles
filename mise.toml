@@ -6,3 +6,78 @@ lua-language-server = "latest"
 lefthook = "latest"
 shellcheck = "latest"
 shfmt = "latest"
+
+[tasks.setup]
+description = "Install Node dependencies and Git hooks"
+run = [{ task = "deps:install" }, "lefthook install"]
+
+[tasks."deps:install"]
+description = "Install the locked Node dependencies"
+run = "pnpm install --frozen-lockfile"
+
+[tasks.check]
+description = "Check repository formatting and lint"
+run = [{ task = "format:check" }, { task = "lint" }]
+
+[tasks.fix]
+description = "Fix Markdown lint issues, then format the repository"
+run = [{ task = "lint:fix" }, { task = "format" }]
+
+[tasks.format]
+description = "Format files with Prettier, shfmt, and StyLua"
+run = [{ task = "format:md" }, { task = "format:sh" }, { task = "format:lua" }]
+
+[tasks."format:check"]
+description = "Check formatting without changing files"
+run = [{ task = "format:check:md" }, { task = "format:check:sh" }, { task = "format:check:lua" }]
+
+[tasks."format:md"]
+description = "Format Prettier-supported files"
+run = "pnpm exec prettier --write ."
+
+[tasks."format:check:md"]
+description = "Check Prettier-supported files"
+run = "pnpm exec prettier --check ."
+
+[tasks."format:sh"]
+description = "Format shell scripts using EditorConfig ignore rules"
+run = "shfmt --apply-ignore -w ."
+
+[tasks."format:check:sh"]
+description = "Check shell formatting using EditorConfig ignore rules"
+run = "shfmt --apply-ignore -d ."
+
+[tasks."format:lua"]
+description = "Format Lua files"
+run = "stylua ."
+
+[tasks."format:check:lua"]
+description = "Check Lua formatting"
+run = "stylua --check ."
+
+[tasks.lint]
+description = "Lint Lua, Markdown, and shell scripts"
+run = [{ task = "lint:lua" }, { task = "lint:md" }, { task = "lint:sh" }]
+
+[tasks."lint:fix"]
+description = "Fix auto-fixable lint issues"
+run = [{ task = "lint:fix:md" }]
+
+[tasks."lint:lua"]
+description = "Check Neovim and SketchyBar Lua diagnostics"
+run = [
+  "lua-language-server --check=dot_config/nvim --checklevel=Warning",
+  "lua-language-server --check=dot_config/sketchybar --checklevel=Warning",
+]
+
+[tasks."lint:md"]
+description = "Lint Markdown files"
+run = "pnpm exec markdownlint-cli2"
+
+[tasks."lint:fix:md"]
+description = "Fix auto-fixable Markdown lint issues"
+run = "pnpm exec markdownlint-cli2 --fix"
+
+[tasks."lint:sh"]
+description = "Run ShellCheck on repository shell scripts"
+run = "find . -name '*.sh' -not -path './dot_config/sketchybar/lib/*' -not -path './Library/Themes/tinted/*' -not -path './Library/Themes/Catppuccin/*' -not -path './.obsidian/*' | xargs shellcheck"

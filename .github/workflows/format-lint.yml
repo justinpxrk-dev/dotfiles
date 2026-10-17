@@ -28,10 +28,10 @@ jobs:
         uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
 
       - name: Install node dependencies
-        run: pnpm install --frozen-lockfile
+        run: mise run deps:install
 
       - name: Check formatting
-        run: pnpm run format:check
+        run: mise run format:check
 
   lint:
     name: Lint
@@ -47,7 +47,7 @@ jobs:
         uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
 
       - name: Install node dependencies
-        run: pnpm install --frozen-lockfile
+        run: mise run deps:install
 
       - name: Lint
-        run: pnpm run lint
+        run: mise run lint
