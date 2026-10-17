@@ -48,6 +48,7 @@ chezmoi/
 │   └── skills/ — symlinks to .agents/skills/ (commit, preflight)
 ├── .github/    — GitHub Actions workflows
 │   └── workflows/
+├── .zed/       — Zed project settings and tasks (git-only)
 ├── assets/     — icons and images
 ├── Library/    → ~/Library/
 │   ├── Application Support/ — per-app data (applied)
@@ -109,6 +110,8 @@ chezmoi apply ~/.config/sketchybar    # Apply a specific path
 
 See `docs/developer.md` for setup, formatting, linting, and worktree tool lifecycle (e.g. `mise trust`).
 
+Define repository tasks in `mise.toml` and invoke them with `mise run`. Use pnpm to install and execute Node dependencies; keep workflow orchestration out of `package.json`.
+
 ## Scripts
 
 Scripts are applied to `~/.scripts/` (source `dot_scripts/`, non-executable in the repo, `+x` on apply) ; run them by path (e.g. `~/.scripts/themes/handle-theme-change.sh`). For full per-script documentation, read `docs/scripts.md`.
@@ -148,7 +151,7 @@ After any change, update all relevant files to reflect the new state:
 - **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
 - **Editor config:** `.editorconfig`
 - **Formatter / linter configs:** `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`
-- **Tool scripts:** `package.json` (pnpm lint/format scripts), `mise.toml` (tool versions)
+- **Tool manifests:** `package.json` (Node dependencies), `mise.toml` (tool versions and repository tasks)
 
 ### Operational Notes
 

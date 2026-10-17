@@ -2,6 +2,6 @@ pre-commit:
   parallel: true
   commands:
     format-check:
-      run: pnpm run format:check
+      run: mise run format:check
     lint:
-      run: pnpm run lint
+      run: mise run lint
