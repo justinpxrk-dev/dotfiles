@@ -65,7 +65,7 @@ yabai --restart-service
 
 1. Check the new pins: `npm view markdownlint-cli2@<version> dependencies`.
 2. Remove overrides whose fixes are already included upstream; bound any remaining overrides to compatible major versions and run `pnpm install`.
-3. Run `pnpm run check` to verify the refreshed dependency tree and repository configuration together.
+3. Run `mise run check` to verify the refreshed dependency tree and repository configuration together.
 
 ## GitHub Actions SHA pins (no Dependabot to bump them)
 
@@ -128,4 +128,4 @@ Website transparency has a second, profile-local leg: the Zen Internet extension
 
 After a backend change, run `mise install pnpm`, then check `mise tool pnpm`, `mise which pnpm`, and `mise exec -- pnpm --version`. The active executable should come from mise's `pnpm` installation, rather than `npm-pnpm`. Existing npm-backend installations can remain on disk; mise selects the backend declared by this repository.
 
-CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `pnpm install --frozen-lockfile` before package scripts. Installing dependencies in the Format job does not prepare the Lint job.
+CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `mise run deps:install` (which invokes `pnpm install --frozen-lockfile`) before their check tasks. Installing dependencies in the Format job does not prepare the Lint job.

@@ -54,7 +54,7 @@ chezmoi init --apply justinpxrk-dev/dotfiles
 
 ```sh
 mise trust                     # trust config file (mise.toml)
-mise install                   # install configured tools
+mise run setup                 # install tools, Node dependencies, and Git hooks
 ~/.scripts/macos/set-system-settings.sh # apply macOS defaults (reboot after)
 ```
 
@@ -87,6 +87,7 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 │   └── skills/                         — symlinks to .agents/skills/ (commit, preflight)
 ├── .github/                            — GitHub metadata
 │   └── workflows/                      — GitHub Actions workflows
+├── .zed/                               — Zed project settings and tasks (git-only)
 ├── assets/                             — icons and images
 ├── docs/                               — documentation
 │   └── ops/                            — operational runbooks (upgrade hazards, couplings)
