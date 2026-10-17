@@ -67,7 +67,6 @@ brew "zlib"
 
 # Themes
 brew "cormacrelf/tap/dark-notify", trusted: true
-brew "tinted-theming/tinted/tinted-builder-rust", trusted: true
 
 # General
 brew "chezmoi"
@@ -98,7 +97,6 @@ cask "betterdisplay"
 cask "bitwarden"
 cask "chatgpt"
 cask "claude"
-cask "discord"
 cask "ghostty"
 cask "google-chrome"
 cask "keepingyouawake"
@@ -110,9 +108,6 @@ cask "raycast"
 cask "sf-symbols"
 cask "slack"
 cask "spotify"
-cask "stats"
-cask "thaw"
-cask "ungoogled-chromium"
 cask "zed"
 cask "zen"
 cask "zoom"
@@ -122,4 +117,3 @@ brew "mas"
 mas "Copilot", id: 1447330651
 mas "Dynamic wallpaper", id: 1582358382
 mas "Flow", id: 1423210932
-mas "KakaoTalk", id: 869223134
