@@ -3,7 +3,6 @@
 tap "asmvik/formulae"
 tap "cormacrelf/tap"
 tap "FelixKratz/formulae"
-tap "tinted-theming/tinted"
 
 # Window Manager
 brew "FelixKratz/formulae/borders", restart_service: :changed, trusted: true
