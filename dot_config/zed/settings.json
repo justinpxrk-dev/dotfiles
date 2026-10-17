@@ -1,4 +1,8 @@
 {
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "catppuccin-icons": true
+  },
   "icon_theme": {
     "dark": "Catppuccin Mocha",
     "light": "Catppuccin Latte",
@@ -91,7 +95,6 @@
       "background.appearance": "blurred",
       "editor.background": "#eff1f500",
       "editor.gutter.background": "#eff1f500",
-      "editor.subheader.background": "#e6e9eff2",
       "elevated_surface.background": "#e6e9eff2",
       "panel.background": "#e6e9eff2",
       "panel.overlay_background": "#e6e9eff2",
@@ -111,7 +114,6 @@
       "background.appearance": "blurred",
       "editor.background": "#1e1e2e00",
       "editor.gutter.background": "#1e1e2e00",
-      "editor.subheader.background": "#181825f2",
       "elevated_surface.background": "#181825f2",
       "panel.background": "#181825f2",
       "panel.overlay_background": "#181825f2",
