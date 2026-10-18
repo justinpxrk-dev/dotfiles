@@ -18,7 +18,7 @@ Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and
 ```text
 chezmoi/
 ├── .agents/    — shared agent config, read by Claude and Codex
-│   ├── memories/ — AGENTS.md (this file)
+│   ├── AGENTS.md — shared agent guidance (this file)
 │   └── skills/ — shared skill bodies (commit, preflight)
 ├── .chezmoiscripts/ — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/    — Claude Code config; skills/ symlink into .agents/skills/
@@ -47,8 +47,8 @@ chezmoi/
 │   └── Wallpapers/ — desktop wallpapers (git-only)
 ├── docs/       — documentation
 │   └── ops/    — operational runbooks (upgrade hazards, couplings)
-├── AGENTS.md             → .agents/memories/AGENTS.md (symlink — Codex entry point)
-├── CLAUDE.md             → .agents/memories/AGENTS.md (symlink — Claude entry point)
+├── AGENTS.md             → .agents/AGENTS.md (symlink — Codex entry point)
+├── CLAUDE.md             → .agents/AGENTS.md (symlink — Claude entry point)
 ├── dot_Brewfile          → ~/.Brewfile
 ├── dot_claude/           → ~/.claude
 ├── dot_config/ → ~/.config/
@@ -123,7 +123,7 @@ Write inline comments for non-obvious _why_ — hidden constraints, invariants, 
 
 After any change, update all relevant files to reflect the new state:
 
-- **Docs:** `.agents/memories/AGENTS.md`, other files in `docs/`, READMEs — the project-structure tree is duplicated in `.agents/memories/AGENTS.md` and `README.md`; update both together
+- **Docs:** `.agents/AGENTS.md`, other files in `docs/`, READMEs — the project-structure tree is duplicated in `.agents/AGENTS.md` and `README.md`; update both together
 - **Skills:** `.agents/skills/**/SKILL.md` (canonical; `.claude/skills/` are symlinks to these)
 - **Ignore files:** `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
 - **Editor config:** `.editorconfig`
