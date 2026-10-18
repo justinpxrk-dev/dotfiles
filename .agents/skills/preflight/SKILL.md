@@ -12,7 +12,7 @@ Scan documentation for staleness and format/auto-fix the working tree so a commi
 Run in order. Repository workflows are mise tasks, which load the tools and environment declared in `mise.toml` without requiring shell activation.
 
 1. **Documentation scan.** Compare `git status --short` and `git diff` against docs that could now be out of date, and propose specific edits (show the new wording or a diff) for each. Per `AGENTS.md` "Keeping Config in Sync":
-   - `.agents/memories/AGENTS.md` — project structure, conventions, rules
+   - `.agents/AGENTS.md` — project structure, conventions, rules
    - `docs/**` (developer.md, scripts.md, ops/\*) and any README
    - Ignore files — `.gitignore`, `.prettierignore`, `.chezmoiignore`, `.styluaignore`, and the `ignores` list in `.markdownlint-cli2.jsonc`
    - Editor / formatter / linter configs — `.editorconfig`, `dot_config/nvim/.luarc.json`, `dot_config/sketchybar/.luarc.json`

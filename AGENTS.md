@@ -1,1 +1,1 @@
-.agents/memories/AGENTS.md
+.agents/AGENTS.md

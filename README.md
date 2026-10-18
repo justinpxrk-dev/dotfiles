@@ -80,7 +80,7 @@ Entries prefixed with `dot_` or `empty_`, and `Library/Application Support/` and
 ```text
 chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── .agents/                            — shared agent config, read by Claude and Codex
-│   ├── memories/                       — AGENTS.md (symlinked from repo root)
+│   ├── AGENTS.md                       — shared agent guidance (symlinked from repo root)
 │   └── skills/                         — shared skill bodies (commit, preflight)
 ├── .chezmoiscripts/                    — bootstrap scripts run automatically by chezmoi on apply
 ├── .claude/                            — Claude Code config; skills/ symlink into .agents/skills/
@@ -91,8 +91,8 @@ chezmoi/                                — repo root (~/.local/share/chezmoi)
 ├── assets/                             — icons and images
 ├── docs/                               — documentation
 │   └── ops/                            — operational runbooks (upgrade hazards, couplings)
-├── AGENTS.md                           → .agents/memories/AGENTS.md (symlink — Codex entry point)
-├── CLAUDE.md                           → .agents/memories/AGENTS.md (symlink — Claude entry point)
+├── AGENTS.md                           → .agents/AGENTS.md (symlink — Codex entry point)
+├── CLAUDE.md                           → .agents/AGENTS.md (symlink — Claude entry point)
 ├── dot_Brewfile                        → ~/.Brewfile - Homebrew bundle
 ├── dot_claude/                         → ~/.claude - Claude Code user config
 ├── dot_config/                         → ~/.config/ - XDG config root
