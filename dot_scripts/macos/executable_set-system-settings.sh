@@ -32,6 +32,25 @@ defaults write com.apple.dock show-recents -bool false
 
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Symbolic hotkeys 118–126 select Desktop 1–9; virtual keycodes are not in digit order.
+readonly -a DESKTOP_KEY_CODES=(18 19 20 21 23 22 26 28 25)
+readonly OPTION_MODIFIER=524288
+
+for desktop in {1..9}; do
+	defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add "$((117 + desktop))" \
+		"<dict>
+			<key>enabled</key><true/>
+			<key>value</key><dict>
+				<key>type</key><string>standard</string>
+				<key>parameters</key><array>
+					<integer>$((48 + desktop))</integer>
+					<integer>${DESKTOP_KEY_CODES[desktop]}</integer>
+					<integer>$OPTION_MODIFIER</integer>
+				</array>
+			</dict>
+		</dict>"
+done
+
 # 64 = Show Spotlight search
 /usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:64:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
 

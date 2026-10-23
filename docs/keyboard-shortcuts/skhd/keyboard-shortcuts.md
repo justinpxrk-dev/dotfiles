@@ -4,9 +4,9 @@ Window and space bindings follow a modifier grammar (HJKL = left/down/up/right):
 
 | Layer | Meaning                                                       |
 | ----- | ------------------------------------------------------------- |
-| ⌥     | focus — window (HJKL) or space (N, M, 1–9)                    |
+| ⌥     | focus window (HJKL)                                           |
 | ⇧⌥    | resize window (HJKL)                                          |
-| ⌃⌥    | move window — swap in place (HJKL), send to space (N, M, 1–9) |
+| ⌃⌥    | move window — swap in place (HJKL), send to space (C, V, 1–9) |
 | ⌘⌥    | _reserved for Ghostty splits — never bind in `skhdrc`_        |
 
 ⌘⌥ is intentionally unbound: skhd grabs hotkeys globally before any app sees them, so leaving that layer free is what lets Ghostty receive its [split chords](../ghostty/keyboard-shortcuts.md).
@@ -19,14 +19,6 @@ Window and space bindings follow a modifier grammar (HJKL = left/down/up/right):
 | ⌥J       | `yabai -m window --focus south` |
 | ⌥K       | `yabai -m window --focus north` |
 | ⌥L       | `yabai -m window --focus east`  |
-
-## Focus Space
-
-| Shortcut | Command                       |
-| -------- | ----------------------------- |
-| ⌥N       | `yabai -m space --focus prev` |
-| ⌥M       | `yabai -m space --focus next` |
-| ⌥1–9     | `yabai -m space --focus <n>`  |
 
 ## Move Window (Swap in Place)
 
@@ -41,8 +33,8 @@ Window and space bindings follow a modifier grammar (HJKL = left/down/up/right):
 
 | Shortcut | Command                        |
 | -------- | ------------------------------ |
-| ⌃⌥N      | `yabai -m window --space prev` |
-| ⌃⌥M      | `yabai -m window --space next` |
+| ⌃⌥C      | `yabai -m window --space prev` |
+| ⌃⌥V      | `yabai -m window --space next` |
 | ⌃⌥1–9    | `yabai -m window --space <n>`  |
 
 ## Resize Window
