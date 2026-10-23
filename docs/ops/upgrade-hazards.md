@@ -133,3 +133,11 @@ Website transparency has a second, profile-local leg: the Zen Internet extension
 After a backend change, run `mise install pnpm`, then check `mise tool pnpm`, `mise which pnpm`, and `mise exec -- pnpm --version`. The active executable should come from mise's `pnpm` installation, rather than `npm-pnpm`. Existing npm-backend installations can remain on disk; mise selects the backend declared by this repository.
 
 CI jobs have separate checkouts and dependency installations. Both Format and Lint must run `mise run deps:install` (which invokes `pnpm install --frozen-lockfile`) before their check tasks. Installing dependencies in the Format job does not prepare the Lint job.
+
+## macOS 27: yabai space focus with SIP enabled
+
+Yabai 7.1.25 falls back to [synthetic trackpad swipes](https://github.com/asmvik/yabai/blob/v7.1.25/src/space_manager.c#L846-L919) for space focus when the scripting addition is unavailable. On macOS 27, a focus command can return success without switching desktops. Gesture-encoding changes [reported in another space switcher](https://github.com/jurplel/InstantSpaceSwitcher/issues/72) are the suspected cause. Verify the actual visible space with `yabai -m query --spaces` rather than relying on a command's exit status.
+
+Space navigation uses native Mission Control instead: ⌥C/V selects the previous/next space, and `macos/set-system-settings.sh` binds symbolic hotkeys 118–126 to ⌥1–9 for numbered desktops. Keep these keys unbound in skhd. The former ⌥N/M bindings were removed because they used yabai's failing focus path. Window movement remains in yabai, with ⌃⌥C/V sending a window to the previous/next space.
+
+Re-run the Keyboard Shortcuts section if Keyboard settings or a macOS upgrade changes the numbered mappings. The complete settings script also changes other preferences and restarts system UI processes.
