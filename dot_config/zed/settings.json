@@ -96,8 +96,7 @@
       "editor.background": "#eff1f5c6",
       "editor.gutter.background": "#eff1f5c6",
       "elevated_surface.background": "#e6e9eff2",
-      "error.background": "#d20f39f2",
-      "info.background": "#179299f2",
+      "error.background": "#ecdce3f2",
       "panel.background": "#e6e9eff2",
       "panel.overlay_background": "#e6e9eff2",
       "scrollbar.track.background": "#dce0e8f2",
@@ -110,7 +109,7 @@
       "title_bar.background": "#dce0e8f2",
       "title_bar.inactive_background": "#e6e9eef2",
       "toolbar.background": "#eff1f5f2",
-      "warning.background": "#df8e1df2"
+      "warning.background": "#ede8e0f2"
     },
     "Catppuccin Mocha": {
       "background": "#27273bc6",
@@ -118,8 +117,7 @@
       "editor.background": "#1e1e2ec6",
       "editor.gutter.background": "#1e1e2ec6",
       "elevated_surface.background": "#181825f2",
-      "error.background": "#f38ba8f2",
-      "info.background": "#94e2d5f2",
+      "error.background": "#32283af2",
       "panel.background": "#181825f2",
       "panel.overlay_background": "#181825f2",
       "scrollbar.track.background": "#11111bf2",
@@ -132,7 +130,7 @@
       "title_bar.background": "#11111bf2",
       "title_bar.inactive_background": "#171725f2",
       "toolbar.background": "#1e1e2ef2",
-      "warning.background": "#f9e2aff2"
+      "warning.background": "#33313af2"
     }
   }
 }
